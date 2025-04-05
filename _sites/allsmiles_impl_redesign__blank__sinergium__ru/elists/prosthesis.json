@@ -1,0 +1,37 @@
+{
+  "button": "Управление блоком",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "title": {
+      "name": "Заголовок",
+      "type": "str"
+    },
+    "text": {
+      "name": "Текст список",
+      "type": "str"
+    },
+    "text_note": {
+      "name": "Текст",
+      "type": "str"
+    },
+    "photo": {
+      "name": "Фотография",
+      "type": "img",
+      "file": "[id]/m-prosthesis-image",
+      "path": "m-prosthesis"
+    },
+    "flag_list": {
+        "name": "Флаг",
+        "type": "img-list",
+        "file": "[id]/flag/m-prosthesis-flag-[inc]",
+        "path": "m-prosthesis"
+    },
+    "text_list": {
+        "name": "Список",
+        "type": "text-list"
+    }
+  }
+}

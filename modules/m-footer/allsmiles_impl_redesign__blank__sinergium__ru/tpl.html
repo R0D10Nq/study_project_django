@@ -1,0 +1,165 @@
+{% load core_tags core_filters %}
+
+{% elist 'footer_licenses' as elist_footer_licenses %}
+{% elist 'footer_payment' as elist_footer_payment %}
+{% chunk 'footer.logo_image' raw=True as f_logo %}
+{% chunk 'footer.logo_width' raw=True as f_logo_width %}
+{% chunk 'footer.logo_height' raw=True as f_logo_height %}
+{% get_socials_links as socials_link %}
+
+<footer class="footer" data-js-scroll-target="footer">
+    <div class="row">
+        <div class="footer__grid">
+            <div class="footer__logo">
+                {% img_tag f_logo width=f_logo_width height=f_logo_height class="footer__logo-img" %}
+            </div>
+            <div class="footer__subtitle">{% chunk 'footer.logo_subtitle' %}</div>
+            <div class="footer__license-title">{% chunk 'footer.license-title' %}</div>
+            {% if elist_footer_licenses.instance.list %}
+                {% for id, item in elist_footer_licenses.instance.list.items %}
+                    <div class="footer__requisites">
+                        {% if item.name %}
+                            <div class="footer__requisites-name">{{ item.name|safe }}</div>
+                        {% endif %}
+                        {% if item.inn %}
+                            <div class="footer__requisites-inn">{{ item.inn|safe }}</div>
+                        {% endif %}
+                        {% if item.kpp %}
+                            <div class="footer__requisites-kpp">{{ item.kpp|safe }}</div>
+                        {% endif %}
+                        {% if item.ogrn %}
+                            <div class="footer__requisites-ogrn">{{ item.ogrn|safe }}</div>
+                        {% endif %}
+                        {% if item.email %}
+                            <div class="footer__requisites-email">
+                                {{ item.email|safe }}
+                            </div>
+                        {% endif %}
+                        {% if item.display_phones and item.display_phones == 'true' and get_phones and not success_page %}
+                            <div class="footer__requisites-phones footer__requisites-item">
+                                {% if item.phone_prefix %}
+                                    <div class="footer__requisites-phones-prefix">
+                                        {{ item.phone_prefix|safe }}
+                                    </div>
+                                {% endif %}
+                                <div class="footer__requisites-phones-list">
+                                    {% for phone in get_phones %}
+                                        <a href="tel:{{ phone|phone }}" class="footer__phone nobr">
+                                            {{ phone|safe }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                                    {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if elist_footer_licenses.instance.list %}
+                <div class="footer__license">
+                    {% for id, item in elist_footer_licenses.instance.list.items %}
+                        {% if item.certificate %}
+                            {% for img in item.certificate %}
+                                <div class="footer__license-img" data-js="image-popup-gallery">
+                                    {% img_tag_with_preview img width=750 height=1000 is_elist=True %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if elist_footer_payment.instance.list %}
+                <div class="footer__payment-wrapper">
+                    <div class="footer__payment-title">{% chunk 'footer.payment_title' %}</div>
+                    {% for id, item in elist_footer_payment.instance.list.items %}
+                        <div class="footer__payment-list">
+                            {% for img in item.payment %}
+                                <div class="footer__payment-list-item">
+                                    {% img_tag img is_elist=True width=60 height=30 class="footer__payment-list-img" %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="footer__offer-text">{% chunk 'footer.offer' %}</div>
+            <div class="footer__requisites-mobile" data-js-accord="wrapper">
+                <button type="button" class="footer__requisites-btn" data-dropdown="footer-dropdown">
+                    <span class="footer__requisites-btn-text">
+                        {% chunk 'footer.requisites_btn' %}
+                    </span>
+                </button>
+                <div class="footer__licenses" data-dropdown="footer-dropdown-content">
+                    <div class="footer__license-content">
+                        <div class="footer__license-title">{% chunk 'footer.license-title' %}</div>
+                        {% if elist_footer_licenses.instance.list %}
+                            {% for id, item in elist_footer_licenses.instance.list.items %}
+                                <div class="footer__requisites">
+                                    {% if item.name %}
+                                        <div class="footer__requisites-name">{{ item.name|safe }}</div>
+                                    {% endif %}
+                                    {% if item.inn %}
+                                        <div class="footer__requisites-inn">{{ item.inn|safe }}</div>
+                                    {% endif %}
+                                    {% if item.kpp %}
+                                        <div class="footer__requisites-kpp">{{ item.kpp|safe }}</div>
+                                    {% endif %}
+                                    {% if item.ogrn %}
+                                        <div class="footer__requisites-ogrn">{{ item.ogr|safe }}</div>
+                                    {% endif %}
+                                    {% if item.email %}
+                                        <div class="footer__requisites-email">
+                                            {{ item.email|safe }}
+                                        </div>
+                                    {% endif %}
+                                    {% if item.display_phones and item.display_phones == 'true' and get_phones and not success_page %}
+                                        <div class="footer__requisites-phones footer__requisites-item">
+                                            {% if item.phone_prefix %}
+                                                <div class="footer__requisites-phones-prefix">
+                                                    {{ item.phone_prefix|safe }}
+                                                </div>
+                                            {% endif %}
+                                            <div class="footer__requisites-phones-list">
+                                                {% include 'common/phones.html' %}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% if elist_footer_licenses.instance.list %}
+                        <div class="footer__license">
+                            {% for id, item in elist_footer_licenses.instance.list.items %}
+                                {% if item.certificate %}
+                                    {% for img in item.certificate %}
+                                        <div class="footer__license-img" data-js="image-popup-gallery">
+                                            {% img_tag_with_preview img width=750 height=1000 is_elist=True %}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright-wrapper">
+            <div class="footer__copyright">
+                <div class="footer__copyright-warning">{% chunk 'footer.copyright-warning' %}</div>
+                <div class="footer__offer-text">{% chunk 'footer.offer' %}</div>
+            </div>
+            {% if not hide_copyright %}
+                <div class="footer__sinergium">
+                    {% img_tag 'm-footer-sinergium.svg' width=27 height=35 class="footer__sinergium-img" %}
+                    <p class="footer__sinergium-text">
+                        {% chunk 'footer.sinergium_text' %}
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-footer/chunk-panel.html" %}
+    {% endif %}
+</footer>

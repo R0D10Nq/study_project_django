@@ -1,0 +1,26 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+    <div class="chunk-panel__block">
+        {{ elist_quiz.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__subtitle">
+            ID Врача:
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk 'quiz.doctor_id' %}
+        </div>
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__subtitle">
+            Текст на экране загрузки:
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk 'quiz.progress_title' %}
+        </div>
+    </div>
+{% endblock panel_content %}

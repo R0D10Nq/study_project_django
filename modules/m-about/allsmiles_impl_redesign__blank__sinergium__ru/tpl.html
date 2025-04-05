@@ -1,0 +1,58 @@
+{% load core_tags core_filters %}
+
+{% elist "about" as elist_about %}
+{% chunk "about.link" raw=True as link %}
+
+<section class="about" data-js-scroll-target="about">
+    <div class="row">
+        <h2 class="h2 about__title">{% chunk "about.title" %}</h2>
+        <div class="about__grid{% if link != 'false' %} about__grid-link{% endif %}">
+            <div class="about__image">
+                {% img_tag data.about.image width=743 height=461 class="about__image-img" %}
+                {% if link and link != 'false' %}
+                    <div class="about__link-block">
+                        <a href="{{ link }}" class="about__link-icon" data-js="video-popup"></a>
+                        <div class="about__link-text-block">
+                            <div class="about__link-text">
+                                {% chunk "about.link_text" %}
+                            </div>
+                            <div class="about__link-time">
+                                {% chunk "about.time" %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            {% if elist_about.instance.list %}
+                <div class="about__images">
+                    {% for id, item in elist_about.instance.list.items %}
+                        {% if item.list_img %}
+                            {% for img in item.list_img %}
+                                <div class="about__images-item">
+                                    {% img_tag img width=236 height=146 is_elist=True class="about__images-item-img" %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% chunk "about.list_text" %}
+            {% if link and link != 'false' %}
+                <div class="about__link-block about__link-block--mobile">
+                    <a href="{{ link }}" class="about__link-icon" data-js="video-popup"></a>
+                    <div class="about__link-text-block">
+                        <div class="about__link-text">
+                            {% chunk "about.link_text" %}
+                        </div>
+                        <div class="about__link-time">
+                            {% chunk "about.time" %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if is_content_manager and not is_modal %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-about/chunk-panel.html" %}
+    {% endif %}
+</section>

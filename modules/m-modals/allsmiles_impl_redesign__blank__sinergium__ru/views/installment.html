@@ -1,0 +1,90 @@
+{% load core_tags core_filters %}
+
+{% elist 'prices_steps' as e_prices_steps %}
+{% elist 'm_installment_list' as e_installment_list %}
+{% elist 'm_installment_banks' as e_installment_banks %}
+
+<div class="modal modal-installment modal-style" id="modal-installment">
+    <div class="modal__wrapper">
+        <div class="mi__title">
+            {% chunk 'modal.installment.title' %}
+        </div>
+        {% if is_content_manager %}
+            <div class="elist-child-button">
+                {{ e_installment_list.button }}
+            </div>
+        {% endif %}
+        {% if e_installment_list.instance.list %}
+            <div class="mi__items ">
+                {% for id, item in e_installment_list.instance.list.items %}
+                    <div class="mi__item">
+                        {% if item.image %}
+                            <div class="mi__item-image">
+                                {% img_tag item.image is_elist=True width=129 height=80 alt="Изображение" %}
+                            </div>
+                        {% endif %}
+                        {% if item.title %}
+                            <div class="mi__item-title">
+                                {{ item.title|safe }}
+                            </div>
+                        {% endif %}
+                        {% if e_prices_steps.instance.list %}
+                            <div class="mi__item-prices" data-parent-id="{{ item.id }}">
+                                {% for p_id, price in e_prices_steps.instance.list.items %}
+                                    {% if price.id|to_number == item.price_id|to_number %}
+                                        {% if price.price_old %}
+                                            <div class="mi__item-old nobr throughline">
+                                                {{ price.price_old|safe }}
+                                            </div>
+                                        {% endif %}
+                                        {% if price.price %}
+                                            <div class="mi__item-new nobr">
+                                                {{ price.price|safe }}
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if item.note %}
+                            <div class="mi__item-note">
+                                {{ item.note }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="mi__subtitle">
+            {% chunk 'modal.installment.subtitle' %}
+        </div>
+        <div class="mi__phone-wrapper">
+            <div class="mi__phone-text">
+                {% chunk 'modal.installment.phone_text' %}
+            </div>
+            {% if get_phones %}
+                <div class="mi__phone">
+                    <a href="tel:{{ get_phones.0|phone }}" class="nobr phone">
+                        {{ get_phones.0|safe }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        {% if is_content_manager %}
+            <div class="elist-child-button">
+                {{ e_installment_banks.button }}
+            </div>
+        {% endif %}
+        {% if e_installment_banks.instance.list %}
+            <div class="mi__banks">
+                {% for id, icon in e_installment_banks.instance.list.items %}
+                    {% for img in icon.image %}
+                        <div class="mi__bank">
+                            {% img_tag img is_elist=True width=117 height=42 alt="Лейбл" %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

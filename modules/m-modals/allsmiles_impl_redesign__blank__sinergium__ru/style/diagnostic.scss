@@ -1,0 +1,291 @@
+.panel_doctor_info_text {
+  position: absolute;
+  top: 80px;
+  max-width: 224px;
+  left: -160px;
+}
+
+.modal-diagnostic {
+  overflow: hidden;
+  max-width: 980px;
+
+  .mfp-close {
+    background-color: $second_color;
+  }
+
+  .modal__wrapper {
+    position: relative;
+    color: $text_color2;
+    padding-top: 40px;
+    padding-left: 52px;
+    padding-bottom: 38px;
+  }
+}
+
+.modal-diagnostic__title {
+  @include font($font_bold_2);
+  font-size: 35px;
+  max-width: 600px;
+  margin-bottom: 19px;
+}
+
+.md__doc {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.md__doc-info {
+  position: absolute;
+  top: 58px;
+  left: -121px;
+  max-width: 183px;
+}
+
+.md__items {
+  margin-bottom: 28px;
+  min-height: 242px;
+}
+
+.md__item {
+  position: relative;
+  border-radius: 15px;
+  background: #4e70d1;
+  max-width: 442px;
+  padding: 14px 10px 18px 70px;
+
+  & + .md__item {
+    margin-top: 7px;
+  }
+}
+
+.md__item-image {
+  position: absolute;
+  left: 7px;
+  top: 3px;
+}
+
+.md__item-title {
+  @include font($font_bold);
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 7px;
+}
+
+.md__item-text {
+  @include font($font_sb);
+  font-size: 14px;
+}
+
+.md__form {
+  max-width: fit-content;
+
+  .form-wrapper {
+    display: flex;
+  }
+
+  .form__group_phone {
+    width: 100%;
+    max-width: 296px;
+    margin-right: 14px;
+  }
+
+  .btn {
+    width: 100%;
+    height: 75px;
+    max-width: 296px;
+  }
+
+  .form__policy {
+    color: $text_color2;
+    margin-left: auto;
+    margin-top: 11px;
+  }
+}
+
+.md__doc-name {
+  @include font($font_bold_2);
+  font-size: 16px;
+  line-height: 29px;
+}
+
+.md__doc-prof {
+  @include font($font_regular_2);
+  font-size: 16px;
+}
+
+.md__doc-feature {
+  @include font($font_sb);
+  font-size: 14px;
+  color: $text_color3;
+  background-color: $bg;
+  border-radius: 15px;
+  width: fit-content;
+  margin-top: 7px;
+  padding: 8px 13px 6px;
+}
+
+@include laptop {
+
+  .modal-diagnostic {
+    max-width: calc(100% - 78px);
+
+    .modal__wrapper {
+      padding-top: 41px;
+      padding-left: 27px;
+      padding-bottom: 38px;
+    }
+  }
+
+  .md__doc-info {
+    top: 102px;
+    left: -109px;
+  }
+
+  .md__doc-feature {
+    margin-top: 6px;
+  }
+
+  .modal-diagnostic__title {
+    margin-bottom: 16px;
+  }
+
+  .md__items {
+    margin-bottom: 27px;
+  }
+
+  .md__item {
+    padding-top: 17px;
+    padding-bottom: 16px;
+  }
+
+  .md__form {
+
+    .btn {
+      height: 76px;
+    }
+  }
+}
+
+@include tablet {
+
+  .modal-diagnostic {
+    max-width: calc(100% - 30px);
+
+    .mfp-close {
+      right: 15px;
+      top: 20px;
+    }
+  }
+
+  .modal-diagnostic__title {
+    margin-bottom: 21px;
+  }
+
+  .md__items {
+    margin-bottom: 22px;
+  }
+
+  .md__item {
+    padding-top: 16px;
+    padding-bottom: 17px;
+  }
+
+  .md__form {
+
+    .form-wrapper {
+      display: block;
+    }
+
+    .btn {
+      margin-top: 7px;
+    }
+
+    .form__policy {
+      margin-left: unset;
+    }
+  }
+
+  .md__doc {
+    width: 243px;
+  }
+
+  .md__doc-info {
+    top: -143px;
+    left: 58px;
+    max-width: 155px;
+  }
+
+  .md__doc-feature {
+    margin-top: 10px;
+  }
+
+  .panel_doctor_info_text {
+    top: -80px;
+    left: 0;
+  }
+}
+
+@include mobile {
+
+  .modal-diagnostic {
+    max-width: calc(100% - 18px);
+
+    .mfp-close {
+      right: 9px;
+      top: 11px;
+    }
+
+    .modal__wrapper {
+      padding: 32px 14px 32px 20px;
+    }
+  }
+
+  .modal-diagnostic__title {
+    font-size: 26px;
+    line-height: 35px;
+    margin-bottom: 14px;
+  }
+
+  .md__item {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    min-height: 76px;
+
+    & + .md__item {
+      margin-top: 5px;
+    }
+  }
+
+  .md__item-image {
+    top: 8px;
+  }
+
+  .md__doc {
+    display: none;
+  }
+
+  .md__items {
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+  }
+
+  .md__form {
+    padding-right: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .btn {
+      margin-top: 5px;
+    }
+  }
+
+  .form__policy {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 17px;
+    max-width: 265px;
+  }
+}

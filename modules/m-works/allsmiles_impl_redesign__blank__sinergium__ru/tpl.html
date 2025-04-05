@@ -1,0 +1,71 @@
+{% load core_tags core_filters %}
+
+{% elist 'works' as elist_works %}
+{% list_count elist_works.instance.list as elist_works_length %}
+
+<section class="works" data-js-scroll-target="works">
+    <div class="row">
+        <h2 class="h2 works__title">{% chunk "works.title" %}</h2>
+        {% if elist_works.instance.list %}
+            <div class="works__content-wrapper">
+                <div class="works-slider swiper" data-js-slider="works">
+                    <div class="works-slider-wrapper swiper-wrapper">
+                        {% for id, item in elist_works.instance.list.items %}
+                            <div class="swiper-slide works-slider__slide">
+                                <div class="works-slider__item">
+                                    <div class="works-slider__photo">
+                                        {% if item.photo %}
+                                            {% img_tag item.photo is_swiper=True is_elist=True width=544 height=303 class="works-slider__photo-img" %}
+                                        {% endif %}
+                                        {% if item.photo_text %}
+                                            <div class="works-slider__photo-text">
+                                                {{ item.photo_text|safe }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="works-slider__before-after">
+                                        {% if item.photo_before %}
+                                            <div class="works-slider__before">
+                                                {% img_tag item.photo_before is_swiper=True is_elist=True width=305 height=164 class="works-slider__before-img" %}
+                                                {% if item.photo_before_text %}
+                                                    <div class="works-slider__before-after-text">
+                                                        {{ item.photo_before_text|safe }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                        {% if item.photo_after %}
+                                            <div class="works-slider__after">
+                                                {% img_tag item.photo_after is_swiper=True is_elist=True width=305 height=164 class="works-slider__after-img" %}
+                                                {% if item.photo_after_text %}
+                                                    <div class="works-slider__before-after-text">
+                                                        {{ item.photo_after_text|safe }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if item.photo_text %}
+                                        <div class="works-slider__photo-text works-slider__photo-text_mobile">
+                                            {{ item.photo_text|safe }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if elist_works_length > 1 %}
+                        <button type="button" data-js-more="works-slider__more" class="btn btn-light">{% chunk 'works.btn_more' %}</button>
+                    {% endif %}
+                </div>
+                <div class="works__button-next swiper-arrow next"></div>
+                <div class="works__button-prev swiper-arrow prev"></div>
+                <div class="works__pagination"></div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if is_content_manager %}
+        {% include 'common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-works/chunk-panel.html' %}
+    {% endif %}
+</section>

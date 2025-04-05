@@ -1,0 +1,256 @@
+.modal-dont-go {
+  overflow: hidden;
+  max-width: 980px;
+
+  .mfp-close {
+    background-color: $second_color;
+  }
+
+  .modal__wrapper {
+    position: relative;
+    color: $text_color2;
+    padding-top: 41px;
+    padding-left: 52px;
+    padding-bottom: 50px;
+  }
+
+  .modal-dont-go__title {
+    @include font($font_bold_2);
+    font-size: 35px;
+    line-height: 43px;
+    margin-bottom: 12px;
+  }
+
+  .modal-dont-go__subtitle {
+    @include font($font_sb);
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 470px;
+    margin-bottom: 39px;
+
+    .bold {
+      @include font($font_extra_bold);
+    }
+  }
+
+  .modal-dont-go__text {
+    @include font($font_bold_2);
+    font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 15px;
+  }
+
+  .md__items {
+    margin-bottom: 21px;
+    min-height: 150px;
+  }
+
+  .md__item {
+    position: relative;
+    border-radius: 15px;
+    background: $bg_3;
+    max-width: 416px;
+    padding: 14px 10px 14px 27px;
+
+    & + .md__item {
+      margin-top: 6px;
+    }
+  }
+
+  .md__item-text {
+    @include font($font_sb);
+    position: relative;
+    font-size: 14px;
+    line-height: 18px;
+    padding-left: 33px;
+
+    .bold {
+      @include font($font_extra_bold);
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 3px;
+      left: 0;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      background-color: var(--bg_2);
+    }
+  }
+
+  .md__form {
+    width: 100%;
+    height: 76px;
+    max-width: 296px;
+  }
+
+  .md__doc {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  .md__doc-info {
+    position: absolute;
+    top: 100px;
+    left: -75px;
+    max-width: 183px;
+  }
+
+  .md__doc-name {
+    @include font($font_bold_2);
+    font-size: 16px;
+    line-height: 29px;
+  }
+
+  .md__doc-prof {
+    @include font($font_regular_2);
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .md__doc-feature {
+    @include font($font_sb);
+    font-size: 14px;
+    line-height: 18px;
+    color: $text_color3;
+    background-color: $bg;
+    border-radius: 15px;
+    width: fit-content;
+    margin-top: 9px;
+    padding: 7px 13px 6px;
+  }
+}
+
+@include laptop {
+
+  .modal-dont-go {
+    max-width: calc(100% - 78px);
+
+    .mfp-close {
+      right: 16px;
+    }
+
+    .modal-dont-go__subtitle {
+      margin-bottom: 30px;
+    }
+
+    .md__items {
+      margin-bottom: 30px;
+    }
+
+    .md__doc {
+      right: -28px;
+    }
+
+    .md__doc-info {
+      left: -93px;
+    }
+
+    .md__doc-feature {
+      margin-top: 7px;
+    }
+  }
+}
+
+@include tablet {
+
+  .modal-dont-go {
+    max-width: calc(100% - 30px);
+
+    .mfp-close {
+      right: 15px;
+    }
+
+    .modal__wrapper {
+      padding-left: 43px;
+      padding-bottom: 52px;
+    }
+
+    .modal-dont-go__title {
+      font-size: 28px;
+      line-height: 35px;
+      margin-bottom: 9px;
+    }
+
+    .modal-dont-go__subtitle {
+      margin-bottom: 32px;
+    }
+
+    .md__items {
+      margin-bottom: 37px;
+    }
+
+    .md__doc {
+      right: 0;
+      max-width: 197px;
+    }
+
+    .md__doc-info {
+      top: -143px;
+      left: 15px;
+    }
+
+    .md__doc-name {
+      line-height: 19px;
+    }
+
+    .md__doc-feature {
+      margin-top: 12px;
+    }
+  }
+}
+
+@include mobile {
+
+  .modal-dont-go {
+    max-width: calc(100% - 18px);
+
+    .mfp-close {
+      top: 13px;
+      right: 11px;
+    }
+
+    .modal__wrapper {
+      padding: 31px 14px 40px 20px;
+    }
+
+    .modal-dont-go__title {
+      font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 10px;
+    }
+
+    .modal-dont-go__subtitle {
+      margin-bottom: 21px;
+    }
+
+    .modal-dont-go__text {
+      margin-bottom: 14px;
+    }
+
+    .md__items {
+      margin-bottom: 20px;
+    }
+
+    .md__item {
+      max-width: 296px;
+      min-height: 42px;
+      padding: 11px 10px 13px 27px;
+
+      & + .md__item {
+        margin-top: 5px;
+      }
+    }
+
+    .md__item-text {
+      padding-left: 23px;
+    }
+
+    .md__doc {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,113 @@
+.modal-form {
+  max-width: 633px;
+
+  .modal__wrapper {
+    padding: 41px 20px 45px;
+    text-align: center;
+
+    > * {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .mfp-close {
+    background-color: $bg_3;
+    right: 12px;
+    top: 23px;
+  }
+}
+
+.modal-form__title {
+  @include font($font_bold_2);
+  color: $text_color2;
+  font-size: 35px;
+  margin-bottom: 13px;
+  max-width: 450px;
+}
+
+.modal-form__text {
+  @include font($font_sb);
+  color: $text_color4;
+  margin-bottom: 18px;
+  font-size: 20px;
+  max-width: 390px;
+  line-height: 32px;
+}
+
+.modal-form__form {
+  width: 100%;
+  max-width: 352px;
+
+  .btn {
+    margin-top: 14px;
+    margin-bottom: 17px;
+    width: 100%;
+    height: 76px;
+  }
+
+  .form__policy {
+    margin: auto;
+    color: $text_color2;
+  }
+}
+
+@include tablet {
+
+  .modal-form {
+    max-width: 506px;
+
+    .mfp-close {
+      right: 19px;
+    }
+  }
+
+  .modal-form__title {
+    font-size: 24px;
+    margin-bottom: 12px;
+    max-width: 330px;
+  }
+
+  .modal-form__text {
+    font-size: 18px;
+    line-height: 26px;
+    margin-bottom: 25px;
+  }
+}
+
+@include mobile {
+
+  .modal-form {
+
+    .modal__wrapper {
+      padding: 31px 19px 34px;
+    }
+
+    .mfp-close {
+      right: 9px;
+      top: 11px;
+    }
+  }
+
+  .modal-form__title {
+    font-size: 26px;
+    margin-bottom: 4px;
+  }
+
+  .modal-form__text {
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 17px;
+  }
+
+  .modal-form__form {
+    .btn {
+      margin-top: 5px;
+      margin-bottom: 17px;
+    }
+
+    .form__policy {
+      max-width: 265px;
+    }
+  }
+}

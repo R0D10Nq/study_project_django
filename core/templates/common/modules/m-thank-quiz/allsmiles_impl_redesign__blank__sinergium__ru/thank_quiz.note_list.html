@@ -1,0 +1,8 @@
+{% load core_tags core_filters %}
+<ul class="thank-quiz__note-list">
+    {% for item in chunk_data %}
+        <li class="thank-quiz__note-list-item">
+            {{ item|safe }}
+        </li>
+    {% endfor %}
+</ul>

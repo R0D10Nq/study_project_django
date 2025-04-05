@@ -1,0 +1,27 @@
+{
+    "button": "Управление ценами",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "price_id": {
+            "name": "ID цены",
+            "type": "str"
+        },
+        "width": {
+            "name": "Ширина изображения",
+            "type": "int"
+        },
+        "height": {
+            "name": "Высота изображения",
+            "type": "int"
+        },
+        "image": {
+            "name": "Изображение",
+            "type": "img",
+            "file": "m-modal-price-image-[id]",
+            "path": "m-modals"
+        }
+    }
+}

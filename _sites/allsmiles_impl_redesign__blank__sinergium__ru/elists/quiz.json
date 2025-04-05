@@ -1,0 +1,36 @@
+{
+    "button": "Управление квизом",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "display": {
+            "name": "Отображать вопрос?",
+            "type": "bool"
+        },
+        "title": {
+            "name": "Заголовок",
+            "type": "str"
+        },
+        "type": {
+            "name": "Тип квиза:",
+            "type": "select",
+            "options": {
+                "image": {
+                    "name": "С Изображениями"
+                },
+                "text": {
+                    "name": "С текстом"
+                },
+                "multiple": {
+                    "name": "С множественным выбором"
+                }
+            }
+        },
+        "doctor_quote": {
+            "name": "Цитата врача",
+            "type": "str"
+        }
+    }
+}

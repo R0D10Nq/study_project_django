@@ -1,0 +1,44 @@
+{
+  "button": "Управление этапами",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "parent_id": {
+      "name": "ID родителя",
+      "type": "int"
+    },
+    "step": {
+      "name": "Цена за:",
+      "type": "select",
+      "options": {
+        "surgical": {
+          "name": "Хирургический этап"
+        },
+        "orthopedic": {
+          "name": "Ортопедический этап"
+        },
+        "turnkey": {
+          "name": "Под ключ"
+        },
+        "other": {
+          "name": "Другое"
+        }
+      }
+    },
+    "title": {
+      "name": "Заголовок",
+      "type": "str"
+    },
+    "price": {
+      "name": "Цена",
+      "type": "str"
+    },
+    "price_old": {
+      "name": "Старая цена",
+      "type": "str"
+    }
+  }
+}
+

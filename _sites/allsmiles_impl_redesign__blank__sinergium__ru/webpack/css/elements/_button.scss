@@ -1,0 +1,74 @@
+.btn {
+  @include font($font_sb);
+  padding: 17px 25px 12px 25px;
+  border-radius: 50px;
+  background-color: $btn_color;
+  box-shadow: $btn_shadow;
+  color: $text_color2;
+  font-size: 15px;
+  line-height: 23px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: background-color .2s ease-in;
+  border: none;
+
+  &:hover {
+    background-color: $btn_hover;
+  }
+
+  &:active {
+    background-color: $btn_active;
+  }
+
+  &.btn_light {
+    @include font($font_sb);
+    padding: 17px 38px;
+    border: 2px solid $btn_color;
+    border-radius: 50px;
+    background-color: transparent;
+    color: $text_color3;
+    font-size: 15px;
+    line-height: 23px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    transition: background-color .2s ease-in, color .2s ease-in;
+    letter-spacing: 0.03em;
+    box-shadow: none;
+
+    &:hover {
+      background-color: $btn_color;
+      color: $text_color2;
+    }
+  }
+}
+
+button.mfp-arrow-left {
+
+  &::after {
+    transform: rotate(0)!important;
+  }
+}
+
+button.mfp-arrow-right {
+
+  &::after {
+    transform: rotate(180deg)!important;
+  }
+}
+
+@include laptop {
+
+  .btn_light {
+    padding: 19px 30px;
+  }
+}
+
+@include tablet {
+
+  .btn_light {
+    padding: 10px 15px;
+  }
+}

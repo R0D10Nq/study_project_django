@@ -1,0 +1,213 @@
+{% load core_tags core_filters %}
+
+{% elist 'employees' as e_employees %}
+{% elist 'gift_list' as e_gift_list %}
+{% elist 'prices_stages' as e_prices_stages %}
+{% elist 'm_best_price' as e_best_price %}
+{% elist 'm_best_price_list' as e_best_price_list %}
+
+{% chunk 'modal.best_price.doc_id' raw=True as doc_id %}
+{% chunk 'modal.best_price.title' raw=True as title %}
+{% chunk 'modal.best_price.quote' raw=True as quote %}
+{% chunk 'modal.best_price.promo_title' raw=True as promo_title %}
+{% chunk 'modal.best_price.promo_note' raw=True as promo_note %}
+{% chunk 'modal.best_price.promo_old' raw=True as promo_old %}
+{% chunk 'modal.best_price.promo_new' raw=True as promo_new %}
+{% chunk 'modal.best_price.promo_benefit' raw=True as promo_benefit %}
+{% chunk 'modal.best_price.bottom_title' raw=True as bottom_title %}
+{% chunk 'modal.best_price.bottom_note' raw=True as bottom_note %}
+{% chunk 'modal.best_price.button' raw=True as button %}
+
+
+<div class="modal modal-best-price modal-style" id="modal-best-price-{{ config_key }}">
+    <button title="Close (Esc)" type="button" class="mfp-close"></button>
+    <div class="modal__wrapper">
+        {% if title and title != 'false' %}
+            <div class="mbp__title">
+                {% chunk 'modal.best_price.title' %}
+            </div>
+        {% endif %}
+        <div class="mbp__doc-wrapper">
+            {% if e_employees.instance.list %}
+                {% for id, item in e_employees.instance.list.items %}
+                    {% if item.id|to_number == doc_id|to_number %}
+                        <div class="mbp__doc-info">
+                            <div class="mbp__doc-image">
+                                {% img_tag 'm-modal-best-price-doc.webp' width=108 height=108 alt="Фото врача" %}
+                            </div>
+                            {% if item.name %}
+                                <div class="mbp__doc-name">
+                                    {{ item.name|safe }}
+                                </div>
+                            {% endif %}
+                            {% if item.profession %}
+                                <div class="mbp__doc-prof">
+                                    {{ item.profession|safe }}
+                                </div>
+                            {% endif %}
+                            {% if item.experience %}
+                                <div class="mbp__doc-exp">
+                                    {% if item.experience_prefix %} {{ item.experience_prefix|safe }} {% endif %} {% get_experience item.experience %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if quote and quote != 'false' %}
+                <div class="mbp__doc-quote">
+                    {% chunk 'modal.best_price.quote' %}
+                </div>
+            {% endif %}
+        </div>
+        {% if e_best_price.instance.list %}
+            <div class="mbp__steps">
+                {% for id, item in e_best_price.instance.list.items %}
+                    {% if item.type == config_key %}
+                        <div class="mbp__steps-item" data-parent-id="{{ item.id }}">
+                            {% if is_content_manager %}
+                                <div class="elist-child-button">
+                                    {{ e_best_price_list.button }}
+                                </div>
+                            {% endif %}
+                            {% if item.step %}
+                                <div class="mbp__steps-item-step">
+                                    {{ item.step|safe }}
+                                </div>
+                            {% endif %}
+                            {% if item.title %}
+                                <div class="mbp__steps-item-title">
+                                    {{ item.title|safe }}
+                                </div>
+                            {% endif %}
+                            {% if item.flag and item.show_flag != 'false' %}
+                                <div class="mbp__steps-item-flag">
+                                    {% img_tag item.flag is_elist=True width=28 height=19 alt="Иконка" %}
+                                </div>
+                            {% endif %}
+                            {% if e_best_price_list.instance.list %}
+                                <div class="mbp__steps-item-list">
+                                    {% for list_id, elem in e_best_price_list.instance.list.items %}
+                                        {% if elem.parent_id|to_number == item.id|to_number %}
+                                            <div class="mbp__steps-item-elem">
+                                                {% if elem.image %}
+                                                    <div class="mbp__steps-item-elem-img">
+                                                        {% img_tag elem.image is_elist=True width=43 height=52 alt="Картинка" %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if elem.text %}
+                                                    <div class="mbp__steps-item-elem-text">
+                                                        {{ elem.text|safe }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="mbp__steps-item-prices">
+                                {% if item.old %}
+                                    <div class="mbp__steps-item-old throughline">
+                                        {{ item.old|safe }}
+                                    </div>
+                                {% endif %}
+                                {% if item.new %}
+                                    <div class="mbp__steps-item-new">
+                                        {{ item.new|safe }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% if item.time %}
+                                <div class="mbp__steps-item-time">
+                                    {{ item.time|safe }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="mbp__promo">
+            <div class="mbp__promo-image">
+                {% if config_key == 'implant' %}
+                    {% img_tag 'm-modal-best-price-image.webp' width=324 height=193 alt="Изображение" %}
+                {% else %}
+                    {% img_tag 'm-modal-best-price-image-2.webp' width=324 height=193 alt="Изображение" %}
+                {% endif %}
+            </div>
+            {% if promo_title and promo_title != 'false' %}
+                <div class="mbp__promo-title">
+                    {% chunk 'modal.best_price.promo_title' %}
+                </div>
+            {% endif %}
+            {% if promo_benefit and promo_benefit != 'false' %}
+                <div class="mbp__promo-benefit">
+                    {% chunk 'modal.best_price.promo_benefit' %}
+                </div>
+            {% endif %}
+            <div class="mbp__promo-prices">
+                {% if promo_old and promo_old != 'false' %}
+                    <div class="mbp__promo-prices-old throughline">
+                        {% chunk 'modal.best_price.promo_old' %}
+                    </div>
+                {% endif %}
+                {% if promo_new and promo_new != 'false' %}
+                    <div class="mbp__promo-prices-new">
+                        {% chunk 'modal.best_price.promo_new' %}
+                    </div>
+                {% endif %}
+            </div>
+            {% if promo_note and promo_note != 'false' %}
+                <div class="mbp__promo-note">
+                    {% chunk 'modal.best_price.promo_note' %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mbp__bottom">
+            {% if bottom_title and bottom_title != 'false' %}
+                <div class="mbp__bottom-title">
+                    {% chunk 'modal.best_price.bottom_title' %}
+                </div>
+            {% endif %}
+            {% if e_gift_list.instance.list %}
+                <div class="mbp__bottom-gifts">
+                    {% if is_content_manager %}
+                        <div class="elist-child-button">
+                            {{ e_gift_list.button }}
+                        </div>
+                    {% endif %}
+                    {% for gift_id, gift in e_gift_list.instance.list.items %}
+                        {% if gift.m_modal_best_price == 'true' %}
+                            <div class="mbp__bottom-gift">
+                                {% if gift.image %}
+                                    <div class="mbp__bottom-gift-image">
+                                        {% img_tag gift.image is_elist=True width=67 height=63 alt="Подарок" %}
+                                    </div>
+                                {% endif %}
+                                {% if gift.text %}
+                                    <div class="mbp__bottom-gift-text">
+                                        {{ gift.text|safe }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if bottom_note and bottom_note != 'false' %}
+                <div class="mbp__bottom-note">
+                    {% chunk 'modal.best_price.bottom_note' %}
+                </div>
+            {% endif %}
+            {% with button='modal.best_price.button'  class="mbp__form" %}
+                {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with button=button form_class=class %}
+            {% endwith %}
+        </div>
+        <button title="Close (Esc)" type="button" class="mfp-close mfp-close_bottom">
+            Вернуться на главную
+        </button>
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-modals/modal-best-price/chunk-panel.html" %}
+    {% endif %}
+</div>

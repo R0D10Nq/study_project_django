@@ -1,0 +1,97 @@
+{% load core_tags core_filters %}
+
+{% if on_moderation %}
+    {% elist "affiliates_moderate" as e_affiliates %}
+{% else %}
+    {% elist "affiliates" as e_affiliates %}
+{% endif %}
+{% elist "settings_map_modal" as elist_settings_map %}
+{% elist "settings_offer" as e_settings_offer %}
+
+{% define e_settings_offer.instance.list.1 as settings_offer %}
+{% define e_affiliates.instance.list as e_affiliates_list %}
+{% define e_affiliates_list.1 as one_address %}
+
+{% list_count e_affiliates_list as e_affiliates_list_length %}
+
+{% chunk 'contacts.title_multi_prefix' raw=True as title_multi_prefix %}
+{% chunk 'contacts.text_content' raw=True as text_content %}
+{% chunk 'contacts.show_offer' raw=True as show_offer %}
+{% chunk 'contacts.form_offer_prefix' raw=True as form_offer_prefix %}
+
+<div class="modal modal-map-list modal-style"
+     id="modal-map-list">
+    <div class="modal__wrapper">
+        <div class="modal-map-list__block">
+            <h2 class="modal-map-list__title h2">
+                {% if title_multi_prefix and title_multi_prefix != 'false' %}
+                    {{ title_multi_prefix|safe }}
+                {% endif %}
+                {% if text_content and text_content != 'false' %}
+                    {% affiliates_count type='text' affiliates_list=e_affiliates_list text_content=text_content %}
+                {% endif %}
+                {% chunk 'contacts.title_multi' %}
+            </h2>
+            <div class="modal-map-list__flex">
+                <div class="modal-map-list__content">
+                    {% if not hide_phone %}
+                        {% for phone in get_phones %}
+                            <div class="modal-map-list__phone bold">
+                                <a href="tel:{{ phone|phone }}" class="phone nobr">
+                                    {{ phone|safe }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="modal-map-list__worktime-wrapper">
+                        <div class="modal-map-list__worktime">
+                            {% chunk 'worktime_short' %}
+                        </div>
+                    </div>
+                    <div class="modal-map-list__address-wrapper">
+                        {% if e_affiliates_list %}
+                            {% for id, item in e_affiliates_list.items %}
+                                {% if e_affiliates_list_length  < 2 %}
+                                    <div class="modal-map-list__address-item">
+                                        {% if item.address %}
+                                            <div class="contacts__address">
+                                                {{ item.address|safe }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="modal-map-list__address-item">
+                                        {% if item.metro %}
+                                            <div class="contacts__metro bold">
+                                                {{ item.metro|safe }}
+                                            </div>
+                                        {% endif %}
+                                        {% if item.address %}
+                                            <div class="contacts__address">
+                                                {{ item.address|safe }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="modal-map-list__map">
+                    <div class="map"
+                        data-js="map"
+                        {% if is_modal %}
+                            id="map-modal"
+                        {% endif %}
+                        data-js-modal="modal"
+                        data-js-map-settings="{{ elist_settings_map.instance.list|to_data_json }}"
+                        data-js-markers-list='{{ e_affiliates_list|to_data_json }}'
+                        data-js-pin="{% get_map_pin name=map_pin %}"
+                    >
+                        {% include "common/blocks/map-loader/map_loader.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

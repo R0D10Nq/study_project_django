@@ -1,0 +1,15 @@
+{% load core_filters core_tags %}
+
+<div class="modal modal-thank modal-style" id="modal-thank">
+    <div class="modal__wrapper">
+        <div class="modal-thank__image">
+            {% img_tag 'm-modal-thank.webp' width=72 height=72 alt="Картинка" %}
+        </div>
+        <div class="modal-thank__title ">
+            {% chunk "modal.thank.title" %}
+        </div>
+        <div class="modal-thank__text">
+            {% chunk "modal.thank.text" %}
+        </div>
+    </div>
+</div>

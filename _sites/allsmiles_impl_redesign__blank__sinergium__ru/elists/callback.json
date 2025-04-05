@@ -1,0 +1,21 @@
+{
+    "button": "Управление блоком",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "logo": {
+            "name": "Логотип",
+            "type": "img",
+            "file": "logo/m-callback-logo-[id]",
+            "path": "m-callback"
+        },
+        "flag": {
+            "name": "Флаг",
+            "type": "img",
+            "file": "flag/m-callback-flag-[id]",
+            "path": "m-callback"
+        }
+    }
+}

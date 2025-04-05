@@ -1,0 +1,30 @@
+{% load core_tags core_filters %}
+
+<div class="modal modal-tax modal-style" id="modal-tax">
+    <div class="modal__wrapper">
+        <div class="mt__title">
+            {% chunk 'modal.tax.title' %}
+        </div>
+        <div class="mt__text">
+            {% chunk 'modal.tax.text' %}
+        </div>
+        <div class="mt__phone-wrapper">
+            <div class="mt__phone-text">
+                {% chunk 'modal.tax.phone_text' %}
+            </div>
+            {% if get_phones %}
+                <div class="mt__phone">
+                    <a href="tel:{{ get_phones.0|phone }}" class="nobr phone">
+                        {{ get_phones.0|safe }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="mt__image">
+            {% img_tag 'm-modal-tax-image.webp' width=378 height=252 alt="Картинка" %}
+            <div class="mt__icon">
+                {% img_tag 'm-modal-tax-icon.webp' width=69 height=70 alt="Эмблема" %}
+            </div>
+        </div>
+    </div>
+</div>

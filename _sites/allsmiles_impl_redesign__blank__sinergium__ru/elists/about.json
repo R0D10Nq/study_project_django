@@ -1,0 +1,16 @@
+{
+    "button": "Управление блоком",
+    "cannot_be_added": true,
+    "fields": {
+        "id": {
+          "name": "ID",
+          "type": "int"
+        },
+        "list_img": {
+            "name": "Изображения",
+            "type": "img-list",
+            "file": "m-about-image-[inc]",
+            "path": "m-about"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "button": "Управление списком опций",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "parent_id": {
+            "name": "parent_id",
+            "type": "int"
+        },
+        "text": {
+            "name": "Текст",
+            "type": "str"
+        },
+        "image": {
+            "name": "Картинка",
+            "type": "img",
+            "path": "m-modals",
+            "file": "best_prices/m-modals-icon-[id]"
+        }
+    }
+}

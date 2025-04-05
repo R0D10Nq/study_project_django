@@ -1,0 +1,426 @@
+.cheap {
+  padding-top: 85px;
+  background-image: url(~img/bg/background-1.jpg);
+}
+
+.cheap__grid {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: 'c_title c_doctor'
+                        'c_gift c_doctor'
+                        'c_form c_doctor';
+}
+
+.cheap__title {
+  grid-area: c_title;
+  max-width: 800px;
+  margin-bottom: 27px;
+}
+
+.cheap__gift-block {
+  grid-area: c_gift;
+  display: flex;
+  margin-bottom: 52px;
+  column-gap: 23px;
+  align-items: flex-start;
+}
+
+.cheap__gift {
+  @include font($font_regular_2);
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  line-height: 33px;
+  max-width: 380px;
+  column-gap: 15px;
+
+  .bold {
+    @include font($font_bold_2);
+  }
+}
+
+.cheap__gift-image-gift {
+  width: 64px;
+  max-width: unset;
+}
+
+.cheap__form-block {
+  grid-area: c_form;
+  background-color: $common_color;
+  border-radius: 15px;
+  padding: 29px 36px 31px 32px;
+  max-width: 665px;
+  align-self: baseline;
+
+  .form-wrapper {
+    display: flex;
+    column-gap: 15px;
+    margin-bottom: 11px;
+  }
+
+  .form__policy {
+    color: $text_color2;
+    max-width: 100%;
+    text-align: left;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .btn {
+    padding: 14px 31px 14px;
+  }
+}
+
+.cheap__form-title {
+  @include font($font_bold_2);
+  font-size: 27px;
+  color: $text_color2;
+  margin-bottom: 19px;
+}
+
+.cheap__count-wrapper {
+  font-size: 16px;
+  max-width: 270px;
+  margin-top: 6px;
+}
+
+.cheap__count {
+  @include font($font_bold);
+  font-size: 20px;
+  line-height: 20px;
+  padding: 11px 12px 6px 10px;
+}
+
+.cheap__count-all {
+  @include font($font_regular);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.cheap__doctor-block {
+  grid-area: c_doctor;
+  display: flex;
+  position: relative;
+  transform: translateX(63px);
+  margin-top: -19px;
+}
+
+.cheap__doctor-info {
+  background-color: $bg;
+  border-radius: 15px;
+  padding: 17px 10px 18px 21px;
+  max-width: 217px;
+  position: absolute;
+  left: -127px;
+  top: 177px;
+}
+
+.cheap__doctor-name {
+  @include font($font_bold_2);
+  font-size: 18px;
+  line-height: 29px;
+  margin-bottom: 4px;
+}
+
+.cheap__doctor-prof {
+  @include font($font_regular_2);
+  font-size: 18px;
+  line-height: 22px;
+  color: $text-accent;
+  margin-bottom: 9px;
+}
+
+.cheap__doctor-experience {
+  background-color: $common_color;
+  border-radius: 15px;
+  font-size: 16px;
+  color: $text_color2;
+  width: fit-content;
+  padding: 4px 11px 5px 16px;
+}
+
+.cheap__doctor-image {
+  z-index: 1;
+}
+
+.cheap__doctor-image-photo {
+  width: 452px;
+  max-width: unset;
+}
+
+@include laptop {
+
+  .cheap {
+    padding-top: 55px;
+    padding-bottom: 71px;
+  }
+
+  .cheap__title {
+    max-width: 760px;
+    margin-bottom: 31px;
+  }
+
+  .cheap__doctor-wrapper {
+    position: relative;
+  }
+
+  .cheap__doctor-block {
+    position: absolute;
+    right: 0;
+    bottom: -71px;
+    margin-top: 0;
+    transform: translateX(147px);
+  }
+
+  .cheap__doctor-image {
+    transform: scale(-1,1);
+  }
+
+  .cheap__doctor-image-photo {
+    width: 377px;
+  }
+
+  .cheap__grid {
+    grid-template-areas: 'c_title'
+                          'c_gift'
+                          'c_form';
+    position: relative;
+  }
+
+  .cheap__gift {
+    max-width: 337px;
+  }
+
+  .cheap__gift-block {
+    margin-bottom: 41px;
+  }
+
+  .cheap__gift-text {
+    font-size: 22px;
+    line-height: 29px;
+  }
+
+  .cheap__count-wrapper {
+    max-width: 100%;
+    margin-top: 13px;
+  }
+
+  .cheap__count {
+    padding: 6px 12px 4px 10px;
+  }
+
+  .cheap__count-text {
+    font-size: 16px;
+  }
+
+  .cheap__form-block {
+    padding: 23px 17px 25px 18px;
+    max-width: 543px;
+
+    .form-wrapper {
+      column-gap: 14px;
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      font-size: 15px;
+      padding: 14px 15px;
+    }
+
+    .form__policy {
+      font-size: 12px;
+      padding-right: 30px;
+    }
+  }
+
+  .cheap__form-title {
+    font-size: 22px;
+    margin-bottom: 11px;
+  }
+
+  .cheap__doctor-name {
+    font-size: 15px;
+    margin-bottom: -3px;
+  }
+
+  .cheap__doctor-prof {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .cheap__doctor-info {
+    left: -137px;
+    top: 187px;
+    padding: 9px 10px 18px 14px;
+  }
+
+  .cheap__doctor-experience {
+    font-size: 14px;
+    padding: 8px 10px 5px 15px;
+  }
+}
+
+@include tablet {
+
+  .cheap {
+    padding-top: 40px;
+    padding-bottom: 145px;
+  }
+
+  .cheap__title {
+    max-width: 550px;
+    margin-bottom: 21px;
+  }
+
+  .cheap__gift-text {
+    font-size: 20px;
+  }
+
+  .cheap__gift-block {
+    margin-bottom: 21px;
+  }
+
+  .cheap__doctor-image-photo {
+    width: 254px;
+  }
+
+  .cheap__doctor-block {
+    transform: translateX(59px);
+    bottom: -145px;
+  }
+
+  .cheap__doctor-info {
+    left: -152px;
+    top: 167px;
+    padding: 7px 10px 18px 15px;
+  }
+
+  .cheap__doctor-prof {
+    font-size: 14px;
+  }
+}
+
+@include mobile {
+
+  .cheap {
+    padding-top: 53px;
+    padding-bottom: 0;
+  }
+
+  .cheap__grid {
+    grid-template-areas: 'c_title'
+                          'c_gift'
+                          'c_form'
+                          'c_doctor';
+  }
+
+  .cheap__title {
+    line-height: 35px;
+    margin-bottom: 16px;
+  }
+
+  .cheap__gift {
+    column-gap: 9px;
+    max-width: 290px;
+  }
+
+  .cheap__gift-block {
+    flex-direction: column;
+    margin-bottom: 24px;
+  }
+
+  .cheap__gift-text {
+    font-size: 18px;
+    line-height: 29px;
+  }
+
+  .cheap__gift-image-gift {
+    width: 52px;
+  }
+
+  .count-wrapper {
+    column-gap: 9px;
+  }
+
+  .cheap__count-text {
+    font-size: 14px;
+  }
+
+  .cheap__count-all {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .cheap__form-title {
+    text-align: center;
+  }
+
+  .cheap__form-block {
+    padding: 23px 15px 21px 14px;
+    margin-bottom: 13px;
+
+    .form-wrapper {
+      flex-direction: column;
+      row-gap: 5px;
+    }
+
+    .form__policy {
+      font-size: 10px;
+      line-height: 15px;
+      text-align: center;
+      margin-top: 7px;
+      padding-right: 0;
+      max-width: 250px;
+    }
+
+    .btn {
+      padding: 16px 15px 15px 14px;
+      letter-spacing: 0.03em;
+      width: 100%;
+    }
+  }
+
+  .cheap__doctor-block {
+    transform: translateX(0);
+    bottom: 0;
+    position: relative;
+    flex-direction: row-reverse;
+  }
+
+  .cheap__doctor-image {
+    transform: scaleX(1);
+  }
+
+  .cheap__doctor-image-photo {
+    width: 134px;
+    transform: scaleX(1) translateX(-9px);
+  }
+
+  .cheap__doctor-info {
+    position: relative;
+    left: unset;
+    top: unset;
+    transform: translateY(23px);
+    padding: 15px 10px 18px 15px;
+    align-self: flex-start;
+    max-width: 182px;
+  }
+
+  .cheap__doctor-name {
+    font-size: 16px;
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+
+  .cheap__doctor-prof {
+    line-height: 18px;
+    font-size: 15px;
+  }
+
+  .cheap__doctor-experience {
+    font-size: 12px;
+    padding: 5px 9px 5px 13px;
+  }
+}
+

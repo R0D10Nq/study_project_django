@@ -1,0 +1,202 @@
+{% load core_tags core_filters %}
+
+{% elist "quiz" as elist_quiz %}
+{% elist "employees" as elist_employees %}
+{% elist "gift_list" as elist_gift_list %}
+{% chunk "quiz.doctor_id" raw=True as doctor_id %}
+{% list_count elist_gift_list.instance.list search_item='m_quiz_result' as elist_gift_list_length %}
+
+<form class="quiz__form"
+      data-js-quiz="wrapper"
+      action="{% url 'mailer:send' %}"
+      method="POST"
+      data-js="ajax-form"
+      data-js-goal="form:complete"
+      autocomplete="on"
+>
+    <input type="hidden" name="subject" value='Заявка из квиза "{{ landing.domain }}"'>
+    <input type="hidden" name="form_type" value="quiz">
+    <input type="hidden" name="quiz_group" value="Один">
+    <input type="hidden" name="site_url" value="{{ landing.domain }}"/>
+    <input type="hidden" class="input" name="tags" value="Заявка с квиза сайта">
+    <input type="tel" class="input input_phone_check" name="phone" placeholder="+7"/>
+
+
+    <div class="quiz__grid" data-js-quiz="grid">
+        <div class="quiz__form-block">
+            <div class="quiz__form-content">
+                <h2 class="h2 quiz__title">{% chunk 'quiz.title' %}</h2>
+                <div class="quiz__subtitle">
+                    {% chunk 'quiz.subtitle' %}
+                </div>
+            </div>
+            <div class="quiz__form-inner">
+                <div class="quiz__form-bg">
+                    <div class="quiz__grid-form">
+                        <div class="quiz__form-wrapper">
+                            <div class="quiz__form-progress" data-js-quiz="progress">
+                                <div class="quiz__progress-step">Вопрос <span class="current"
+                                                                              data-js-quiz="current">1</span> из <span
+                                        class="total"
+                                        data-js-quiz="total">{{ elist_quiz.instance.list.items|length }}</span>
+                                </div>
+                                <div class="quiz__progress-lines">
+                                    <span class="quiz__progress-line" data-js-quiz="line"></span>
+                                </div>
+                            </div>
+
+                            <div class="quiz__pages-wrapper" data-js-quiz="pages-wrapper">
+                                {% if elist_quiz.instance.list %}
+                                    <div class="quiz__pages" data-js-quiz="pages" data-js-quiz-slider>
+                                        {% for item_id, item in elist_quiz.instance.list.items %}
+                                            {% if item.display != 'false' %}
+                                                {% module "m-quiz" file="quiz-pages/template" key=item_id parent_id=item.id %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="quiz__navigation">
+                                    <a href="javascript:void(0);"
+                                       class="quiz__navigation-button-arrow quiz__navigation-button-back"
+                                       data-js-quiz="navigation-back"
+                                    >
+                                        {% img_tag 'arrow_back.svg' width=25 height=25 %}
+                                    </a>
+
+                                    <a href="javascript:void(0);"
+                                       class="btn quiz__navigation-button-forward goal-quiz-first-question"
+                                       data-js-quiz="navigation-forward"
+                                    >
+                                        <span>{% chunk "quiz.button_forward" %}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz__form-doctor-block">
+                    {% if elist_employees.instance.list %}
+                        {% for id, employee in elist_employees.instance.list.items %}
+                            {% if id == doctor_id %}
+                                <div class="quiz__doctor-image">
+                                    {% img_tag 'm-quiz-doctor.webp' width=569 height=628 %}
+                                </div>
+                                <div class="quiz__doctor-info">
+                                    {% if employee.name %}
+                                        <div class="quiz__form-doctor-name">{{ employee.name|safe }}</div>
+                                    {% endif %}
+                                    {% if employee.profession %}
+                                        <div class="quiz__doctor-prof">{{ employee.profession|safe }}</div>
+                                    {% endif %}
+                                    {% if employee.experience %}
+                                        <div class="quiz__doctor-experience">
+                                            {{ employee.experience_prefix|safe }} {% get_experience employee.experience %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="quiz__employee-text-block" data-js-quiz="text">
+                        {% if elist_quiz.instance.list %}
+                            {% for item_id, item in elist_quiz.instance.list.items %}
+                                {% if item.display != 'false' %}
+                                    {% if item.doctor_quote %}
+                                        <div>
+                                            <div class="quiz__employee-text">{{ item.doctor_quote|safe }}</div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quiz__grid quiz__results" data-js-quiz="results">
+        <div class="quiz__results-form">
+            <div class="quiz__results-form-wrapper">
+                <h2 class="h2">{% chunk "quiz.result_title" %}</h2>
+                <div class="quiz__results-description">
+                    {% chunk "quiz.results_description" %}
+                </div>
+                {% if elist_gift_list %}
+                    <div class="quiz__results-gift">
+                        <div class="quiz__results-gift-title">{% chunk 'quiz.gift_title' %}</div>
+                        <ul class="quiz__results-gift-list {% if elist_gift_list_length <= 2 %}quiz__results-gift-list__image{% endif %}">
+                            {% for id, item in elist_gift_list.instance.list.items %}
+                                {% if item.m_quiz_result == 'true' %}
+                                    {% if elist_gift_list_length <= 2 %}
+                                        <li class="quiz__results-gift-list-item">
+                                            {% img_tag item.image width=69 height=69 is_elist=True module="m-modals" class="quiz__results-gift-list-item-image" %}
+                                            <span class="quiz__results-gift-list-item-text">{{ item.text|safe }}</span>
+                                        </li>
+                                    {% else %}
+                                        <li class="quiz__results-gift-list-item">{{ item.text|safe }}</li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="quiz__form-wrapper">
+                    <div class="form-wrapper">
+                        <div class="form__group form__group_phone required">
+                            <input type="tel" class="input input_phone" name="id" placeholder="+7 (___) ___-__-__">
+                        </div>
+
+                        <div class="form__group">
+                            <button type="submit" class="btn {% if animate %}animate{% endif %}">
+                                <span>{% chunk 'quiz.button_form' %}</span>
+                                {% img_tag "m-quiz-plan.webp" width=62 height=99 class="btn__submit" %}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form__policy">
+                        Нажимая на кнопку, вы соглашаетесь с условиями
+                        <span>{% get_policy_link text="обработки персональных данных" classes='underline' %}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="quiz__doctor">
+                {% if elist_employees.instance.list %}
+                    {% for id, item in elist_employees.instance.list.items %}
+                        {% if id == doctor_id %}
+                            <div class="quiz__doctor-info">
+                                {% if item.name %}
+                                    <div class="quiz__doctor-name">{{ item.name|safe }}</div>
+                                {% endif %}
+                                {% if item.profession %}
+                                    <div class="quiz__doctor-prof">{{ item.profession|safe }}</div>
+                                {% endif %}
+                                {% if item.experience %}
+                                    <div class="quiz__doctor-experience">
+                                        {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="quiz__doctor-image">
+                                {% img_tag 'm-quiz-doctor-rezult.webp' width=569 height=628 alt="{{ item.name|safe }}" module="m-employees" class="quiz__doctor-image-photo" %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="quiz__count" data-js-quiz="count">
+        <div class="quiz__count-wrapper">
+            <div class="quiz__count-title">
+                {% chunk 'quiz.progress_title' raw=True %}
+            </div>
+            <div class="quiz__count-progress">
+                <span class="quiz__count-bg" data-js-quiz="count-bg"></span>
+            </div>
+            <p class="quiz__count-progress-value" data-js-quiz="count-value">0%</p>
+        </div>
+    </div>
+</form>

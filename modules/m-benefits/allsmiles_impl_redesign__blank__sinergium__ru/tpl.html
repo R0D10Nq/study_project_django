@@ -1,0 +1,80 @@
+{% load core_tags core_filters %}
+
+{% elist 'benefits' as elist_benefits %}
+{% elist 'benefits_community' as elist_benefits_community %}
+
+{% chunk "benefits_community.title" raw=True as community_title %}
+{% chunk "benefits.image_note_text" raw=True as image_note_text %}
+
+<section class="benefits" data-js-scroll-target="benefits">
+    <div class="row">
+        <h2 class="h2 benefits__title">{% chunk 'benefits.title' %}</h2>
+        <div class="benefits__wrapper">
+            <div class="benefits__block">
+                <div class="benefits__note">
+                    <div class="benefits__note-flag">
+                        {% img_tag data.benefits.note_flag width=39 height=32 class="benefits__note-flag-image" %}
+                    </div>
+                    <div class="benefits__note-text">
+                        {% chunk "benefits.note" %}
+                    </div>
+                </div>
+                {% if elist_benefits.instance.list %}
+                    <div class="benefits__list">
+                        {% for id, item in elist_benefits.instance.list.items %}
+                            <div class="benefits__list-item">
+                                {% if item.image %}
+                                    <div class="benefits__list-icon">
+                                        {% img_tag item.image width=80 height=87 class="benefits__list-image" is_elist=True %}
+                                    </div>
+                                {% endif %}
+                                {% if item.text %}
+                                    <div class="benefits__list-text">{{ item.text|safe }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="benefits__image-wrapper">
+                {% if elist_benefits_community.instance.list %}
+                    {% for id, item in elist_benefits_community.instance.list.items %}
+                        {% if item.show_community != 'false' %}
+                            <div class="benefits__community-block">
+                                {% if community_title and community_title != 'false' %}
+                                    <div class="benefits__community-title">
+                                        {% chunk "benefits_community.title" %}
+                                    </div>
+                                {% endif %}
+                                <div class="benefits__community-flag">
+                                    {% if item.img_list %}
+                                        {% for flag in item.img_list %}
+                                            {% img_tag flag width=49 height=32 class="benefits__community-flag-image" is_elist=True %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="benefits__image-block">
+                    {% img_tag data.benefits.image width=774 height=506 class="benefits__image"  %}
+                    {% if image_note_text and image_note_text != 'false' %}
+                        <div class="benefits__image-note">
+                            <div class="benefits__image-note-icon">
+                                {% img_tag data.benefits.image_note_icon width=50 height=50 class="benefits__image"  %}
+                            </div>
+                            <div class="benefits__image-note-text">
+                                {% chunk 'benefits.image_note_text' %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-benefits/chunk-panel.html" %}
+    {% endif %}
+</section>

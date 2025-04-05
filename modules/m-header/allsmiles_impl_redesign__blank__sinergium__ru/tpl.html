@@ -1,0 +1,200 @@
+{% load core_tags core_filters %}
+
+{% if on_moderation %}
+    {% elist "affiliates_moderate" as elist_affiliates %}
+{% else %}
+    {% elist "affiliates" as elist_affiliates %}
+{% endif %}
+
+{% if menu %}
+    {% if menu == 'success' %}
+        {% elist "menu_success" as elist_menu %}
+    {% else %}
+        {% elist "menu" as elist_menu %}
+    {% endif %}
+{% endif %}
+
+{% list_count elist_affiliates.instance.list as elist_affiliates_length %}
+
+{% chunk 'header.logo' raw=True as h_logo %}
+{% chunk 'header.logo_description' as h_logo_description %}
+{% chunk 'header.logo_description_mobile' as h_logo_description_mobile %}
+{% chunk "header.logo_width" raw=True as h_logo_width %}
+{% chunk "header.logo_height" raw=True as h_logo_height %}
+
+<header class="header" data-js-scroll-target="header" data-js-header="header" data-js="first-screen">
+    <div class="row">
+        <div class="header__flex{% if elist_affiliates_length == 2 %} header__flex-alt{% endif %}">
+            <div class="header__block">
+                <div class="header__logo-wrapper">
+                    <a href="{% if active_logo %}/{% else %}javascript:void(0){% endif %}" class="header__logo{% if active_logo %} active{% endif %}">
+                        {% img_tag h_logo class="header_logo-image" width=h_logo_width height=h_logo_height without_lazy=True %}
+                    </a>
+                    {% if h_logo_description and h_logo_description != 'false' %}
+                        <div class="header__logo-description">{{ h_logo_description|safe }}</div>
+                    {% endif %}
+                    {% if h_logo_description_mobile and h_logo_description_mobile != 'false' %}
+                        <div class="header__logo-description-mobile">{{ h_logo_description_mobile|safe }}</div>
+                    {% endif %}
+                </div>
+                {% if not success_page %}
+                    <div class="header__address-wrapper{% if elist_affiliates.instance.list.1.metro and elist_affiliates_length != 2 %} header__address-wrapper-metro{% endif %}">
+                        {% for id, address in elist_affiliates.instance.list.items %}
+                            {% if elist_affiliates_length == 1 %}
+                                <div class="header__address-inner">
+                                    <a href="javascript:void(0);" class="header__address" data-js="popup" data-js-popup="modal-map">
+                                        {{ address.address_full|safe }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if elist_affiliates_length == 2 %}
+                                <div class="header__address-inner">
+                                    <a href="javascript:void(0);" class="header__address" data-js="popup" data-js-popup="modal-map">
+                                        {{ address.address|safe }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if elist_affiliates_length == 3 and address.metro != 'false' %}
+                                <div class="header__address-inner">
+                                    <a href="javascript:void(0);" class="header__address-metro-list" style="color:{% if address.metro_color %}{{ address.metro_color }}{% else %}#000000{% endif %}" data-js="popup" data-js-popup="modal-map">
+                                        {% img_tag address.metro_icon width=14 height=10 class="header__address-metro-icon" module="m-contacts" is_elist=True %}
+                                        {{ address.metro_name|safe }}
+                                    </a>
+                                </div>
+                                {% if forloop.first %}
+                                    <div class="header__address-inner">
+                                        <a href="javascript:void(0);" class="header__address-metro-list header__address-metro-list_tablet" style="color:{% if address.metro_color %}{{ address.metro_color }}{% else %}#000000{% endif %}" data-js="popup" data-js-popup="modal-map">
+                                            {% img_tag 'metro/m-contacts-metro-main.webp' width=20 height=14 module="m-contacts" class="header__address-metro-list-icon" %}
+                                            {{ elist_affiliates_length|safe }} {% chunk 'address_postfix' %}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            {% if elist_affiliates_length == 3 and address.metro == 'false' %}
+                                <div class="header__address-inner">
+                                    <a href="javascript:void(0);" class="header__address-metro" data-js="popup" data-js-popup="modal-map">{{ elist_affiliates_length }} {% chunk 'address_postfix' %}</a>
+                                </div>
+                            {% endif %}
+                            {% if elist_affiliates_length >= 4 and forloop.first %}
+                                <div class="header__address-inner">
+                                    <a href="javascript:void(0);" class="header__address-metro" data-js="popup" data-js-popup="modal-map">
+                                        {% img_tag 'm-header-pin-address.svg' width=28 height=28 class="header__address-pin-icon" %}
+                                        {{ elist_affiliates_length }}&nbsp;{% chunk 'address_postfix' %}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <a href="javascript:void(0);" class="header__address-metro-short" data-js="popup" data-js-popup="modal-map">{{ elist_affiliates_length }} {% chunk 'address_postfix' %}</a>
+                {% endif %}
+            </div>
+            {% if not hide_phone %}
+                <button type="button" class="btn btn_light header__btn" data-js-cbs data-js="popup" data-js-popup="modal-form">{% chunk 'header.btn' %}</button>
+                <div class="header__contact">
+                    {% if get_phones %}
+                        <div class="header__phone">
+                            {% for phone in get_phones %}
+                                <a href="tel:{{ get_phones.0|phone }}" class="phone nobr">
+                                    {{ get_phones.0|safe }}
+                                </a>
+                            {% endfor %}
+                            {% for phone in get_phones_moderation %}
+                                <div style="display: none;">{{ get_phones_moderation.0|safe }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="header__worktime {% is_working_time %}">
+                        {% chunk 'worktime_with_text' %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if not success_page %}
+                <div class="header__menu-btn" data-menu-open></div>
+                <div class="header__menu hide" data-menu>
+                    <div class="header__menu-close" data-menu-close></div>
+                    <a href="tel:{{ get_phones.0|phone }}" class="phone nobr">
+                        {{ get_phones.0|safe }}
+                    </a>
+                    <div class="header__worktime {% is_working_time %}">
+                        {% chunk 'worktime_with_text' %}
+                    </div>
+                    {% if elist_menu.instance.list.items %}
+                        <div class="header__menu-list">
+                            {% for id, menu in elist_menu.instance.list.items %}
+                                <a href="javascript:void(0)" data-js-scroll-to="{{ menu.target }}" class="header__menu-list-item" data-js="menu_item">{{ menu.text|safe }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% for id, address in elist_affiliates.instance.list.items %}
+                        <div class="header__menu-address">{{ address.address_full|safe }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        {% if not success_page %}
+            <div class="header__address-wrapper{% if elist_affiliates.instance.list.1.metro %} header__address-wrapper-metro{% endif %} header__address-mobile">
+                {% for id, address in elist_affiliates.instance.list.items %}
+                    {% if elist_affiliates_length == 2 %}
+                        <a href="javascript:void(0);" class="header__address" data-js="popup" data-js-popup="modal-map">
+                            {{ address.address|safe }}
+                        </a>
+                    {% endif %}
+                    {% if elist_affiliates_length >= 3 and address.metro != 'false' %}
+                        {% if forloop.first %}
+                            <a href="javascript:void(0);" class="header__address-metro-list" style="color:{% if address.metro_color %}{{ address.metro_color }}{% else %}#000000{% endif %}" data-js="popup" data-js-popup="modal-map">
+                                {% img_tag 'metro/m-contacts-metro-main.webp' width=20 height=14 module="m-contacts" class="header__address-metro-list-icon" %}
+                                {{ elist_affiliates_length|safe }} {% chunk 'address_postfix' %}
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                    {% if elist_affiliates_length == 3 and address.metro == 'false' %}
+                        <a href="javascript:void(0);" class="header__address-metro" data-js="popup" data-js-popup="modal-map">{{ elist_affiliates_length }} {% chunk 'address_postfix' %}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="header__fixed" data-js="header-fixed">
+            <div class="header__fixed-container">
+                <div class="header__logo-wrapper">
+                    <a href="{% if active_logo %}/{% else %}javascript:void(0){% endif %}" class="header__logo{% if active_logo %} active{% endif %}">
+                        {% img_tag 'm-header-logo.svg' class="header_logo-image" width=h_logo_width height=h_logo_height without_lazy=True %}
+                    </a>
+                    {% if h_logo_description and h_logo_description != 'false' %}
+                        <div class="header__logo-description">{{ h_logo_description|safe }}</div>
+                    {% endif %}
+                    {% if h_logo_description_mobile and h_logo_description_mobile != 'false' %}
+                        <div class="header__logo-description-mobile">{{ h_logo_description_mobile|safe }}</div>
+                    {% endif %}
+                </div>
+                {% if elist_menu.instance.list.items %}
+                    <div class="header__menu-list">
+                        {% for id, menu in elist_menu.instance.list.items %}
+                            <a href="javascript:void(0)" data-js-scroll-to="{{ menu.target }}" class="header__menu-list-item" data-js="menu_item">{{ menu.text|safe }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if not hide_phone %}
+                    <button type="button" class="btn btn_light header__btn" data-js-cbs data-js="popup" data-js-popup="modal-form">{% chunk 'header.btn' %}</button>
+                    <div class="header__contact">
+                        {% if get_phones %}
+                            <div class="header__phone">
+                                {% for phone in get_phones %}
+                                    <a href="tel:{{ get_phones.0|phone }}" class="phone nobr">
+                                        {{ get_phones.0|safe }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="header__worktime {% is_working_time %}">
+                            {% chunk 'worktime_with_text' %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-header/chunk-panel.html" %}
+    {% endif %}
+</header>

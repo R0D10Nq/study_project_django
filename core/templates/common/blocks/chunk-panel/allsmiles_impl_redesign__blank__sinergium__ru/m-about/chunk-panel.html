@@ -1,0 +1,19 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+
+    <div class="chunk-panel__block">
+        {{ elist_about.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__subtitle">
+            Ссылка на видео:
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk "about.link" %}
+        </div>
+    </div>
+    
+{% endblock panel_content %}

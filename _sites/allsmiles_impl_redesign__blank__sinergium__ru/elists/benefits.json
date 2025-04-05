@@ -1,0 +1,19 @@
+{
+  "button": "Управление блоком",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "text": {
+      "name": "Текст",
+      "type": "str"
+    },
+    "image": {
+      "name": "Изображение",
+      "type": "img",
+      "file": "m-benefits-icon-[id]",
+      "path": "m-benefits"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "button": "Управление блоком флаги",
+  "cannot_be_added": true,
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "show_community": {
+      "name": "Показывать флаги",
+      "type": "bool"
+    },
+    "img_list": {
+      "name": "Изображение",
+      "type": "img-list",
+      "file": "m-benefits-flag-[inc]",
+      "path": "m-benefits"
+    }
+  }
+}

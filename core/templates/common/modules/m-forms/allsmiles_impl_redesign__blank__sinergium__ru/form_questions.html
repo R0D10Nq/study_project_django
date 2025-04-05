@@ -1,0 +1,35 @@
+{% extends "core/form-layout.html" %}
+{% load core_tags core_filters %}
+
+{% block form_class %}{{ form_class }}{% endblock form_class %}
+
+{% block form_content %}
+    <input type="hidden" name="redirect" value="success">
+    <div class="questions__form-wrapper">
+        <div class="questions__form-title">
+            {% chunk "questions.form_title" %}
+        </div>
+        <div class="form__inner__form__inputs">
+            <div class="form__group form__group_name active">
+                <input type="text" class="input input_name" name="text" placeholder="Какой у вас вопрос?">
+            </div>
+            <div class="form__group form__group_text required active">
+                <input type="tel" class="input input_phone" name="id" placeholder="Введите номер телефона">
+            </div>
+        </div>
+        <div class="form__inner__form__submit">
+            <div class="form__group">
+                <button type="submit" class="btn btn_submit">
+                    <span>
+                        {% chunk btn_submit %}
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="form__policy">
+            <span>Нажимая на&nbsp;кнопку, вы&nbsp;соглашаетесь с&nbsp;условиями обработки
+                {% get_policy_link text="персональных данных" classes='underline' %}
+            </span>
+        </div>
+    </div>
+{% endblock form_content %}

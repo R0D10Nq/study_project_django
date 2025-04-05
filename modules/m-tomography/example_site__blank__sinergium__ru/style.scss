@@ -1,0 +1,109 @@
+/* 
+ * Стили для модуля томографии
+ * Используется в модуле m-tomography лэндинга example_site__blank__sinergium__ru
+ */
+
+.tomography {
+  margin-bottom: 60px;
+  padding-top: 40px;
+  
+  @media (max-width: 991px) {
+    margin-bottom: 30px;
+  }
+  
+  &__question {
+    margin-bottom: 40px;
+    
+    &_laptop {
+      display: none;
+      @media (min-width: 992px) {
+        display: flex;
+      }
+    }
+    
+    @media (min-width: 992px) {
+      display: none;
+    }
+  }
+  
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    
+    @media (min-width: 992px) {
+      flex-direction: row;
+    }
+  }
+  
+  &__left {
+    margin-bottom: 30px;
+    
+    @media (min-width: 992px) {
+      flex: 0 0 50%;
+      margin-bottom: 0;
+      padding-right: 30px;
+    }
+  }
+  
+  &__right {
+    @media (min-width: 992px) {
+      flex: 0 0 50%;
+    }
+  }
+  
+  &__text {
+    margin-bottom: 30px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    
+    &_exclusive {
+      background-color: rgba(#e9f6ff, 0.5);
+      padding: 15px;
+      border-radius: 8px;
+    }
+  }
+  
+  &__icon {
+    flex: 0 0 40px;
+    margin-right: 15px;
+    
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+  }
+  
+  &__media {
+    position: relative;
+    
+    video,
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  &__plate {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}

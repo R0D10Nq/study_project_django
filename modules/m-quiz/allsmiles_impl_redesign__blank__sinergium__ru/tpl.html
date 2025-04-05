@@ -1,0 +1,16 @@
+{% load core_filters core_tags %}
+
+{% elist "quiz" as elist_quiz %}
+
+<section class="quiz" data-js-scroll-target="quiz">
+    <div class="row">
+
+        <div class="quiz__form-wrapper">
+            {% module "m-quiz" file="views/form" quiz_modal=quiz_modal %}
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include 'common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-quiz/chunk-panel.html' %}
+    {% endif %}
+</section>

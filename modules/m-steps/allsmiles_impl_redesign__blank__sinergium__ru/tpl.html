@@ -1,0 +1,48 @@
+{% load core_tags core_filters %}
+
+{% elist 'steps' as elist_steps %}
+
+<section class="steps" data-js-scroll-target="steps">
+    <div class="row">
+        <h2 class="h2 steps__title">{% chunk "steps.title" %}</h2>
+        {% if elist_steps.instance.list %}
+            <div class="steps__wrapper">
+                {% for id, step in elist_steps.instance.list.items %}
+                    <div class="steps__item">
+                        <div class="steps__item-content">
+                            <div class="steps__number">
+                                {{ id }} {% chunk 'steps.number_text' %}
+                            </div>
+                            {% if step.title %}
+                                <div class="steps__item-title">{{ step.title|safe }}</div>
+                            {% endif %}
+                            {% if step.text %}
+                                <div class="steps__item-text">{{ step.text|safe }}</div>
+                            {% endif %}
+                            <div class="steps__item-cost">
+                                {% if step.cost_old %}
+                                    <div class="steps__item-cost-old">{{ step.cost_old|safe }}</div>
+                                {% endif %}
+                                {% if step.cost_new %}
+                                    <div class="steps__item-cost-new">{{ step.cost_new|safe }}</div>
+                                {% endif %}
+                            </div>
+                            {% if step.note %}
+                                <div class="steps__item-note">{{ step.note|safe }}</div>
+                            {% endif %}
+                        </div>
+                        {% if step.image %}
+                            <div class="steps__item-image">
+                                {% img_tag step.image is_elist=True width=486 height=385 class="steps__item-image-img" %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-steps/chunk-panel.html" %}
+    {% endif %}
+</section>

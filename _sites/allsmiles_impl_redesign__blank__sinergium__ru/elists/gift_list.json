@@ -1,0 +1,43 @@
+{
+    "button": "Управление подарками",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "description": {
+            "name": "Описание",
+            "type": "str"
+        },
+        "text": {
+            "name": "Текст",
+            "type": "str"
+        },
+        "m_modal_price": {
+            "name": "Использовать в блоке m-modal-price",
+            "type": "bool"
+        },
+        "m_modal_diagnostic": {
+            "name": "Использовать в блоке m-modal-diagnostic",
+            "type": "bool"
+        },
+        "m_modal_dont_go": {
+            "name": "Использовать в блоке m-modal-dont-go",
+            "type": "bool"
+        },
+        "m_modal_best_price": {
+            "name": "Использовать в блоке m-best-price",
+            "type": "bool"
+        },
+        "m_quiz_result": {
+            "name": "Использовать в блоке m-quiz результат",
+            "type": "bool"
+        },
+        "image": {
+            "name": "Изображение",
+            "type": "img",
+            "file": "gifts/m-modal-gift-[id]",
+            "path": "m-modals"
+        }
+    }
+}

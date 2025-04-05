@@ -1,0 +1,51 @@
+{
+    "button": "Управление этапами",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "type": {
+            "name": "Тип операции",
+            "type": "select",
+            "options": {
+                "allon4": {
+                    "name": "All-on-4"
+                },
+                "implant": {
+                    "name": "Одиночная имплантация"
+                }
+            }
+        },
+        "step": {
+            "name": "Шаг",
+            "type": "str"
+        },
+        "title": {
+            "name": "Заголовок",
+            "type": "str"
+        },
+        "show_flag": {
+            "name": "Отобразить флаг?",
+            "type": "bool"
+        },
+        "old": {
+            "name": "Старая цена",
+            "type": "str"
+        },
+        "new": {
+            "name": "Новая цена",
+            "type": "str"
+        },
+        "time": {
+            "name": "Время",
+            "type": "str"
+        },
+        "flag": {
+            "name": "Флаг",
+            "type": "img",
+            "module": "m-modals",
+            "path": "best_prices/flag-[id]"
+        }
+    }
+}

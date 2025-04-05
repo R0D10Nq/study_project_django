@@ -1,0 +1,28 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+
+    <div class="chunk-panel__block">
+        {{ elist_callback.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__subtitle">
+            Врач id
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk "callback.doctor_id" %}
+        </div>
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__subtitle">
+            Показывать блок "Мировые сообщества"
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk "callback.show_community" %}
+        </div>
+    </div>
+
+{% endblock panel_content %}

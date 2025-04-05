@@ -1,0 +1,74 @@
+{% load core_tags core_filters %}
+{% load core_tags core_filters %}
+{% elist "quiz" as elist_quiz %}
+{% elist "quiz_answers" as elist_quiz_answers %}
+
+<div class="quiz__page quiz__page_{{ key }}" data-parent-id="{{ parent_id }}">
+
+    {% if elist_quiz.instance.list %}
+        {% for item_id, item in elist_quiz.instance.list.items %}
+            {% if item_id == key %}
+                {% if item.title %}
+                    <div class="quiz__page-title">
+                        {{ item.title|safe }}
+                        <input type="hidden" name="question_{{ key }}" value="{{ item.title|safe }}"/>
+                    </div>
+                {% endif %}
+                {% if is_content_manager %}
+                    <div class="elist-child-button">
+                        {{ elist_quiz_answers.button }}
+                    </div>
+                {% endif %}
+
+                {% if elist_quiz_answers.instance.list %}
+                    <div class="quiz__page-content">
+
+                        {% if item.type == 'image' %}
+                            {% define 'quiz__radio_images' as answer_class %}
+                        {% else %}
+                            {% define 'quiz__radio_text' as answer_class %}
+                        {% endif %}
+
+                        <div class="quiz__radio {{ answer_class }}" data-js-quiz="radio">
+                            {% for id, answer in elist_quiz_answers.instance.list.items %}
+                                {% if answer.parent_id|to_number == item.id|to_number %}
+                                    <div class="quiz__radio-item {% if answer.checked != 'false' %}checked{% endif %}  {% if item.type == 'image'%}quiz__radio-item-with-image{% endif %}"
+                                        {% if answer.reset_checked != 'false' %}
+                                            data-js-quiz-only
+                                        {% endif %}
+                                        {% if item.type == 'multiple' %}
+                                            data-js-quiz="checkbox-input"
+                                        {% else %}
+                                            data-js-quiz="radio-input"
+                                        {% endif %}
+                                    >
+                                        {% if item.type == 'image' and answer.image %}
+                                            <div class="quiz__radio-item-image">
+                                                {% img_tag answer.image width=113 height=113 is_elist=True %}
+                                            </div>
+                                        {% endif %}
+
+                                        {% if answer.value %}
+                                            <div class="quiz__radio-item-text">{{ answer.value|safe }}</div>
+                                            <input
+                                                {% if item.type == 'multiple' %}
+                                                    type="checkbox"
+                                                {% else %}
+                                                    type="radio"
+                                                {% endif %}
+                                                name="answer_{{ key }}"
+                                                value="{{ answer.value|safe }}"
+                                                data-js-quiz-choice="{{ answer.value|safe }}"
+                                                {% if answer.checked != 'false' %}checked{% endif %}
+                                            >
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

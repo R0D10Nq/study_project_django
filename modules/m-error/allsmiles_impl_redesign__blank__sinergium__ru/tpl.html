@@ -1,0 +1,28 @@
+{% load core_tags core_filters %}
+
+{% define config_key default=404 as config_key %}
+
+<section class="error-block" data-js-scroll-target="error">
+    <div class="row">
+        <div class="breadcrumbs">
+            <a href="/">Главная /</a>
+            <span class="accent">{{ config_key }}</span>
+        </div>
+        <div class="error-block__content-wrapper">
+            <div class="error-block__content">
+                <h2 class="error-block__title h2">
+                    {% chunk 'errors.'|concat:config_key|concat:'.title' %}
+                </h2>
+                <div class="error-block__text">
+                    {% chunk 'errors.'|concat:config_key|concat:'.text' %}
+                </div>
+                <a href="/" class="error-block__btn btn">
+                    <span>{% chunk 'errors.'|concat:config_key|concat:'.button' %}</span>
+                </a>
+            </div>
+            <div class="error-block__label">
+                {{ config_key }}
+            </div>
+        </div>
+    </div>
+</section>

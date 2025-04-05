@@ -1,0 +1,36 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+
+    <div class="chunk-panel__block">
+        {{ elist_benefits_community.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        {{ elist_benefits.button }}
+    </div>
+
+    {% if community_title == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Заголовок блока с флагами
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk "benefits_community.title" %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if image_note_text == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Заголовок блока с иконкой
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk "benefits.image_note_text" %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock panel_content %}

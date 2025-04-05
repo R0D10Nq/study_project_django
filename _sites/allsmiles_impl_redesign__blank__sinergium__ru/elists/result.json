@@ -1,0 +1,23 @@
+{
+    "button": "Управление блоком",
+    "fields": {
+        "id": {
+          "name": "ID",
+          "type": "int"
+        },
+        "title": {
+          "name": "Заголовок",
+          "type": "str"
+        },
+        "text": {
+          "name": "Текст",
+          "type": "str"
+        },
+        "image": {
+            "name": "Изображения",
+            "type": "img",
+            "file": "m-result-[id]",
+            "path": "m-result"
+        }
+    }
+}

@@ -1,0 +1,78 @@
+:root {
+  --common_color: #678cf5;
+  --second_color: #4e70d1;
+  --accent_color: #8bc33e;
+  --bg: #fff;
+  --bg_2: #eaf1ff;
+  --bg_3: #4e70d1;
+  --bg_4: #d4d4d4;
+  --bg_5: #d4d4d4;
+  --text-accent: #a1a1a1;
+  --text_color: #181818;
+  --text_color2: #fff;
+  --text_color3: #36302e;
+  --text_color4: #eaf1ff;
+  --text_color5: #e1e1e1;
+  --bold_color: #181818;
+  --btn_color: #8bc33e;
+  --btn_active: #6a982a;
+  --btn_hover: #7ab727;
+  --btn_arrow: #a1a1a1;
+  --border: #eaf1ff;
+  --btn_shadow: 0 4px 0 0 var(--btn_active), 0 10px 6px 0 rgba(255, 255, 255, 0.22) inset;
+  --box_shadow: -0.023px 0.462px 1.22px 0 rgba(104, 104, 104, 0.02), -0.102px 2.034px 2.526px 0 rgba(104, 104, 104, 0.03), -0.251px 4.994px 5.037px 0 rgba(104, 104, 104, 0.04), -0.484px 9.617px 9.874px 0 rgba(104, 104, 104, 0.04), -0.815px 16.183px 18.155px 0 rgba(104, 104, 104, 0.05), -1.257px 24.968px 31px 0 rgba(104, 104, 104, 0.07);
+  --box_shadow2: -10px 10px 16px rgba(0, 0, 0, 0.1);
+  --tooltip_hover: #a2cd68;
+}
+
+// Главный цвет
+$common_color: var(--common_color);
+
+// Второстепенный цвет
+$second_color: var(--second_color);
+$accent_color: var(--accent_color);
+
+// Фоны
+$bg: var(--bg);
+$bg_2: var(--bg_2);
+$bg_3: var(--bg_3);
+$bg_4: var(--bg_4);
+$bg_5: var(--bg_5);
+
+// Цвет текста
+$text-accent: var(--text-accent);
+$text_color: var(--text_color);
+$text_color2: var(--text_color2);
+$text_color3: var(--text_color3);
+$text_color4: var(--text_color4);
+$text_color5: var(--text_color5);
+
+// Цвет в основном жирных текстов
+$bold_color: var(--bold_color);
+
+// Цвет кнопок
+$btn_color: var(--btn_color);
+$btn_shadow: var(--btn_shadow);
+$btn_hover: var(--btn_hover);
+$btn_active: var(--btn_active);
+$btn_arrow: var(--btn_arrow);
+
+// Цвет обводки
+$border: var(--border);
+
+$box_shadow: var(--box_shadow);
+
+// Шрифты (названия в миксинах)
+$font_regular: mont; // 400
+$font_sb: mont-sb; // 600
+$font_bold: mont-b; // 700
+$font_extra_bold: mont-black; // 800
+$font_heavy: mont-heavy; // 900
+$font_regular_2: gilroy;
+$font_bold_2: gilroy-b;
+
+//Разрешения экранов
+$desktop-width: 1320px;
+$laptop-width: 1024px;
+$tablet-width: 768px;
+$mobile-width: 320px;

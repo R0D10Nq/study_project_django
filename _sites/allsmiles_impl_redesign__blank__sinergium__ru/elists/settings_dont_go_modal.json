@@ -1,0 +1,13 @@
+{
+    "button": "Настройки модального окна dont-go",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "doctor_id": {
+            "name": "ID врача",
+            "type": "str"
+        }
+    }
+}

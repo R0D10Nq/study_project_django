@@ -1,0 +1,77 @@
+{% load core_tags core_filters %}
+
+{% elist 'reception' as elist_reception %}
+{% elist 'employees' as elist_employees %}
+{% chunk 'reception.doctor_id' raw=True as reception_doctor_id %}
+
+<header class="reception" data-js-scroll-target="reception">
+    <div class="row">
+        <h2 class="h2 reception__title">{% chunk 'reception.title' %}</h2>
+        {% if elist_reception.instance.list %}
+            <div class="reception__list">
+                {% for id, item in elist_reception.instance.list.items %}
+                    <div class="reception__list-item">
+                        {% if item.photo %}
+                            <div class="reception__list-item-image">
+                                {% img_tag item.photo is_elist=True width=385 height=238 class="reception__list-item-img" %}
+                                <div class="reception__list-item-number">0{{ id }}</div>
+                                {% if item.flag_list %}
+                                    <div class="reception__list-item-flag">
+                                        {% for img in item.flag_list %}
+                                            {% img_tag img is_elist=True width=38 height=25 class="reception__list-item-flag-img" %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="reception__list-item-content">
+                            {% if item.title %}
+                                <div class="reception__list-item-title">{{ item.title|safe }}</div>
+                            {% endif %}
+                            {% if item.text %}
+                                <div class="reception__list-item-text">{{ item.text|safe }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if elist_employees.instance.list %}
+            {% for id, item in elist_employees.instance.list.items %}
+                {% if id == reception_doctor_id  %}
+                    <div class="reception__doctor-wrapper">
+                        <div class="reception__doctor-title">{% chunk 'reception.doctor_title' %}</div>
+                        <div class="reception__doctor-info">
+                            <div class="reception__doctor-image reception__doctor-image-mobile">
+                                {% img_tag data.reception.image width=414 height=427 %}
+                            </div>
+                            <div class="reception__doctor-photo">
+                                {% img_tag 'm-employees-reception-doctor.webp' width=215 height=215 module="m-employees" %}
+                            </div>
+                            <div class="reception__doctor-block">
+                                {% if item.name %}
+                                    <div class="reception__doctor-name">{{ item.name|safe }}</div>
+                                {% endif %}
+                                {% if item.profession %}
+                                    <div class="reception__doctor-prof">{{ item.profession|safe }}</div>
+                                {% endif %}
+                                {% if item.experience %}
+                                    <div class="reception__doctor-experience">
+                                        {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="reception__doctor-quote">{% chunk 'reception.doctor_quote' %}</div>
+                        </div>
+                        <div class="reception__doctor-image">
+                            {% img_tag data.reception.image width=414 height=427 %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-reception/chunk-panel.html" %}
+    {% endif %}
+</header>

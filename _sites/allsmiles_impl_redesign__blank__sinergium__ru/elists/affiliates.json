@@ -1,0 +1,43 @@
+{
+    "button": "Управление адресами",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "metro": {
+            "name": "Метро",
+            "type": "str"
+        },
+        "metro_name": {
+            "name": "Название метро",
+            "type": "str"
+        },
+        "metro_color": {
+            "name": "Цвет метро",
+            "type": "str"
+        },
+        "address_full": {
+            "name": "Адрес полный",
+            "type": "str"
+        },
+        "address": {
+            "name": "Адрес",
+            "type": "str"
+        },
+        "map_lat": {
+            "name": "lat",
+            "type": "str"
+        },
+        "map_lng": {
+            "name": "lng",
+            "type": "str"
+        },
+        "metro_icon": {
+            "name": "Иконка метро",
+            "type": "img",
+            "file": "m-contacts-metro-1-[id]",
+            "path": "m-contacts/metro"
+        }
+    }
+}

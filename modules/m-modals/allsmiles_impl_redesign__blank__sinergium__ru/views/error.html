@@ -1,0 +1,26 @@
+{% load core_tags core_filters %}
+
+<div class="modal modal-error modal-style" id="modal-error-{{ key }}">
+    <div class="modal__wrapper">
+        <div class="modal__error-image">
+            {% img_tag 'm-modal-error.webp' width=75 height=103 alt="Иконка" %}
+        </div>
+        <div class="modal__error-title">
+            {% chunk "modal.error."|concat:key|concat:".title" %}
+        </div>
+        <div class="modal__error-subtitle ">
+            {% chunk "modal.error."|concat:key|concat:".subtitle" %}
+        </div>
+        {% if key == 'default' %}
+            <div class="modal__error-text">
+                {% chunk "modal.error."|concat:key|concat:".text" %}
+                {% if get_phones %}
+                    <a href="tel:{{ get_phones.0|phone }}"
+                       class="phone nobr bold">
+                        {{ get_phones.0|safe }}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,77 @@
+{% load core_tags core_filters %}
+
+{% elist 'employees' as e_employees %}
+{% elist 'gift_list' as e_gift_list %}
+{% elist "settings_dont_go_modal" as e_settings_dont_go_modal %}
+{% define e_settings_dont_go_modal.instance.list.1 as settings_dont_go_modal %}
+
+<div class="modal modal-dont-go modal-style" id="modal-dont-go">
+    <div class="modal__wrapper">
+        <div class="modal-dont-go__title">
+            {% chunk 'modal.dont-go.title' %}
+        </div>
+        <div class="modal-dont-go__subtitle">
+            {% chunk 'modal.dont-go.subtitle' %}
+        </div>
+        <div class="modal-dont-go__text">
+            {% chunk 'modal.dont-go.text' %}
+        </div>
+        {% if e_gift_list.instance.list %}
+            {% if is_content_manager %}
+                <div class="elist-child-button">
+                    {{ e_gift_list.button }}
+                </div>
+            {% endif %}
+            <div class="md__items">
+                {% for gift_id, gift in e_gift_list.instance.list.items %}
+                    {% if gift.m_modal_dont_go == 'true' %}
+                        <div class="md__item">
+                            {% if gift.text %}
+                                <div class="md__item-text">
+                                    {{ gift.text|safe }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="md__doc">
+                {% img_tag 'm-modal-dont-go-image.webp' width=305 height=452 alt="Фото врача" %}
+                <div class="md__doc-info">
+                    {% for id, item in e_employees.instance.list.items %}
+                        {% if item.id|to_number == settings_dont_go_modal.doctor_id|to_number %}
+                            {% if item.name %}
+                                <div class="md__doc-name">
+                                    {{ item.name|safe }}
+                                </div>
+                            {% endif %}
+                            {% if item.profession_short %}
+                                <div class="md__doc-prof">
+                                    {{ item.profession_short|safe }}
+                                </div>
+                            {% endif %}
+                            {% if item.experience %}
+                                <div class="md__doc-feature">
+                                    {% if item.experience_prefix %}
+                                        {{ item.experience_prefix|safe }}
+                                    {% endif %}
+                                    {% get_experience item.experience no_space=True %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <button type="button"
+                data-js="popup"
+                data-js-popup="modal-quiz"
+                class="btn md__form"
+        >
+            {% chunk 'modal.dont-go.button' %}
+        </button>
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-modals/modal-dont-go/chunk-panel.html" %}
+    {% endif %}
+</div>

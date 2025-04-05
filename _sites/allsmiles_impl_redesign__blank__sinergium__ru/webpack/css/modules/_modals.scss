@@ -1,0 +1,126 @@
+.mfp-container {
+  overflow-y: auto;
+
+  .mfp-close {
+    line-height: 0;
+    font-size: 0;
+    mask-image: url(~img/close_modal.svg);
+    mask-size: cover;
+    background-color: $bg_4;
+    opacity: 1;
+    overflow: hidden;
+    width: 32px;
+    height: 32px;
+    right: 21px;
+    top: 21px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.mfp-zoom-out-cur {
+
+  .mfp-close {
+    right: 0;
+    top: 38px;
+  }
+}
+
+.modal {
+  width: calc(100% - 30px);
+  padding: 0;
+  margin-top: 47px;
+  margin-bottom: 47px;
+
+  .modal__wrapper {
+    overflow: hidden;
+    border-radius: 15px;
+    background-color: $common_color;
+  }
+}
+
+#chunk-modal,
+.modal_elist {
+
+  .mfp-close {
+    mask-image: none;
+  }
+}
+
+button {
+
+  &.mfp-arrow {
+    width: 75px;
+    height: 75px;
+
+    &::after {
+      width: 40px;
+      height: 40px;
+      top: 36%;
+    }
+  }
+
+  &.mfp-arrow-right {
+    left: auto;
+    right: calc(50% - 420px);
+    border-radius: 50%;
+
+    &::after {
+      right: 20%;
+      transform: none;
+    }
+  }
+
+  &.mfp-arrow-left {
+    left: calc(50% - 420px);
+    border-radius: 50%;
+
+    &::after {
+      left: 20%;
+      transform: rotate(180deg);
+    }
+  }
+}
+
+@include tablet {
+
+  .modal-title {
+    line-height: 28px;
+  }
+}
+
+@include mobile {
+
+  .modal {
+    width: calc(100% - 18px);
+  }
+
+  .modal-title {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  button {
+
+    &.mfp-arrow {
+      width: 40px;
+      height: 75px;
+
+      &::after {
+        top: 35%;
+      }
+    }
+
+    &.mfp-arrow-right {
+      right: 6px;
+      border-radius: 100px 0 0 100px;
+    }
+
+    &.mfp-arrow-left {
+      left: 6px;
+      border-radius: 0 100px 100px 0;
+    }
+  }
+}

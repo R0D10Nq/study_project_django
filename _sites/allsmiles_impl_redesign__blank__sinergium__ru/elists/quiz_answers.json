@@ -1,0 +1,35 @@
+{
+    "button": "Управление ответами квиза",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "parent_id": {
+            "name": "ID родителя",
+            "type": "int"
+        },
+        "display": {
+            "name": "Отображать вариант ответа?",
+            "type": "bool"
+        },
+        "value": {
+            "name": "Заголовок",
+            "type": "str"
+        },
+        "checked": {
+            "name": "Вариант ответа по умолчанию",
+            "type": "bool"
+        },
+        "reset_checked": {
+            "name": "Исключает остальные варианты ответов в вопросе с множественным выбором",
+            "type": "bool"
+        },
+        "image": {
+            "name": "Картинка",
+            "type": "img",
+            "file": "[id]/m-quiz-[inc]",
+            "path": "m-quiz"
+        }
+    }
+}

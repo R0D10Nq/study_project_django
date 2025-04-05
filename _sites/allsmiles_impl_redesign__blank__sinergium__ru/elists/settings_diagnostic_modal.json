@@ -1,0 +1,29 @@
+{
+    "button": "Настройки модального окна diagnostic",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "doctor_info": {
+            "name": "Вывод информации",
+            "type": "select",
+            "options": {
+                "text": {
+                    "name": "Текст"
+                },
+                "doctor": {
+                    "name": "Врач"
+                }
+            }
+        },
+        "doctor_text": {
+            "name": "Текст отображаемый в блоке",
+            "type": "str"
+        },
+        "doctor_id": {
+            "name": "ID врача",
+            "type": "str"
+        }
+    }
+}

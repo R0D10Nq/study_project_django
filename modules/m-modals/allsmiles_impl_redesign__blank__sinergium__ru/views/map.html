@@ -1,0 +1,14 @@
+{% load core_tags core_filters %}
+
+{% if on_moderation %}
+    {% elist "affiliates_moderate" as elist_affiliates %}
+{% else %}
+    {% elist "affiliates" as elist_affiliates %}
+{% endif %}
+
+<div class="modal modal-map modal-style"
+     id="modal-map">
+    <div class="modal__wrapper">
+        {% module 'm-contacts' is_modal=True %}
+    </div>
+</div>

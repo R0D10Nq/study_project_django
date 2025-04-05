@@ -1,0 +1,174 @@
+{% load core_tags core_filters %}
+
+{% elist "prices" as elist_prices %}
+{% elist "employees" as elist_employees %}
+{% chunk 'offer.doctor_id' raw=True as doctor_id %}
+{% elist "offer_list" as offer_list %}
+
+<section class="offer" data-js-scroll-target="offer">
+    <div class="row">
+        <h2 class="h2 offer__title">{% chunk 'offer.title' %}</h2>
+        {% if elist_prices.instance.list %}
+            <div class="offer__price-block">
+                {% for id, item in elist_prices.instance.list.items %}
+                    {% if item.checkbox_offer == 'true' %}
+                        <div class="offer__price-item-wrapper">
+                            <div class="offer__price-item">
+                                {% if item.info %}
+                                    <div class="offer__price-item-info">{{ item.info|safe }}</div>
+                                {% endif %}
+                                {% if item.flag %}
+                                    <div class="offer__price-item-flag">
+                                        {% img_tag item.flag width=65 height=45 module="m-prices" is_elist=True %}
+                                    </div>
+                                {% endif %}
+                                {% if item.title %}
+                                    <div class="offer__price-item-title">{{ item.title|safe }}</div>
+                                {% endif %}
+                                {% if item.manufacture %}
+                                    <div class="offer__price-item-manufacture">
+                                        {% if item.flag %}
+                                            <div class="offer__price-item-flag-mobile">
+                                                {% img_tag item.flag width=65 height=45 module="m-prices" is_elist=True %}
+                                            </div>
+                                        {% endif %}
+                                        {{ item.manufacture|safe }}
+                                    </div>
+                                {% endif %}
+                                <div class="offer__price-item-form">
+                                    {% with button='offer.btn' redirect='success' %}
+                                        {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with form_class="form__inner__form" button=button redirect=redirect %}
+                                    {% endwith %}
+                                </div>
+                                <div class="offer__price-wrapper">
+                                    {% if item.price_old %}
+                                        <div class="offer__price-old">{{ item.price_old|safe }}</div>
+                                    {% endif %}
+                                    {% if item.price %}
+                                        <div class="offer__price-new">{{ item.price|safe }}</div>
+                                    {% endif %}
+                                </div>
+                                {% if item.tooltip %}
+                                    <div class="offer__price-info-wrapper">
+                                        <a class="offer__price-info-inner" data-js="popup" data-js-popup="{{ item.modal_name|safe }}">
+                                            <span class="offer__price-info">
+                                                {{ item.tooltip|safe }}
+                                            </span>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                <a href="javaScript:void(0);"
+                                    data-js="popup"
+                                    data-js-popup="modal-form"
+                                    class="offer__price-item-btn btn"
+                                    data-js-cbs
+                                >
+                                    {% chunk 'offer.btn_mobile' %}
+                                </a>
+                                <div class="offer__price-item-image">
+                                    {% if item.benefit %}
+                                        <div class="offer__price-item-benefit">{{ item.benefit|safe }}</div>
+                                    {% endif %}
+                                    {% if item.image %}
+                                        {% img_tag item.image width=266 height=216 module="m-prices" is_elist=True %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="offer__benefit-block">
+                <div class="offer__benefit-wrapper">
+                    <div class="offer__benefit-header">
+                        {% if offer_list.instance.list.items %}
+                            <div class="offer__benefit-list">
+                                {% for id, item in offer_list.instance.list.items %}
+                                    {% if item.text %}
+                                        <div class="offer__benefit-list__inline">
+                                            <a href="javascript:void(0)" {% if item.modal %}data-js="popup" data-js-popup="{{ item.modal|safe }}"{%endif%} class="offer__benefit-list-item {% if item.modal %}offer__benefit-list-item-link{%endif%}">
+                                                {{ item.text|safe }}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
+                        {% endif %}
+                        <div class="offer__benefit-gift">
+                            <div class="offer__benefit-gift-image">
+                                {% img_tag data.offer.gift_image width=74 height=68 %}
+                            </div>
+                            <div class="offer__benefit-gift-content">
+                                <div class="offer__benefit-gift-title">{% chunk 'offer.gift_title' %}</div>
+                                <div class="offer__benefit-gift-price-wrapper">
+                                    <div class="offer__benefit-gift-price-old">{% chunk 'offer.gift_old_price' %}</div>
+                                    <div class="offer__benefit-gift-price">{% chunk 'offer.gift_price' %}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="javaScript:void(0);"
+                    data-js="popup"
+                    data-js-popup="modal-diagnostic"
+                    class="offer__price-item-btn-mobile btn"
+                    data-js-cbs
+                >
+                    {% chunk 'offer.btn_mobile' %}
+                </a>
+                <div class="offer__quote-block">
+                    {% if elist_employees.instance.list %}
+                        <div class="offer__quote-doctor">
+                            {% for id, item in elist_employees.instance.list.items %}
+                                {% if id == doctor_id %}
+                                    <div class="offer__quote-doctor-flex">
+                                        <div class="offer__quote-doctor-image">
+                                            {% img_tag 'm-offer-doctor-image.webp' width=149 height=149 %}
+                                        </div>
+                                        <div class="offer__quote-doctor-info">
+                                            {% if item.name %}
+                                                <div class="offer__quote-doctor-name">{{ item.name|safe }}</div>
+                                            {% endif %}
+                                            {% if item.profession %}
+                                                <div class="offer__quote-doctor-profession">{{ item.profession|safe }}</div>
+                                            {% endif %}
+                                            {% if item.experience %}
+                                                <div class="offer__quote-doctor-experience">
+                                                    {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="offer__quote">
+                        <div class="offer__quote-content">
+                            <div class="offer__quote-title">{% chunk 'offer.quote_title' %}</div>
+                            <div class="offer__quote-text">{% chunk 'offer.quote_text' %}</div>
+                        </div>
+                        <div class="offer__quote-footer">
+                            <div class="offer__count-wrapper count-wrapper">
+                                <div class="offer__count count">{% chunk 'count_lost' %}<span class="offer__count-all count-all">{% chunk 'count_all' %}</span></div>
+                                <div class="offer__count-text count-text">{% chunk 'count_text' %}</div>
+                            </div>
+                            <a href="javascript:void(0);"
+                               data-js="popup"
+                               data-js-cbs
+                               data-js-popup="modal-form"
+                               class="offer__link"
+                            >
+                                {% chunk 'offer.link' %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-offer/chunk-panel.html" %}
+    {% endif %}
+</section>

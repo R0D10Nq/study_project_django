@@ -1,0 +1,80 @@
+{% load core_tags core_filters %}
+
+{% elist 'settings_offer' as elist_settings_offer %}
+{% elist 'callback' as elist_callback %}
+{% elist 'employees' as elist_employees %}
+{% define elist_settings_offer.instance.list.1 as settings_offer %}
+{% chunk 'callback.doctor_id' raw=True as doctor_id %}
+{% chunk 'callback.show_community' raw=True as show_community %}
+
+<section class="callback" data-js-scroll-target="callback">
+    <div class="row">
+        <div class="callback__grid">
+            <h2 class="h2 callback__title">{% chunk 'callback.title' %}</h2>
+            <div class="callback__subtitle">{% chunk 'callback.subtitle' %}</div>
+            <div class="callback__form">
+                <div class="callback__form-note-wrapper">
+                    <div class="callback__form-note">{% chunk 'callback.note' %}</div>
+                    <div class="offer-end-time__wrapper">
+                        {% include 'common/blocks/promo_block/promo_block.html' with promo_class="po__price-promo" promo_view=settings_offer.promo_variant prefix=settings_offer.prefix %}
+                    </div>
+                </div>
+                {% with button='callback.btn' redirect='success' %}
+                    {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with form_class="callback__inner-form" button=button redirect=redirect %}
+                {% endwith %}
+            </div>
+            {% if elist_employees.instance.list %}
+                {% for id, item in elist_employees.instance.list.items %}
+                    {% if id == doctor_id %}
+                        <div class="callback__doctor-block">
+                            <div class="callback__doctor-info">
+                                {% if item.name %}
+                                    <div class="callback__doctor-name">{{ item.name|safe }}</div>
+                                {% endif %}
+                                {% if item.profession %}
+                                    <div class="callback__doctor-prof">{{ item.profession|safe }}</div>
+                                {% endif %}
+                                {% if item.experience %}
+                                    <div class="callback__doctor-experience">
+                                        {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="callback__doctor-image">
+                                {% img_tag 'm-employees-callback-doctor.webp' width=447 height=527 alt="{{ item.name|safe }}" module="m-employees" class="callback__doctor-image-photo" %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if show_community and show_community != 'false' %}
+                <div class="callback__community">
+                    <div class="callback__community-title">{% chunk 'callback.community_title' %}</div>
+                    {% if elist_callback.instance.list %}
+                        <div class="callback__community-list">
+                            {% for id, item in elist_callback.instance.list.items %}
+                                {% if item.display != 'false' %}
+                                    <div class="callback__community-list-item">
+                                        {% if item.flag %}
+                                            <div class="callback__community-list-flag">
+                                                {% img_tag item.flag is_elist=True width=25 height=17 class="callback__community-list-flag-img" %}
+                                            </div>
+                                        {% endif %}
+                                        {% if item.logo %}
+                                            <div class="callback__community-list-logo">
+                                                {% img_tag item.logo is_elist=True width=84 height=47 class="callback__community-list-logo-img" %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-callback/chunk-panel.html" %}
+    {% endif %}
+</section>

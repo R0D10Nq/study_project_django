@@ -1,0 +1,80 @@
+.swiper-arrow {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  z-index: 1;
+  transition: background-color .2s ease-in-out;
+  border: 1px solid $bg_3;
+  background-color: $bg_2;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    mask-image: url(~img/slider-arrow.svg);
+    background-color: $bg_3;
+    mask-size: 32px;
+    mask-position: center;
+    mask-repeat: no-repeat;
+  }
+
+  &:active,
+  &:hover {
+    border-color: $bg;
+    background-color: $common_color;
+
+    &::before {
+      background-color: $bg;
+    }
+  }
+
+  &.next {
+    transform: rotate(180deg);
+  }
+}
+
+.swiper-pagination-bullets {
+  display: flex;
+  column-gap: 8px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-pagination-bullet {
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid $common_color;
+
+  &:hover,
+  &:active {
+    background-color: $common_color;
+  }
+}
+
+.swiper-pagination-bullet-active {
+  background-color: $common_color;
+}
+
+@include laptop {
+
+  .swiper-arrow {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@include mobile{
+   .swiper-arrow {
+    width: 47px;
+    height: 47px;
+  }
+}
+

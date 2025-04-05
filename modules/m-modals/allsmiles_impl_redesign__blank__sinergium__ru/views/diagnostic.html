@@ -1,0 +1,81 @@
+{% load core_tags core_filters %}
+
+{% elist 'employees' as e_employees %}
+{% elist 'gift_list' as e_gift_list %}
+{% elist "settings_diagnostic_modal" as e_settings_diagnostic_modal %}
+{% define e_settings_diagnostic_modal.instance.list.1 as settings_diagnostic_modal %}
+{% define settings_diagnostic_modal.doctor_info as doctor_info_select %}
+
+<div class="modal modal-diagnostic modal-style" id="modal-diagnostic">
+    <div class="modal__wrapper">
+        <div class="modal-diagnostic__title">
+            {% chunk 'modal.diagnostic.title' %}
+        </div>
+        {% if e_gift_list.instance.list %}
+            {% if is_content_manager %}
+                <div class="elist-child-button">
+                    {{ e_gift_list.button }}
+                </div>
+            {% endif %}
+            <div class="md__items">
+                {% for gift_id, gift in e_gift_list.instance.list.items %}
+                    {% if gift.m_modal_diagnostic == 'true' %}
+                        <div class="md__item">
+                            {% if gift.image %}
+                                <div class="md__item-image">
+                                    {% img_tag gift.image is_elist=True width=56 height=72 alt="Подарок" %}
+                                </div>
+                            {% endif %}
+                            {% if gift.description %}
+                                <div class="md__item-title">
+                                    {{ gift.description|safe }}
+                                </div>
+                            {% endif %}
+                            {% if gift.text %}
+                                <div class="md__item-text">
+                                    {{ gift.text|safe }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="md__doc">
+                {% img_tag 'm-modal-diagnostic-image.webp' width=277 height=452 alt="Фото врача" %}
+                {% if doctor_info_select == 'doctor' %}
+                    <div class="md__doc-info">
+                        {% for id, item in e_employees.instance.list.items %}
+                            {% if item.id|to_number == settings_diagnostic_modal.doctor_id|to_number %}
+                                {% if item.name %}
+                                    <div class="md__doc-name">
+                                        {{ item.name|safe }}
+                                    </div>
+                                {% endif %}
+                                {% if item.profession_short %}
+                                    <div class="md__doc-prof">
+                                        {{ item.profession_short|safe }}
+                                    </div>
+                                {% endif %}
+                                {% if item.feature %}
+                                    <div class="md__doc-feature">
+                                        {{ item.feature|safe }}
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% elif doctor_info_select == 'text' %}
+                    <div class="panel_doctor_info_text">
+                        {{ settings_diagnostic_modal.doctor_text|safe }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% with button='modal.diagnostic.button'  class="md__form" %}
+            {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with button=button form_class=class %}
+        {% endwith %}
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-modals/modal-diagnostic/chunk-panel.html" %}
+    {% endif %}
+</div>

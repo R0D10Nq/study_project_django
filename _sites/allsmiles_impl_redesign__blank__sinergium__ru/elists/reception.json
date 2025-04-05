@@ -1,0 +1,29 @@
+{
+  "button": "Управление блоком",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "title": {
+      "name": "Текст на фото",
+      "type": "str"
+    },
+    "text": {
+      "name": "Текст на фото до",
+      "type": "str"
+    },
+    "photo": {
+      "name": "Фотография",
+      "type": "img",
+      "file": "[id]/m-reception-photo",
+      "path": "m-reception"
+    },
+    "flag_list": {
+        "name": "Флаг",
+        "type": "img-list",
+        "file": "[id]/flag/m-reception-flag-[inc]",
+        "path": "m-reception"
+    }
+  }
+}

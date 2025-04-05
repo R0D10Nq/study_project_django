@@ -1,0 +1,18 @@
+/* 
+ * Главный файл стилей для лэндинга example_site__blank__sinergium__ru
+ * Здесь импортируются все модульные стили
+ */
+
+// Базовые стили
+@import "../../../../core/static/css/normalize";
+@import "../../../../core/static/css/variables";
+@import "../../../../core/static/css/mixins";
+@import "../../../../core/static/css/base";
+
+// Стили модулей
+@import "../../../../modules/m-tomography/example_site__blank__sinergium__ru/style";
+
+// Специфичные стили для лэндинга
+.landing-specific {
+    // Уникальные стили для данного лэндинга
+}

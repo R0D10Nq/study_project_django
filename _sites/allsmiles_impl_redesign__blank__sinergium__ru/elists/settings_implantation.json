@@ -1,0 +1,21 @@
+{
+    "button": "Настройки блока имплантации",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "btn_popup": {
+            "name": "Попап для кнопки",
+            "type": "select",
+            "options": {
+                "modal_form": {
+                    "name": "Форма"
+                },
+                "modal_diagnostic": {
+                    "name": "modal-diagnostic"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "button": "Управление меню",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "text": {
+            "name": "Текст",
+            "type": "str"
+        },
+        "target": {
+            "name": "Скролл на блок",
+            "type": "str"
+        }
+    }
+}

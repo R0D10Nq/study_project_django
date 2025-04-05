@@ -1,0 +1,28 @@
+{% load core_tags core_filters %}
+
+<section class="thank-quiz" data-js-scroll-target="thank-quiz">
+    <div class="row">
+        <div class="breadcrumbs thank-quiz__breadcrumbs">
+            <a href="/" class="link breadcrumbs__link">
+                Главная
+            </a>
+            /
+            <span class="breadcrumbs__span">{% chunk 'thank_quiz.breadcrumbs' %}</span>
+        </div>
+        <div class="thank-quiz__wrapper">
+            <div class="thank-quiz__content">
+                <h1 class="h1 thank-quiz__title">{% chunk "thank_quiz.title" %}</h1>
+                <div class="thank-quiz__content-description">{% chunk "thank_quiz.text" %}</div>
+                <div class="thank-quiz__note">
+                    <div class="thank-quiz__note-title">{% chunk "thank_quiz.note_title" %}</div>
+                    {% chunk 'thank_quiz.note_list' %}
+                </div>
+            </div>
+            <div class="thank-quiz__image-wrapper">
+                <div class="thank-quiz__image">
+                    {% img_tag "m-thanks-doctor.webp" width=486 height=538 without_lazy=True %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

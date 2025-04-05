@@ -1,0 +1,32 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+
+    <div class="chunk-panel__block">
+        {{ elist_prices.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        {{ offer_list.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__elem-title">
+            Врач id
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk 'offer.doctor_id' %}
+        </div>
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__elem-title">
+            Заголовок в блоке с подарком
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk 'offer.gift_text' %}
+        </div>
+    </div>
+    
+{% endblock panel_content %}

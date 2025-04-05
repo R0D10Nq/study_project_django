@@ -1,0 +1,13 @@
+{% load core_filters core_tags %}
+
+<div class="modal modal-policy modal-style" id="modal-policy">
+    <button title="Закрыть (Esc)" type="button" class="mfp-close">×</button>
+    <div class="modal__wrapper">
+        <div class="policy__title ">
+            {% chunk "modal.modal_policy.title" %}
+        </div>
+        <div class="policy__text">
+             {% chunk "modal.modal_policy.text" %}
+        </div>
+    </div>
+</div>

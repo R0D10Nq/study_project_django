@@ -1,0 +1,61 @@
+{
+    "button": "Управление врачами",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "display": {
+            "name": "Врач работает?",
+            "type": "bool"
+        },
+        "name": {
+            "name": "ФИО",
+            "type": "str"
+        },
+        "profession": {
+            "name": "Профессия",
+            "type": "str"
+        },
+        "profession_short": {
+            "name": "Профессия (короткий вариант)",
+            "type": "str"
+        },
+        "experience_prefix": {
+            "name": "Префикс стажа",
+            "type": "str"
+        },
+        "experience": {
+            "name": "Год начала работы",
+            "type": "int"
+        },
+        "feature": {
+            "name": "Кол-во операций",
+            "type": "str"
+        },
+        "button": {
+            "name": "Текст кнопки",
+            "type": "str"
+        },
+        "list_title": {
+            "name": "Заголовок специализаций",
+            "type": "str"
+        },
+        "list": {
+            "name": "Список специализаций",
+            "type": "text-list"
+        },
+        "photo": {
+            "name": "Фото в блоке врачей",
+            "type": "img",
+            "file": "[id]/m-employees-image",
+            "path": "m-employees"
+        },
+        "cert": {
+            "name": "Сертификаты",
+            "type": "img-list",
+            "file": "[id]/m-employees-cert-[inc]",
+            "path": "m-employees"
+        }
+    }
+}

@@ -1,0 +1,685 @@
+.prosthesis {
+  padding-top: 103px;
+  padding-bottom: 69px;
+}
+
+.prosthesis__title {
+  max-width: 623px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 45px;
+}
+
+.prosthesis__list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+  margin-bottom: 90px;
+}
+
+.prosthesis__list-item {
+  position: relative;
+  background-color: $bg_2;
+  border-radius: 15px;
+  padding: 39px 68px 39px 32px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.prosthesis__list-info-types-inner {
+
+  [data-js-elist-show="prosthesis_types"] {
+    margin-bottom: 20px;
+  }
+}
+
+.prosthesis__list-image {
+  position: relative;
+  margin-right: 59px;
+}
+
+.prosthesis__list-flag {
+  position: absolute;
+  right: 29px;
+  top: -18px;
+  display: flex;
+  column-gap: 14px;
+}
+
+.prosthesis__list-number {
+  @include font($font_bold);
+  font-size: 20px;
+  color: $text_color2;
+  position: absolute;
+  top: -20px;
+  background-color: $common_color;
+  border-radius: 50%;
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prosthesis__list-image-photo {
+  border-radius: 15px;
+}
+
+.prosthesis__list-content {
+  max-width: 385px;
+}
+
+.prosthesis__list-title {
+  @include font($font_bold);
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 25px;
+}
+
+.prosthesis__list-text {
+  @include font($font_regular);
+  color: $text-accent;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.prosthesis__list-info {
+  margin-left: auto;
+  max-width: 320px;
+}
+
+.prosthesis__list-info-list {
+  background-color: $common_color;
+  padding: 28px 37px 27px 23px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 17px;
+  border-radius: 15px;
+}
+
+.prosthesis__list-info-list-item {
+  font-size: 16px;
+  color: $text_color2;
+  padding-left: 35px;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    background-color: $bg;
+    border-radius: 50%;
+    background-image: url(~img/check.svg);
+    width: 26px;
+    height: 26px;
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    background-position: center;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.prosthesis__list-flag-img {
+  border-radius: 5px;
+  border: 2px solid $border;
+}
+
+.prosthesis__list-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.prosthesis__list-info-badge {
+  @include font($font_bold);
+  background-color: $common_color;
+  border-radius: 15px;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 12px 30px 10px 23px;
+  color: $text_color2;
+  margin-bottom: 12px;
+  transform: translateY(-14px);
+}
+
+.prosthesis__list-info-types {
+  display: flex;
+}
+
+.prosthesis__list-info-types-item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+
+.prosthesis__list-info-types-item-icon {
+  background-color: $bg;
+  border-radius: 15px 0 0 15px;
+  padding-left: 9px;
+}
+
+.prosthesis__list-info-types-text {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  background-color: $bg;
+  border-radius: 0 15px 15px 0;
+  font-size: 14px;
+  line-height: 14px;
+  padding-left: 17px;
+  padding-right: 41px;
+}
+
+.prosthesis__doctor-wrapper {
+  display: grid;
+  grid-template-areas: "p_title p_image"
+                      "p_info  p_image";
+  grid-template-rows: auto 1fr;
+  column-gap: 49px;
+}
+
+.prosthesis__doctor-title {
+  @include font($font_bold_2);
+  grid-area: p_title;
+  font-size: 27px;
+  line-height: 35px;
+  max-width: 730px;
+  margin-bottom: 32px;
+}
+
+.prosthesis__doctor-photo-img {
+  border-radius: 50%;
+  max-width: unset;
+}
+
+.prosthesis__doctor-info {
+  display: grid;
+  grid-area: p_info;
+  grid-template-areas: "p_photo p_block"
+                        "p_photo p_quote";
+  column-gap: 24px;
+  grid-template-rows: auto 1fr;
+  max-width: 826px;
+}
+
+.prosthesis__doctor-photo {
+  grid-area: p_photo;
+  width: 215px;
+}
+
+.prosthesis__doctor-block {
+  grid-area: p_block;
+  margin-top: 7px;
+  margin-bottom: 25px;
+}
+
+.prosthesis__doctor-quote {
+  grid-area: p_quote;
+  position: relative;
+  font-size: 14px;
+  line-height: 22px;
+  background-color: $bg_2;
+  border-radius: 15px;
+  align-self: flex-start;
+  padding: 18px 10px 19px 62px;
+
+  &::before {
+    position: absolute;
+    content: '';
+    background-image: url(~img/quote.svg);
+    background-repeat: no-repeat;
+    width: 34px;
+    height: 28px;
+    left: 12px;
+    top: 20px;
+  }
+}
+
+.prosthesis__doctor-name {
+  @include font($font_bold);
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.prosthesis__doctor-prof {
+  @include font($font_regular);
+  color: $text-accent;
+  font-size: 14px;
+  margin-bottom: 11px;
+}
+
+.prosthesis__doctor-experience {
+  @include font($font_regular);
+  background-color: $common_color;
+  font-size: 14px;
+  padding: 6px 19px 7px 19px;
+  width: fit-content;
+  border-radius: 15px;
+  color: $text_color2;
+}
+
+.prosthesis__doctor-image {
+  grid-area: p_image;
+  transform: translate(-13px,-11px);
+}
+
+.prosthesis__list-info-list--mobile {
+  display: none;
+}
+
+.prosthesis__list-info-badge--mobile {
+  display: none;
+}
+
+@include laptop {
+
+  .prosthesis {
+    padding-top: 70px;
+    padding-bottom: 66px;
+  }
+
+  .prosthesis__title {
+    max-width: 850px;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .prosthesis__list {
+    row-gap: 37px;
+    margin-bottom: 43px;
+  }
+
+  .prosthesis__list-number {
+    width: 32px;
+    height: 32px;
+    top: -15px;
+    font-size: 15px;
+  }
+
+  .prosthesis__list-item {
+    padding: 29px 17px 29px 18px;
+    align-items: flex-start;
+  }
+
+  .prosthesis__list-title {
+    font-size: 16px;
+    margin-bottom: 17px;
+  }
+
+  .prosthesis__list-text {
+    font-size: 14px;
+    transform: translateY(-10px);
+    line-height: 19px;
+  }
+
+  .prosthesis__list-image {
+    margin-right: 38px;
+    max-width: 264px;
+    width: 100%;
+  }
+
+  .prosthesis__list-flag {
+    right: 17px;
+    top: -11px;
+    column-gap: 10px;
+  }
+
+  .prosthesis__list-flag-img {
+    width: 40px;
+  }
+
+  .prosthesis__list-content {
+    max-width: 336px;
+    align-self: center;
+    margin-right: 25px;
+  }
+
+  .prosthesis__list-info-list-item {
+    font-size: 14px;
+    padding-left: 27px;
+
+    &::before {
+      width: 19px;
+      height: 19px;
+    }
+  }
+
+  .prosthesis__list-info {
+    margin-top: 11px;
+    max-width: 258px;
+    flex-shrink: 0;
+  }
+
+  .prosthesis__list-info-list {
+    padding: 18px 17px 19px 17px;
+    row-gap: 10px;
+  }
+
+  .prosthesis__list-info-badge {
+    padding: 8px 16px 10px 16px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .prosthesis__list-info-types {
+    margin-top: -15px;
+  }
+
+  .prosthesis__list-info-types-item {
+    row-gap: 3px;
+  }
+
+  .prosthesis__list-info-types-image {
+    width: 40px;
+  }
+
+  .prosthesis__list-info-types-item-text {
+    width: 100%;
+  }
+
+  .prosthesis__list-info-types-item-icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .prosthesis__doctor-wrapper {
+    grid-template-areas: "p_title"
+                          "p_info";
+  }
+
+  .prosthesis__doctor-info {
+    grid-template-columns: 1fr;
+    max-width: 673px;
+  }
+
+  .prosthesis__doctor-quote {
+    padding: 18px 46px 19px 62px;
+  }
+
+  .prosthesis__doctor-image {
+    position: absolute;
+    right: 0;
+    width: 276px;
+    transform: translate(0, 28px);
+  }
+}
+
+@include tablet {
+
+  .prosthesis {
+    padding-top: 49px;
+    padding-bottom: 51px;
+  }
+
+  .prosthesis__title {
+    margin-bottom: 37px;
+  }
+
+  .prosthesis__list {
+    flex-direction: row;
+    column-gap: 20px;
+  }
+
+  .prosthesis__list-item {
+    flex-direction: column;
+    align-items: center;
+    max-width: 353px;
+    padding: 18px 17px 24px 16px;
+  }
+
+  .prosthesis__list-number {
+    left: 16px;
+  }
+
+  .prosthesis__list-image {
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .prosthesis__list-flag {
+    top: -33px;
+  }
+
+  .prosthesis__list-title {
+    margin-bottom: 20px;
+  }
+
+  .prosthesis__list-content {
+    margin-right: 0;
+    margin-bottom: 2px;
+  }
+
+  .prosthesis__list-info {
+    max-width: 100%;
+    width: 100%;
+    margin-left: unset;
+    margin-top: 0;
+  }
+
+  .prosthesis__list-info-badge {
+    margin-top: 12px;
+    padding: 12px 10px 10px;
+  }
+
+  .prosthesis__doctor-title {
+    font-size: 20px;
+    line-height: 28px;
+    max-width: 540px;
+    margin-bottom: 26px;
+  }
+
+  .prosthesis__doctor-photo {
+    width: 125px;
+  }
+
+  .prosthesis__doctor-photo-img {
+    width: 100%;
+  }
+
+  .prosthesis__doctor-experience {
+    padding: 6px 16px 7px;
+  }
+
+  .prosthesis__doctor-quote {
+    padding: 18px 46px 19px 58px;
+  }
+
+  .prosthesis__doctor-image {
+    width: 204px;
+    transform: translateY(-3px);
+  }
+
+  .prosthesis__doctor-info {
+    max-width: 692px;
+  }
+}
+
+@include mobile {
+
+  .prosthesis {
+    padding-top: 49px;
+    padding-bottom: 55px;
+  }
+
+  .prosthesis__title {
+    text-align: left;
+    line-height: 35px;
+    margin-bottom: 36px;
+  }
+
+  .prosthesis__list {
+    flex-wrap: wrap;
+    row-gap: 46px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .prosthesis__list-number {
+    width: 43px;
+    height: 43px;
+    top: -17px;
+    font-size: 20px;
+    left: 14px;
+    z-index: 1;
+  }
+
+  .prosthesis__list-item {
+    padding: 0 17px 10px 16px;
+    max-width: 320px;
+    height: auto;
+  }
+
+  .prosthesis__list-image {
+    width: 320px;
+    max-width: 320px;
+    margin-bottom: 20px;
+  }
+
+  .prosthesis__list-flag {
+    top: unset;
+    bottom: -13px;
+  }
+
+  .prosthesis__list-text {
+    font-size: 12px;
+    line-height: 20px;
+    padding-right: 10px;
+  }
+
+  .prosthesis__list-info-list {
+    display: none;
+  }
+
+  .prosthesis__list-info-list--mobile {
+    display: flex;
+    row-gap: 14px;
+    margin-top: 8px;
+  }
+
+  .prosthesis__list-info-list {
+    padding: 18px 19px 19px;
+  }
+
+  .prosthesis__list-info-list-item {
+    padding-left: 35px;
+  }
+
+  .prosthesis__list-title {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .prosthesis__list-info-badge {
+    display: none;
+  }
+
+  .prosthesis__list-info-badge--mobile {
+    display: block;
+    margin-top: 10px;
+    transform: translateY(0);
+    font-size: 14px;
+    line-height: 22px;
+    padding: 20px 10px 20px 17px;
+  }
+
+  .prosthesis__list-info-types {
+    margin-top: 0;
+    margin-bottom: 21px;
+    box-sizing: border-box;
+
+    &:not(:has(div)) {
+      margin-bottom: 0;
+    }
+  }
+
+  .prosthesis__list-content {
+    margin-bottom: 0;
+  }
+
+  .prosthesis__list-info-types {
+    margin-bottom: 15px;
+  }
+
+  .prosthesis__list-info-types-text {
+    font-size: 12px;
+    line-height: 14px;
+    padding-left: 13px;
+    padding-top: 3px;
+    height: 100%;
+  }
+
+  .prosthesis__list-info-types-image {
+    width: 77px;
+  }
+
+  .prosthesis__list-info-types-item {
+    row-gap: 4px;
+  }
+
+  .prosthesis__doctor-wrapper {
+    padding-top: 41px;
+  }
+
+  .prosthesis__doctor-wrapper {
+    grid-template-columns: 100%;
+    position: relative;
+
+    &::before {
+      position: absolute;
+      content: '';
+      background-color: $bg_2;
+      top: 0;
+      bottom: -55px;
+      left: -20px;
+      right: -20px;
+    }
+  }
+
+  .prosthesis__doctor-title {
+    z-index: 1;
+  }
+
+  .prosthesis__doctor-photo {
+    width: 78px;
+  }
+
+  .prosthesis__doctor-name {
+    font-size: 14px;
+  }
+
+  .prosthesis__doctor-prof {
+    font-size: 12px;
+  }
+
+  .prosthesis__doctor-info {
+    grid-template-areas: "p_photo p_block"
+                          "p_quote p_quote";
+    column-gap: 17px;
+    grid-template-columns: 78px 1fr;
+    z-index: 1;
+  }
+
+  .prosthesis__doctor-block {
+    margin-top: 2px
+  }
+
+  .prosthesis__doctor-experience {
+    font-size: 12px;
+    padding: 4px 12px 4px;
+  }
+
+  .prosthesis__doctor-image {
+    width: 137px;
+    transform: translate(38px, 124px);
+  }
+
+  .prosthesis__doctor-quote {
+    margin-top: 7px;
+    padding: 18px 10px 19px 58px;
+    background-color: $bg;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "button": "Управление блоком",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "question": {
+      "name": "Вопрос",
+      "type": "str"
+    },
+    "answer": {
+      "name": "Ответ",
+      "type": "str"
+    }
+  }
+}

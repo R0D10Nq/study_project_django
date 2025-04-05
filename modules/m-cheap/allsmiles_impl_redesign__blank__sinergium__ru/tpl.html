@@ -1,0 +1,60 @@
+{% load core_tags core_filters %}
+
+{% elist 'employees' as elist_employees %}
+{% chunk 'cheap.doctor_id' raw=True as doctor_id %}
+
+<section class="cheap" data-js-scroll-target="cheap">
+    <div class="row">
+        <div class="cheap__grid">
+            <h2 class="h2 cheap__title">{% chunk 'cheap.title' %}</h2>
+            <div class="cheap__gift-block">
+                <div class="cheap__gift">
+                    <div class="cheap__gift-image">
+                        {% img_tag data.cheap.gift_image width=67 height=77 class="cheap__gift-image-gift" %}
+                    </div>
+                    <div class="cheap__gift-text">{% chunk 'cheap.gift_text' %}</div>
+                </div>
+                <div class="cheap__count-wrapper count-wrapper">
+                    <div class="cheap__count count">{% chunk 'count_lost' %}<span class="cheap__count-all count-all">{% chunk 'count_all' %}</span></div>
+                    <div class="cheap__count-text count-text">{% chunk 'count_text' %}</div>
+                </div>
+            </div>
+            <div class="cheap__form-block">
+                <div class="cheap__form-title">{% chunk 'cheap.form_title' %}</div>
+                {% with button="cheap.btn" redirect="success" %}
+                    {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with form_class="cheap__inner-form" button=button redirect=redirect %}
+                {% endwith %}
+            </div>
+            {% if elist_employees.instance.list %}
+                {% for id, item in elist_employees.instance.list.items %}
+                    {% if id == doctor_id %}
+                        <div class="cheap__doctor-block">
+                            <div class="cheap__doctor-info">
+                                {% if item.name %}
+                                    <div class="cheap__doctor-name">{{ item.name|safe }}</div>
+                                {% endif %}
+                                {% if item.profession %}
+                                    <div class="cheap__doctor-prof">{{ item.profession|safe }}</div>
+                                {% endif %}
+                                {% if item.experience %}
+                                    <div class="cheap__doctor-experience">
+                                        {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="cheap__doctor-image">
+                                {% if item.name %}
+                                    {% img_tag 'm-cheap-doctor.webp' width=452 height=600 alt="{{ item.name|safe }}" class="cheap__doctor-image-photo" %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-cheap/chunk-panel.html" %}
+    {% endif %}
+</section>

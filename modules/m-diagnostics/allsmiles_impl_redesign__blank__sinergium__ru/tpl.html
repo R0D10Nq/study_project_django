@@ -1,0 +1,64 @@
+{% load core_tags core_filters %}
+
+{% elist 'diagnostics' as elist_diagnostics  %}
+{% elist 'settings_offer' as elist_settings_offer %}
+
+{% if not config %}
+    {% define 1 as config %}
+{% endif %}
+{% define 'data:diagnostics.'|concat:config|concat:'.image' as image %}
+
+<section class="diagnostics{% if config == '2' %} diagnostics--dark{% endif %}" data-js-scroll-target="diagnostics">
+    <div class="row">
+        <h2 class="h2 diagnostics__title">{% chunk 'diagnostics.'|concat:config|concat:'.title' %}</h2>
+        <div class="diagnostics__subtitle">{% chunk 'diagnostics.'|concat:config|concat:'.subtitle' %}</div>
+        <div class="diagnostic__grid">
+            {% if elist_diagnostics.instance.list %}
+                <div class="diagnostic__list">
+                    {% for id, item in elist_diagnostics.instance.list.items %}
+                        <div class="diagnostic__list-item">
+                            {% if item.icon %}
+                                <div class="diagnostic__list-item-icon">
+                                    {% img_tag item.icon width=56 height=72 is_elist=True %}
+                                </div>
+                            {% endif %}
+                            <div class="diagnostic__list-item-content">
+                                {% if item.title %}
+                                    <div class="diagnostic__list-item-title">{{ item.title|safe }}</div>
+                                {% endif %}
+                                {% if item.text %}
+                                    <div class="diagnostic__list-item-text">{{ item.text|safe }}</div>
+                                {% endif %}
+                            </div>
+                            {% if item.note %}
+                                <div class="diagnostic__list-item-note">{{ item.note|safe }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if image %}
+                <div class="diagnostic__image">
+                    {% img_tag image width=692 height=392 class="diagnostic__image-img" %}
+                </div>
+            {% endif %}
+            <div class="diagnostic__form">
+                <div class="diagnostic__form-note">
+                    <div class="diagnostic__form-note-price">{% chunk 'diagnostics.note' %}</div>
+                    <div class="offer-end-time__wrapper">
+                        {% if elist_settings_offer.instance.list.1.display != 'false' %}
+                            {% custom_offer %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% with button='diagnostics.btn' redirect='success' %}
+                    {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with form_class="form__inner__form" button=button redirect=redirect %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-diagnostics/chunk-panel.html" %}
+    {% endif %}
+</section>

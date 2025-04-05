@@ -1,0 +1,43 @@
+{
+  "button": "Информация о компании",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "name": {
+      "name": "Название",
+      "type": "str"
+    },
+    "inn": {
+      "name": "ИНН",
+      "type": "str"
+    },
+    "kpp": {
+      "name": "КПП",
+      "type": "str"
+    },
+    "ogrn": {
+      "name": "ОГРН",
+      "type": "str"
+    },
+    "email": {
+      "name": "Email",
+      "type": "str"
+    },
+    "display_phones": {
+      "name": "Показывать телефон?",
+      "type": "bool"
+    },
+    "phone_prefix": {
+      "name": "Префикс для телефона",
+      "type": "str"
+    },
+    "certificate": {
+      "name": "Сертификаты",
+      "type": "img-list",
+      "file": "certificate/[id]/m-footer-[inc]",
+      "path": "m-footer"
+    }
+  }
+}

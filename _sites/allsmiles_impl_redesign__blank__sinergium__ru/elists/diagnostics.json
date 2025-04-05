@@ -1,0 +1,27 @@
+{
+  "button": "Управление блоком",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "title": {
+      "name": "Заголовок",
+      "type": "str"
+    },
+    "text": {
+      "name": "Текст",
+      "type": "str"
+    },
+    "note": {
+      "name": "Подтекст",
+      "type": "str"
+    },
+    "icon": {
+      "name": "Изображение",
+      "type": "img",
+      "file": "m-diagnostics-icon-[id]",
+      "path": "m-diagnostics"
+    }
+  }
+}

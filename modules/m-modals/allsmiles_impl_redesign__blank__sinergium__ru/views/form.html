@@ -1,0 +1,15 @@
+{% load core_tags core_filters %}
+
+<div class="modal modal-form modal-style" id="modal-form">
+    <div class="modal__wrapper">
+        <div class="modal-form__title">
+            {% chunk 'modal.form.title' %}
+        </div>
+        <div class="modal-form__text">
+            {% chunk 'modal.form.text' %}
+        </div>
+        {% with button='modal.form.button'  class="modal-form__form" %}
+            {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with button=button form_class=class %}
+        {% endwith %}
+    </div>
+</div>

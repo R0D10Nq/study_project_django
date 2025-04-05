@@ -1,0 +1,118 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+
+    <div class="chunk-panel__block">
+        {{ e_best_price.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__elem-title">
+            Id врача
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk 'modal.best_price.doc_id' %}
+        </div>
+    </div>
+    {% if title == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Заголовок
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.title' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if quote == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Цитата
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.quote' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if promo_title == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Заголовок (блок акции)
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.promo_title' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if promo_note == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Текст (блок акции)
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.promo_note' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if promo_old == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Старая цена (блок акции)
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.promo_old' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if promo_new == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Новая цена (блок акции)
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.promo_new' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if promo_benefit == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Выгода (блок акции)
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.promo_benefit' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if bottom_title == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Заголовок (нижний блок)
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.bottom_title' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if bottom_note == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Текст (нижний блок)
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.bottom_note' %}
+            </div>
+        </div>
+    {% endif %}
+    {% if button == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__elem-title">
+                Текст кнопки
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'modal.best_price.button' %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock panel_content %}

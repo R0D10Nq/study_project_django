@@ -1,0 +1,38 @@
+.modal-quiz {
+  background-color: $common_color;
+  border-radius: 15px;
+  max-width: 1350px;
+
+  .quiz {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+@include laptop {
+
+  .modal-quiz {
+
+    .row {
+      padding: 0 15px;
+    }
+
+    .quiz__form-inner {
+      column-gap: 19px;
+    }
+  }
+}
+
+@include tablet {
+
+  .modal-quiz {
+
+    .quiz__form-block {
+      width: 100%;
+    }
+
+    .quiz__form-inner {
+      grid-template-columns: 100%;
+    }
+  }
+}

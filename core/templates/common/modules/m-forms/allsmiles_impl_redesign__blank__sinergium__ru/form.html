@@ -1,0 +1,30 @@
+{% extends "core/form-layout.html" %}
+{% load core_tags core_filters %}
+
+{% block form_class %}{{ form_class }}{% endblock form_class %}
+
+{% block form_content %}
+    {% if redirect %}
+        <input type="hidden" name="redirect" value="{{ redirect }}">
+    {% endif %}
+    <div class="form-wrapper">
+        <div class="form__group form__group_phone required">
+            <input type="tel" class="input input_phone skew-block skew-block_input" name="id" placeholder="Ваш телефон">
+        </div>
+
+        <div class="form__group">
+            <button type="submit" class="btn">
+                {% if button %}
+                    <span>{% chunk button %}</span>
+                {% else %}
+                    <span>Записаться</span>
+                {% endif %}
+            </button>
+        </div>
+    </div>
+
+    <div class="form__policy">
+        Нажимая на&nbsp;кнопку, вы&nbsp;соглашаетесь с&nbsp;условиями обработки
+        <span>{% get_policy_link text="персональных данных" classes='underline' %}</span>
+    </div>
+{% endblock form_content %}

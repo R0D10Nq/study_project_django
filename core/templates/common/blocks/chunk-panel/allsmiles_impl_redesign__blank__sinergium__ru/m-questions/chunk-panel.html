@@ -1,0 +1,16 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+    <div class="chunk-panel__block">
+        {{ elist_questions.button }}
+    </div>
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__elem-title">
+            ID доктора в блоке
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk 'questions.doctor_id' %}
+        </div>
+    </div>
+{% endblock panel_content %}

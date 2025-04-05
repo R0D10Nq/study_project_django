@@ -1,0 +1,499 @@
+.questions {
+  padding-top: 89px;
+  padding-bottom: 107px;
+  background-image: url(~img/bg/background-1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.questions__title {
+    text-align: center;
+    max-width: 874px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 80px;
+}
+
+.questions__grid {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.questions__list {
+  display: flex;
+  flex-direction: column;
+  width: 593px;
+}
+
+.questions__item {
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
+.questions__item-title {
+  @include font($font_bold);
+  position: relative;
+  font-size: 16px;
+  color:$text_color2;
+  background-color: $common_color;
+  border-radius: 15px;
+  padding: 18px 56px 19px 32px;
+  z-index: 2;
+  cursor: pointer;
+
+  &.active {
+    background-color: $bg_3;
+
+    &::after {
+      background-image: url(~img/accordion-arrow-up.svg);
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background-image: url(~img/accordion-arrow-down.svg);
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    transition: background-image 0.2s ease-in-out;
+  }
+}
+
+.questions__item-content {
+  display: none;
+  @include font($font_regular);
+  margin-top: -58px;
+  background-color: $bg;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 77px 32px 22px;
+  border-radius: 15px;
+
+  &.active {
+    display: block;
+  }
+}
+
+.questions__form-grid {
+  display: flex;
+  flex-direction: column;
+  width: 463px;
+  margin-right: 45px;
+  margin-left: 48px;
+  padding: 33px 52px 55px;
+  background-color: $bg;
+  border-radius: 15px;
+}
+
+.questions__doctor {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}
+
+.questions__doctor-image {
+  width: 168px;
+  height: 168px;
+  margin-top: -64px;
+
+  img {
+    border-radius: 85px;
+    width: 168px;
+    height: 168px;
+  }
+}
+
+.questions__doctor-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 174px;
+}
+
+.questions__doctor-name {
+  @include font($font_bold);
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.questions__doctor-profession {
+  font-size: 14px;
+  color: $text-accent;
+  margin-bottom: 10px;
+}
+
+.questions__doctor-experience {
+  @include font($font_sb);
+  font-size: 14px;
+  border-radius: 15px;
+  background-color: $common_color;
+  color: $text_color2;
+  width: fit-content;
+  padding: 7px 19px 6px 19px;
+}
+
+.questions__form-title {
+  @include font($font_bold_2);
+  font-size: 27px;
+  text-align: center;
+  margin-bottom: 19px;
+}
+
+.questions__form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form__inner__form__inputs,
+  .form__inner__form__submit {
+    width: 100%;
+  }
+
+  .input_name {
+    margin-bottom: 6px;
+  }
+
+  .input {
+    background-color: $bg_2;
+  }
+
+  .input_question,
+  .input_phone {
+    margin-bottom: 13px;
+  }
+
+  .btn_submit {
+    width: 100%;
+    font-size: 15px;
+    padding-top: 26px;
+    padding-bottom: 23px;
+    margin-bottom: 17px;
+  }
+
+  .form__policy {
+    max-width: 318px;
+  }
+
+  .link_dashed {
+      border-bottom: 1px dashed;
+      transition: border-bottom-color .2s ease-in;
+
+      &:hover {
+        border-bottom: 1px dashed transparent;
+      }
+  }
+
+  .form__group_name,
+  .form__group_text,
+  .form__group_phone,
+  .btn_question-step,
+  .btn_final-step {
+    display: none;
+  }
+
+  .active {
+    display: block;
+  }
+}
+
+@include laptop {
+
+  .questions {
+    padding-top: 59px;
+    padding-bottom: 70px;
+  }
+
+  .questions__title {
+    margin-bottom: 63px;
+  }
+
+  .questions__list {
+    width: 495px;
+  }
+
+  .questions__form-grid {
+    width: 387px;
+    padding: 33px 20px 22px;
+    margin-right: 0;
+  }
+
+  .questions__item-title {
+    font-size: 14px;
+    padding: 17px 56px 12px 18px;
+
+    &::after {
+      top: 11px;
+      right: 18px;
+    }
+  }
+
+  .questions__item-content {
+    margin-top: -48px;
+    padding: 66px 16px 20px;
+  }
+
+  .questions__doctor-info {
+    margin-left: 26px;
+    max-width: 178px;
+  }
+
+  .questions__doctor-name {
+    font-size: 14px;
+  }
+
+  .questions__doctor-image {
+    width: 141px;
+    height: 141px;
+    margin-top: -50px;
+
+    img {
+      width: 141px;
+      height: 141px;
+    }
+  }
+
+  .questions__form-title {
+    font-size: 22px;
+    width: 86%;
+    margin-bottom: 12px;
+  }
+
+  .questions__item:not(:last-child) {
+    margin-bottom: 9px;
+  }
+
+  .questions__form-wrapper {
+    max-width: 295px;
+
+    .input::placeholder {
+      font-size: 14px;
+    }
+
+    .input {
+      height: 72px;
+    }
+
+    .form__policy {
+      margin-top: -3px;
+    }
+
+    .btn_submit {
+      padding-top: 23px;
+    }
+  }
+
+  .questions__form {
+    display: flex;
+    justify-content: center;
+  }
+
+  .questions__doctor-experience {
+    padding: 7px 17px 6px;
+  }
+
+  .questions__doctor {
+    margin-bottom: 25px;
+  }
+}
+
+@include tablet {
+
+  .questions {
+    padding-top: 49px;
+    padding-bottom: 55px;
+  }
+
+  .questions__doctor {
+    justify-content: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .questions__doctor-info {
+    margin-top: 4px;
+    margin-left: 21px;
+    max-width: unset;
+  }
+
+  .questions__title {
+    margin-bottom: 21px;
+  }
+
+  .questions__grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .questions__list {
+    width: 600px;
+    margin-bottom: 49px;
+  }
+
+  .questions__form-grid {
+    width: 600px;
+    margin-left: 0;
+    padding: 29px 8px 43px
+  }
+
+  .questions__doctor-image {
+    margin-top: -29px;
+  }
+
+  .questions__form-wrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 552px;
+
+    .questions__form-title {
+      text-align: left;
+    }
+
+    .form__inner__form__inputs {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .form__group,
+    .form__inner__form__submit,
+    .form__policy {
+      max-width: 272px;
+    }
+
+    .input {
+      height: 72px;
+    }
+
+    .form__policy {
+      margin-left: 7px;
+      text-align: left;
+      margin-top: -16px;
+    }
+  }
+}
+
+@include mobile {
+
+  .questions {
+    padding-top: 51px;
+    padding-bottom: 64px;
+  }
+
+  .questions__title {
+    text-align: left;
+    line-height: 35px;
+    margin-bottom: 25px;
+  }
+
+  .questions__list {
+    width: 100%;
+  }
+
+  .questions__item-title {
+    padding: 13px 43px 14px 16px;
+    line-height: 22px;
+
+    &::after {
+      top: 12px;
+      right: 7px;
+    }
+  }
+
+  .questions__item-content {
+    padding-top: 60px;
+  }
+
+  .questions__form-grid {
+    width: 100%;
+    padding: 21px 15px 23px;
+  }
+
+  .questions__doctor-image {
+    margin-top: -52px;
+    margin-left: -19px;
+
+    img {
+      min-width: 141px;
+    }
+  }
+
+  .questions__doctor-info {
+    margin-left: 15px;
+    margin-top: -7px;
+  }
+
+  .questions__doctor-name,
+  .questions__doctor-profession {
+    max-width: 135px;
+  }
+
+  .questions__doctor-profession,
+  .questions__doctor-experience {
+    font-size: 12px;
+  }
+
+  .questions__doctor-experience {
+    padding: 6px 11px 4px;
+  }
+
+  .questions__doctor {
+    margin-bottom: 16px;
+  }
+
+  .questions__form-wrapper {
+    max-width: unset;
+    justify-content: space-evenly;
+
+    .questions__form-title {
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      max-width: 270px;
+      margin-bottom: 18px;
+    }
+
+    .form__inner__form__inputs {
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      max-width: unset;
+    }
+
+    .input,
+    .btn_submit,
+    .form__inner__form__submit,
+    .form__group,
+    .form__policy {
+      width: 100%;
+      max-width: unset;
+    }
+
+    .input {
+      height: 76px;
+    }
+
+    .btn {
+      padding-bottom: 22px;
+    }
+
+    .form__policy {
+      margin-top: 0;
+      text-align: center;
+      max-width: 260px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .questions__item {
+
+    &:not(:last-child) {
+      margin-bottom: 7px;
+    }
+  }
+}

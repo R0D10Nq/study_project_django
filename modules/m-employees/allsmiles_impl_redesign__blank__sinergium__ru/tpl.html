@@ -1,0 +1,125 @@
+{% load core_tags core_filters %}
+
+{% elist 'employees' as e_employees %}
+
+{% chunk 'employees.title' raw=True as title %}
+
+<section class="employees" data-js-scroll-target="employees">
+    <div class="row">
+        {% if title and title != 'false' %}
+            <h2 class="employees__title h2">
+                {% chunk 'employees.title' %}
+            </h2>
+        {% endif %}
+        <div class="employees__content-wrapper">
+            <div class="employees__content swiper" data-js-slider="employees">
+                {% if e_employees.instance.list %}
+                    <div class="employees__items swiper-wrapper" data-js-slider="employees">
+                        {% for id, item in e_employees.instance.list.items %}
+                            {% if item.display != 'false' %}
+                                <div class="employees__item swiper-slide">
+                                    {% if item.photo %}
+                                        <div class="employees__item-image">
+                                            {% img_tag item.photo is_swiper=True is_elist=True width=303 height=341 alt="Фото врача" %}
+                                        </div>
+                                    {% endif %}
+                                    {% if item.button and not success_page %}
+                                        <button type="button"
+                                        class="employees__btn btn"
+                                        data-js="popup"
+                                        data-js-cbs
+                                        data-js-popup="modal-diagnostic"
+                                        >
+                                            <span>
+                                                {{ item.button|safe }}
+                                            </span>
+                                        </button>
+                                    {% endif %}
+                                    <div class="employees__item-content">
+                                        {% if item.name %}
+                                            <div class="employees__item-name">
+                                                {{ item.name|safe }}
+                                            </div>
+                                        {% endif %}
+                                        {% if item.profession %}
+                                            <div class="employees__item-prof">
+                                                {{ item.profession|safe }}
+                                            </div>
+                                        {% endif %}
+                                        {% if item.feature %}
+                                            <div class="employees__item-feature">
+                                                {{ item.feature|safe }}
+                                            </div>
+                                        {% endif %}
+                                        {% if item.experience %}
+                                            <div class="employees__item-exp">
+                                                {% if item.experience_prefix %}
+                                                    {{ item.experience_prefix|safe }}
+                                                {% endif %}
+                                                {% get_experience item.experience no_space=True %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="employees__item-list">
+                                        {% if item.list_title %}
+                                            <div class="employees__item-list-title">
+                                                {{ item.list_title|safe }}
+                                            </div>
+                                        {% endif %}
+                                        <div class="employees__item-list-items">
+                                            {% if item.list %}
+                                                {% for elem in item.list %}
+                                                    <div class="employees__item-list-item">
+                                                        {{ elem|safe }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    {% if item.cert %}
+                                        <div class="employees__cert" data-js="image-popup-gallery">
+                                            {% for img in item.cert %}
+                                                {% if forloop.counter <= 4 %}
+                                                    <a href="javascript:void(0);"
+                                                    class="employees__cert-link {% if forloop.counter == 1 %}employees__cert-link_first{% endif %}"
+                                                    data-js="image-popup"
+                                                    data-src="{% img_src img %}"
+                                                    >
+                                                        {% img_tag img is_elist=True width=58 height=81 class="employees__cert-icon" alt="Сертификат" %}
+                                                    </a>
+                                                {% else %}
+                                                    <a href="javascript:void(0);"
+                                                    class="employees__cert-link hidden"
+                                                    data-js="image-popup"
+                                                    data-src="{% img_src img %}"
+                                                    >
+                                                    </a>
+                                                {% endif %}
+                                                {% if forloop.counter == 2 %}
+                                                    <a href="javascript:void(0);"
+                                                    class="employees__cert-link employees__cert-link_count"
+                                                    data-js="image-popup"
+                                                    data-src="{% img_src img %}"
+                                                    >
+                                                        <span>+{{ item.cert|length|add:-1 }}</span>
+                                                    </a>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="employees__button-next swiper-arrow next"></div>
+            <div class="employees__button-prev swiper-arrow prev"></div>
+            <div class="employees__pagination"></div>
+        </div>
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-employees/chunk-panel.html" %}
+    {% endif %}
+</section>

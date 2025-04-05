@@ -1,0 +1,39 @@
+{
+  "button": "Управление блоком",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "photo_text": {
+      "name": "Текст на фото",
+      "type": "str"
+    },
+    "photo_before_text": {
+      "name": "Текст на фото до",
+      "type": "str"
+    },
+    "photo_after_text": {
+      "name": "Текст на фото после",
+      "type": "str"
+    },
+    "photo": {
+      "name": "Фотография",
+      "type": "img",
+      "file": "[id]/m-works-photo",
+      "path": "m-works"
+    },
+    "photo_before": {
+      "name": "Фотография до",
+      "type": "img",
+      "file": "[id]/m-works-before",
+      "path": "m-works"
+    },
+    "photo_after": {
+      "name": "Фотография после",
+      "type": "img",
+      "file": "[id]/m-works-after",
+      "path": "m-works"
+    }
+  }
+}

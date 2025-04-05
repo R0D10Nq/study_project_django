@@ -1,0 +1,8 @@
+{% load core_tags core_filters %}
+<ul class="implantation__list">
+    {% for item in chunk_data %}
+        <li class="implantation__list-item">
+            {{ item|safe }}
+        </li>
+    {% endfor %}
+</ul>

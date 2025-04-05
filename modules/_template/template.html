@@ -1,0 +1,22 @@
+{% comment %}
+Шаблон нового модуля
+Используйте этот шаблон для создания новых модулей
+{% endcomment %}
+
+<section class="module module-template">
+    <div class="container">
+        <h2 class="module-title">{{ title|default:"Заголовок модуля" }}</h2>
+        
+        <div class="module-content">
+            {{ content|default:"Содержимое модуля" }}
+        </div>
+        
+        {% if button_text %}
+        <div class="module-action">
+            <a href="{{ button_url|default:'#' }}" class="btn btn-primary">
+                {{ button_text }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>

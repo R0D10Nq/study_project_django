@@ -1,0 +1,41 @@
+{% load core_tags core_filters %}
+
+{% elist 'settings_offer_custom' as elist_settings_offer_custom %}
+
+<section class="thanks" data-js-scroll-target="thanks">
+    <div class="row">
+        <div class="breadcrumbs thanks__breadcrumbs">
+            <a href="/" class="link breadcrumbs__link">
+                Главная
+            </a>
+            /
+            <span class="breadcrumbs__span">{% chunk 'thanks.breadcrumbs' %}</span>
+        </div>
+        <div class="thanks__wrapper">
+            <div class="thanks__content">
+                <h1 class="h1 thanks__title">{% chunk "thanks.title" %}</h1>
+                <div class="thanks__content-text">{% chunk "thanks.text" %}</div>
+                <div class="thanks__content-description">
+                    {% chunk "thanks.description_text_before" %}
+                    <span class="thanks__content-offer bold">
+                        {% if elist_settings_offer_custom %}
+                            {% custom_offer elist_settings=elist_settings_offer_custom.instance.list.1 %}.
+                        {% else %}
+                            {% custom_offer %}.
+                        {% endif %}
+                    </span>
+                    {% chunk "thanks.description_text_after" %}
+                </div>
+                <div class="thanks__content-cost">
+                    <div class="thanks__content-cost-old">{% chunk 'thanks.cost_old' %}</div>
+                    <div class="thanks__content-cost-new">{% chunk 'thanks.cost_new' %}</div>
+                </div>
+            </div>
+            <div class="thanks__image-wrapper">
+                <div class="thanks__image">
+                    {% img_tag "m-thanks-doctor.webp" width=486 height=538 without_lazy=True %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

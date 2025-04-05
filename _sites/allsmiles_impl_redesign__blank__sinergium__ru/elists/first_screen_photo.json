@@ -1,0 +1,23 @@
+{
+  "button": "Управление галереей",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "image_width": {
+      "name": "Ширина иконки",
+      "type": "int"
+    },
+    "image_height": {
+      "name": "Высота иконки",
+      "type": "int"
+    },
+    "image": {
+      "name": "Фотография",
+      "type": "img",
+      "file": "m-first-screen-photo-[id]",
+      "path": "m-first-screen"
+    }
+  }
+}

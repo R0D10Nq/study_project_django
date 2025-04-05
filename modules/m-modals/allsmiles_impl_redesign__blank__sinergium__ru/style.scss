@@ -1,0 +1,20 @@
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/policy';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/error';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/thank';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/form';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/installment';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/tax';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/price';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/diagnostic';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/best-price';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/map';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/map-list';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/quiz';
+@import '~modules/m-modals/allsmiles_impl_redesign__blank__sinergium__ru/style/dont-go';
+
+.modal {
+
+    &.modal-style {
+        overflow: hidden;
+    }
+}

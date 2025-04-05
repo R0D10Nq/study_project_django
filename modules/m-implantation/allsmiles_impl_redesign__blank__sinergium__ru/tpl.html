@@ -1,0 +1,657 @@
+{% load core_tags core_filters %}
+
+{% elist "prices" as elist_prices %}
+{% elist "prices_steps" as elist_prices_steps %}
+{% elist "prices_stages" as elist_prices_stages %}
+{% list_count elist_prices.instance.list search_item='checkbox_implantation' as elist_prices_length %}
+{% list_count elist_prices.instance.list search_value='stages' as elist_prices_default_length %}
+{% elist 'settings_prices' as elist_settings_prices %}
+{% define elist_settings_prices.instance.list.1 as settings_prices %}
+
+{% elist "settings_implantation" as elist_settings_implantation %}
+
+{% define elist_settings_implantation.instance.list.1 as implantation_settings %}
+{% define implantation_settings.btn_popup as btn_popup_select %}
+
+{% if btn_popup_select == 'modal_form' %}
+    {% define 'modal-form' as btn_popup %}
+{% elif btn_popup_select == 'modal_diagnostic' %}
+    {% define 'modal-diagnostic' as btn_popup %}
+{% endif %}
+
+<section
+        class="implantation{% if settings_prices.view == 'stages' and elist_prices_length > 3 %} implantation-stage{% endif %} {% if settings_prices.view == 'turnkey' and elist_prices_length > 3 %} implantation-turnkey{% endif %}"
+        data-js-scroll-target="implantation">
+    <div class="row">
+        <h2 class="h2 implantation__title">{% chunk 'implantation.title' %}</h2>
+        <div class="implantation__list-wrapper">
+            {% chunk 'implantation.list' %}
+            <div class="implantation__list-note">
+                {% chunk 'implantation.list_note' %}
+                <div class="implantation__list-image-tablet">
+                    {% img_tag "m-implantation_image_tablet.webp" width=320 height=306 class="implantation__list-image-tablet-image" %}
+                </div>
+            </div>
+        </div>
+        <div class="implantation__list-image-mobile">
+            {% img_tag "m-implantation_image_tablet.webp" width=320 height=306 class="implantation__list-image-tablet-image" %}
+        </div>
+        {% if elist_prices_length == 1 %}
+            {% if settings_prices.view == None %}
+                {% for id, item in elist_prices.instance.list.items %}
+                    <div class="implantation__price-item implantation__price-item-single">
+                        {% if item.flag %}
+                            <div class="implantation__price-list-item-manufacture-flag">
+                                {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                            </div>
+                        {% endif %}
+                        {% if item.info %}
+                            <div class="implantation__price-item-badge">{{ item.info|safe }}</div>
+                        {% endif %}
+                        <div class="implantation__price-list-item-title-block">
+                            {% if item.title_short %}
+                                <div class="implantation__price-list-item-title">{{ item.title_short|safe }}</div>
+                            {% endif %}
+                            {% if item.manufacture %}
+                                <div class="implantation__price-list-item-manufacture-wrapper">
+                                    {% if item.flag %}
+                                        <div class="implantation__price-list-item-manufacture-flag">
+                                            {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="implantation__price-list-item-manufacture">
+                                        {{ item.manufacture|safe }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if item.tooltip %}
+                            <div class="implantation__price-item-tooltip-block">
+                                {{ item.tooltip|safe }}
+                                <div class="implantation__price-tooltip" data-js="tooltip">
+                                    <span class="tooltip-icon" data-js="tooltip-button"></span>
+                                    {% if item.tooltip_text %}
+                                        <div data-js="tooltip-html">
+                                            <div>
+                                                {{ item.tooltip_text|safe }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="implantation__price-item-form">
+                            <div class="implantation__custom-offer">
+                                {% custom_offer elist_settings=elist_settings_offer.list.1 %}
+                            </div>
+                            {% with button='prices.footer_btn' redirect='success' %}
+                                {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with form_class="form__inner__form" button=button redirect=redirect %}
+                            {% endwith %}
+                        </div>
+                        <div class="implantation__price-list-stages-item-price-wrapper">
+                            {% if item.price_old %}
+                                <div class="implantation__price-list-stages-item-price-old">{{ item.price_old|safe }}</div>
+                            {% endif %}
+                            {% if item.price %}
+                                <div class="implantation__price-list-stages-item-price-new">{{ item.price|safe }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="implantation__custom-offer implantation__custom-offer-alt">
+                            {% custom_offer elist_settings=elist_settings_offer.list.1 %}
+                        </div>
+                        <div class="implantation__price-image">
+                            {% if item.benefit %}
+                                <div class="implantation__price-benefit">{{ item.benefit|safe }}</div>
+                            {% endif %}
+                            {% if item.image %}
+                                {% img_tag item.image is_elist=True width=266 height=216 module="m-prices" class="implantation__price-benefit-img" %}
+                            {% endif %}
+                        </div>
+                        <button data-js="popup" data-js-popup="modal-diagnostic" class="btn implantation__price-button">
+                            {% chunk "prices.footer_btn" %}
+                        </button>
+                    </div>
+                    <button data-js="popup" data-js-popup="modal-form" class="btn implantation__price-button-mobile">
+                        {% chunk "prices.footer_btn" %}
+                    </button>
+                {% endfor %}
+            {% endif %}
+            {% if settings_prices.view == 'stages' %}
+                {% for id, item in elist_prices.instance.list.items %}
+                    <div class="implantation__price-item implantation__price-item-single implantation__price-item-single-stage">
+                        {% if item.flag %}
+                            <div class="implantation__price-list-item-manufacture-flag">
+                                {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                            </div>
+                        {% endif %}
+                        {% if item.info %}
+                            <div class="implantation__price-item-badge">{{ item.info|safe }}</div>
+                        {% endif %}
+                        <div class="implantation__price-list-item-title-block">
+                            {% if item.title_short %}
+                                <div class="implantation__price-list-item-title">{{ item.title_short|safe }}</div>
+                            {% endif %}
+                            {% if item.manufacture %}
+                                <div class="implantation__price-list-item-manufacture-wrapper">
+                                    {% if item.flag %}
+                                        <div class="implantation__price-list-item-manufacture-flag">
+                                            {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="implantation__price-list-item-manufacture">
+                                        {{ item.manufacture|safe }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if item.tooltip %}
+                            <div class="implantation__price-item-tooltip-block">
+                                {{ item.tooltip|safe }}
+                                <div class="implantation__price-tooltip" data-js="tooltip">
+                                    <span class="tooltip-icon" data-js="tooltip-button"></span>
+                                    {% if item.tooltip_text %}
+                                        <div data-js="tooltip-html">
+                                            <div>
+                                                {{ item.tooltip_text|safe }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="implantation__price-list-stages-item-price-wrapper">
+                            {% if item.price_old %}
+                                <div class="implantation__price-list-stages-item-price-old">{{ item.price_old|safe }}</div>
+                            {% endif %}
+                            {% if item.price %}
+                                <div class="implantation__price-list-stages-item-price-new">{{ item.price|safe }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="implantation__custom-offer implantation__custom-offer-alt">
+                            {% custom_offer elist_settings=elist_settings_offer.list.1 %}
+                        </div>
+                        <div class="implantation__price-image">
+                            {% if item.benefit %}
+                                <div class="implantation__price-benefit">{{ item.benefit|safe }}</div>
+                            {% endif %}
+                            {% if item.image %}
+                                {% img_tag item.image is_elist=True width=266 height=216 module="m-prices" class="implantation__price-benefit-img" %}
+                            {% endif %}
+                        </div>
+                        <button data-js="popup" data-js-popup="modal-diagnostic" class="btn implantation__price-button">
+                            {% chunk "prices.footer_btn" %}
+                        </button>
+                        {% if elist_prices_stages.instance.list %}
+                            {% for stage_id, stage in elist_prices_stages.instance.list.items %}
+                                {% if stage.parent_id|to_number == item.id|to_number %}
+                                    {% if stage.step == 'surgical' %}
+                                        <div class="implantation__price-stages implantation__price-stages-surgical">
+                                            <div class="implantation__price-stages-block">
+                                                {% if stage.badge %}
+                                                    <div class="implantation__price-stages-badge">{{ stage.badge|safe }}</div>
+                                                {% endif %}
+                                                {% if stage.list_stage %}
+                                                    <div class="implantation__price-stages-list">
+                                                        {% for item in stage.list_stage %}
+                                                            <div class="implantation__price-stages-item">
+                                                                {{ item|safe }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="implantation__price-stages-footer">
+                                                <div class="implantation__price-stages-prices">
+                                                    {% if stage.price_old %}
+                                                        <div class="implantation__price-stages-old-price">{{ stage.price_old|safe }}</div>
+                                                    {% endif %}
+                                                    {% if stage.price %}
+                                                        <div class="implantation__price-stages-price">{{ stage.price|safe }}</div>
+                                                    {% endif %}
+                                                </div>
+                                                {% if stage.operating_time %}
+                                                    <div class="implantation__price-stages-operating-time">{{ stage.operating_time|safe }}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if stage.step == 'orthopedic' %}
+                                        <div class="implantation__price-stages implantation__price-stages-orthopedic">
+                                            <div class="implantation__price-stages-block">
+                                                {% if stage.badge %}
+                                                    <div class="implantation__price-stages-badge">{{ stage.badge|safe }}</div>
+                                                {% endif %}
+                                                {% if stage.list_stage %}
+                                                    <div class="implantation__price-stages-list">
+                                                        {% for item in stage.list_stage %}
+                                                            <div class="implantation__price-stages-item">
+                                                                {{ item|safe }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="implantation__price-stages-footer">
+                                                <div class="implantation__price-stages-prices">
+                                                    {% if stage.price_old %}
+                                                        <div class="implantation__price-stages-old-price">{{ stage.price_old|safe }}</div>
+                                                    {% endif %}
+                                                    {% if stage.price %}
+                                                        <div class="implantation__price-stages-price">{{ stage.price|safe }}</div>
+                                                    {% endif %}
+                                                </div>
+                                                {% if stage.operating_time %}
+                                                    <div class="implantation__price-stages-operating-time">{{ stage.operating_time|safe }}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <button data-js="popup" data-js-popup="modal-form"
+                                class="btn implantation__price-button-mobile">
+                            {% chunk "prices.footer_btn" %}
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if settings_prices.view == 'turnkey' %}
+                {% for id, item in elist_prices.instance.list.items %}
+                    <div class="implantation__price-item implantation__price-item-single implantation__price-item-turnkey">
+                        {% if item.flag %}
+                            <div class="implantation__price-list-item-manufacture-flag">
+                                {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                            </div>
+                        {% endif %}
+                        <div class="implantation__price-list-item-title-block">
+                            {% if item.title %}
+                                <div class="implantation__price-list-item-title">{{ item.title|safe }}</div>
+                            {% endif %}
+                            {% if item.manufacture %}
+                                <div class="implantation__price-list-item-manufacture-wrapper">
+                                    <div class="implantation__price-list-item-manufacture">
+                                        {% if item.flag %}
+                                            <div class="implantation__price-list-item-manufacture-flag">
+                                                {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                                            </div>
+                                        {% endif %}
+                                        {{ item.manufacture|safe }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if item.text_list %}
+                            <div class="implantation__text-list">
+                                {% for item in item.text_list %}
+                                    <div class="implantation__text-list-item">
+                                        {{ item|safe }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="implantation__price-item-form">
+                            <div class="implantation__custom-offer">
+                                {% custom_offer elist_settings=elist_settings_offer.list.1 %}
+                            </div>
+                            {% with button='prices.footer_btn' redirect='success' %}
+                                {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with form_class="form__inner__form" button=button redirect=redirect %}
+                            {% endwith %}
+                        </div>
+                        <div class="implantation__price-list-stages-item-price-wrapper">
+                            {% if item.price_old %}
+                                <div class="implantation__price-list-stages-item-price-old">{{ item.price_old|safe }}</div>
+                            {% endif %}
+                            {% if item.price %}
+                                <div class="implantation__price-list-stages-item-price-new">{{ item.price|safe }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="implantation__custom-offer implantation__custom-offer-alt">
+                            {% custom_offer elist_settings=elist_settings_offer.list.1 %}
+                        </div>
+                        <div class="implantation__price-image">
+                            {% if item.benefit %}
+                                <div class="implantation__price-benefit">{{ item.benefit|safe }}</div>
+                            {% endif %}
+                            {% if item.image %}
+                                {% img_tag item.image is_elist=True width=266 height=216 module="m-prices" class="implantation__price-benefit-img" %}
+                            {% endif %}
+                        </div>
+                        <button data-js="popup" data-js-popup="modal-diagnostic" class="btn implantation__price-button">
+                            {% chunk "prices.footer_btn" %}
+                        </button>
+                    </div>
+                    <button data-js="popup" data-js-popup="modal-form" class="btn implantation__price-button-mobile">
+                        {% chunk "prices.footer_btn" %}
+                    </button>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <div class="implantation__wrapper{% if settings_prices.view == 'stages' %} implantation__wrapper-stage{% endif %}{% if settings_prices.view == 'turnkey' %} implantation__wrapper-turnkey{% endif %}{% if elist_prices_length > 3 %} implantation__slider-wrapper{% endif %}">
+                <div class="implantation__content-wrapper{% if elist_prices_length > 3 %} swiper{% endif %}{% if elist_prices_slider_length %} swiper-top{% endif %} "
+                     {% if elist_prices_length > 3 %}data-js-slider="implantation"{% endif %}>
+                    {% if elist_prices.instance.list %}
+                        {% if settings_prices.view == None %}
+                            <div class="implantation__price-list-wrapper{% if elist_prices_length >= 3 %} implantation__price-list-wrapper-long{% endif %}{% if elist_prices_length > 3 %} swiper-wrapper{% endif %} {% if elist_prices_slider_length %} swiper-wrapper-short{% endif %} {% if elist_prices_default_length == 0 %}implantation__price-list-wrapper-stage{% endif %}">
+                                {% for id, item in elist_prices.instance.list.items %}
+                                    {% if item.checkbox_implantation == 'true' %}
+                                        <div class="implantation__price-list-item {% if elist_prices_default_length == 0 %}implantation__price-list-item-stage{% endif %} {% if elist_prices_length > 3 %} swiper-slide{% endif %}"
+                                             data-parent-id="{{ item.id }}">
+                                            <div class="implantation__price-list-item-content">
+                                                {% if item.view == 'stages' and item.icon_stage %}
+                                                    <div class="implantation__price-list-item-icon">
+                                                        {% img_tag item.icon_stage is_elist=True width=130 height=130 module="m-prices" %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if item.title %}
+                                                    <div class="implantation__price-list-item-title">{{ item.title|safe }}</div>
+                                                {% endif %}
+                                                <div class="implantation__price-list-item-subtitle-wrapper">
+                                                    {% if item.manufacture_subtitle %}
+                                                        <div class="implantation__price-list-item-subtitle">{{ item.manufacture_subtitle|safe }}</div>
+                                                    {% endif %}
+                                                    {% if item.manufacture %}
+                                                        <div class="implantation__price-list-item-manufacture-wrapper">
+                                                            {% if item.flag %}
+                                                                <div class="implantation__price-list-item-manufacture-flag">
+                                                                    {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="implantation__price-list-item-manufacture">
+                                                                {{ item.manufacture|safe }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                {% if is_content_manager %}
+                                                    {{ elist_prices_steps.button }}
+                                                {% endif %}
+                                                {% if elist_prices_steps.instance.list %}
+                                                    <div class="implantation__price-list-stages">
+                                                        {% for step_id, step in elist_prices_steps.instance.list.items %}
+                                                            {% if step.parent_id|to_number == item.id|to_number %}
+                                                                <div class="implantation__price-list-stages-item">
+                                                                    <div class="implantation__price-list-stages-item-title">
+                                                                        {{ step.title|safe }}
+                                                                    </div>
+                                                                    <div class="implantation__price-list-stages-item-price-wrapper">
+                                                                        {% if step.price_old %}
+                                                                            <div class="implantation__price-list-stages-item-price-old">{{ step.price_old|safe }}</div>
+                                                                        {% endif %}
+                                                                        {% if step.price %}
+                                                                            <div class="implantation__price-list-stages-item-price-new">{{ step.price|safe }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                                <div class="implantation__price-list-turnkey {% if item.gift_title %}implantation__price-list-turnkey_gift{% endif %}">
+                                                    <div class="implantation__price-list-turnkey-block">
+                                                        {% if item.price_title %}
+                                                            <div class="implantation__price-list-turnkey-title">{{ item.price_title|safe }}</div>
+                                                        {% endif %}
+                                                        <div class="implantation__price-list-turnkey-price-wrapper">
+                                                            {% if item.price_old %}
+                                                                <div class="implantation__price-list-turnkey-old-price">{{ item.price_old|safe }}</div>
+                                                            {% endif %}
+                                                            {% if item.price %}
+                                                                <div class="implantation__price-list-turnkey-price">{{ item.price|safe }}</div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    {% if item.gift_title %}
+                                                        <div class="implantation__price-list-turnkey-gift">
+                                                            <div class="implantation__price-list-turnkey-gift-image">
+                                                                {% img_tag item.gift_image is_elist=True width=item.gift_icon_width height=item.gift_icon_height module="m-prices" %}
+                                                            </div>
+                                                            <div class="implantation__price-list-turnkey-gift-content">
+                                                                {% if item.gift_title %}
+                                                                    <div class="implantation__price-list-turnkey-gift-title">{{ item.gift_title|safe }}</div>
+                                                                {% endif %}
+                                                                {% if item.gift_price %}
+                                                                    <div class="implantation__price-list-turnkey-gift-price">{{ item.gift_price|safe }}</div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="implantation__price-list-footer">
+                                                <div class="implantation__price-list-footer-content">
+                                                    {% if item.footer_title %}
+                                                        <div class="implantation__price-list-footer-title">{{ item.footer_title|safe }}</div>
+                                                    {% endif %}
+                                                    {% if item.footer_subtitle %}
+                                                        <div class="implantation__price-list-footer-subtitle">{{ item.footer_subtitle|safe }}</div>
+                                                    {% endif %}
+                                                    <div class="implantation__price-list-footer-offer">
+                                                        {% include 'common/blocks/promo_block/promo_block.html' with promo_class="po__price-promo" promo_view=settings_global.promo_variant prefix=promo_prefix %}
+                                                    </div>
+                                                </div>
+                                                <a href="javascript:void(0);" class="btn" data-js="popup"
+                                                   data-js-popup="{{ btn_popup }}"
+                                                   {% if btn_popup_select == 'modal_form' %}data-js-cbs{% endif %}>
+                                                    {% chunk 'prices.footer_btn' %}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if settings_prices.view == 'stages' %}
+                            <div class="implantation__price-list-wrapper{% if elist_prices_length >= 3 %} implantation__price-list-wrapper-long{% endif %}{% if elist_prices_length > 3 %} swiper-wrapper{% endif %} {% if elist_prices_slider_length %} swiper-wrapper-short{% endif %} {% if elist_prices_default_length == 0 %}implantation__price-list-wrapper-stage{% endif %}">
+                                {% for id, item in elist_prices.instance.list.items %}
+                                    {% if item.checkbox_implantation == 'true' %}
+                                        <div class="implantation__price-list-item {% if elist_prices_default_length == 0 %}implantation__price-list-item-stage{% endif %} {% if elist_prices_length > 3 %} swiper-slide{% endif %}"
+                                             data-parent-id="{{ item.id }}">
+                                            <div class="implantation__price-list-item-content implantation__price-list-item-content-grid">
+                                                {% if item.icon_stage %}
+                                                    <div class="implantation__price-list-item-icon">
+                                                        {% img_tag item.icon_stage is_elist=True width=130 height=130 module="m-prices" %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if item.title %}
+                                                    <div class="implantation__price-list-item-title">{{ item.title|safe }}</div>
+                                                {% endif %}
+                                                <div class="implantation__price-list-item-subtitle-wrapper">
+                                                    {% if item.manufacture_subtitle %}
+                                                        <div class="implantation__price-list-item-subtitle">{{ item.manufacture_subtitle|safe }}</div>
+                                                    {% endif %}
+                                                    {% if item.manufacture %}
+                                                        <div class="implantation__price-list-item-manufacture-wrapper">
+                                                            {% if item.flag %}
+                                                                <div class="implantation__price-list-item-manufacture-flag">
+                                                                    {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="implantation__price-list-item-manufacture">
+                                                                {{ item.manufacture|safe }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {% if elist_prices_stages.instance.list %}
+                                                <div class="implantation__price-stages-inner"
+                                                     data-parent-id="{{ item.id }}">
+                                                    {% if is_content_manager %}
+                                                        {{ elist_prices_stages.button }}
+                                                    {% endif %}
+                                                    {% for stage_id, stage in elist_prices_stages.instance.list.items %}
+                                                        {% if stage.parent_id|to_number == item.id|to_number %}
+                                                            {% if stage.step == 'surgical' %}
+                                                                <div class="implantation__price-stages implantation__price-stages-surgical">
+                                                                    <div class="implantation__price-stages-block">
+                                                                        {% if stage.badge %}
+                                                                            <div class="implantation__price-stages-badge">{{ stage.badge|safe }}</div>
+                                                                        {% endif %}
+                                                                        {% if stage.list_stage %}
+                                                                            <div class="implantation__price-stages-list">
+                                                                                {% for item in stage.list_stage %}
+                                                                                    <div class="implantation__price-stages-item">
+                                                                                        {{ item|safe }}
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="implantation__price-stages-footer">
+                                                                        <div class="implantation__price-stages-prices">
+                                                                            {% if stage.price_old %}
+                                                                                <div class="implantation__price-stages-old-price">{{ stage.price_old|safe }}</div>
+                                                                            {% endif %}
+                                                                            {% if stage.price %}
+                                                                                <div class="implantation__price-stages-price">{{ stage.price|safe }}</div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        {% if stage.operating_time %}
+                                                                            <div class="implantation__price-stages-operating-time">{{ stage.operating_time|safe }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            {% if stage.step == 'orthopedic' %}
+                                                                <div class="implantation__price-stages implantation__price-stages-orthopedic">
+                                                                    <div class="implantation__price-stages-block">
+                                                                        {% if stage.badge %}
+                                                                            <div class="implantation__price-stages-badge">{{ stage.badge|safe }}</div>
+                                                                        {% endif %}
+                                                                        {% if stage.list_stage %}
+                                                                            <div class="implantation__price-stages-list">
+                                                                                {% for item in stage.list_stage %}
+                                                                                    <div class="implantation__price-stages-item">
+                                                                                        {{ item|safe }}
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="implantation__price-stages-footer">
+                                                                        <div class="implantation__price-stages-prices">
+                                                                            {% if stage.price_old %}
+                                                                                <div class="implantation__price-stages-old-price">{{ stage.price_old|safe }}</div>
+                                                                            {% endif %}
+                                                                            {% if stage.price %}
+                                                                                <div class="implantation__price-stages-price">{{ stage.price|safe }}</div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        {% if stage.operating_time %}
+                                                                            <div class="implantation__price-stages-operating-time">{{ stage.operating_time|safe }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                            {% if item.text_list %}
+                                                <div class="implantation__text-list">
+                                                    {% for item in item.text_list %}
+                                                        <div class="implantation__text-list-item">
+                                                            {{ item|safe }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if settings_prices.view == 'turnkey' %}
+                            <div class="implantation__price-list-wrapper{% if elist_prices_length == 2 %} implantation__price-list-wrapper-flex{% endif %}{% if elist_prices_length >= 3 %} implantation__price-list-wrapper-long{% endif %}{% if elist_prices_length > 3 %} swiper-wrapper{% endif %} {% if elist_prices_slider_length %} swiper-wrapper-short{% endif %} implantation__price-list-wrapper-turnkey">
+                                {% for id, item in elist_prices.instance.list.items %}
+                                    {% if item.checkbox_implantation == 'true' %}
+                                        <div class="implantation__price-list-item implantation__price-list-item-grid {% if elist_prices_length > 3 %} swiper-slide{% endif %} data-parent-id="{{ item.id }}>
+                                            <div class="implantation__price-list-item-content implantation__price-list-item-content-grid">
+                                                {% if item.icon_stage %}
+                                                    <div class="implantation__price-list-item-icon">
+                                                        {% img_tag item.icon_stage is_elist=True width=130 height=130 module="m-prices" %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if item.title %}
+                                                    <div class="implantation__price-list-item-title">{{ item.title|safe }}</div>
+                                                {% endif %}
+                                                <div class="implantation__price-list-item-subtitle-wrapper">
+                                                    {% if item.manufacture_subtitle %}
+                                                        <div class="implantation__price-list-item-subtitle">{{ item.manufacture_subtitle|safe }}</div>
+                                                    {% endif %}
+                                                    {% if item.manufacture %}
+                                                        <div class="implantation__price-list-item-manufacture-wrapper">
+                                                            {% if item.flag %}
+                                                                <div class="implantation__price-list-item-manufacture-flag">
+                                                                    {% img_tag item.flag is_elist=True width=35 height=24 module="m-prices" class="implantation__price-list-item-manufacture-flag-image" %}
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="implantation__price-list-item-manufacture">
+                                                                {{ item.manufacture|safe }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="implantation__text-list">
+                                                {% if item.text_list %}
+                                                    {% for item in item.text_list %}
+                                                        <div class="implantation__text-list-item">
+                                                            {{ item|safe }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="implantation__price-list-turnkey-price-wrapper implantation__price-list-turnkey-price-wrapper-bg">
+                                                {% if item.price_old %}
+                                                    <div class="implantation__price-list-turnkey-old-price">{{ item.price_old|safe }}</div>
+                                                {% endif %}
+                                                {% if item.price %}
+                                                    <div class="implantation__price-list-turnkey-price">{{ item.price|safe }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="implantation__price-list-footer">
+                                                <div class="implantation__price-list-footer-content">
+                                                    {% if item.footer_title %}
+                                                        <div class="implantation__price-list-footer-title">{{ item.footer_title|safe }}</div>
+                                                    {% endif %}
+                                                    {% if item.footer_subtitle %}
+                                                        <div class="implantation__price-list-footer-subtitle">{{ item.footer_subtitle|safe }}</div>
+                                                    {% endif %}
+                                                    <div class="implantation__price-list-footer-offer">
+                                                        {% include 'common/blocks/promo_block/promo_block.html' with promo_class="po__price-promo" promo_view=settings_global.promo_variant prefix=promo_prefix %}
+                                                    </div>
+                                                </div>
+                                                <button type="button"
+                                                        data-js="popup"
+                                                        data-js-popup="modal-diagnostic"
+                                                        class="btn">
+                                                    {% chunk 'prices.footer_btn' %}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    {% if elist_prices_length < 3 and settings_prices.view == None or elist_prices_length < 3 and settings_prices.view == 'turnkey' %}
+                        <div class="implantation__content-image">
+                            {% img_tag "m-implantation_image_desktop.webp" width=420 height=542 class="implantation_image_desktop" %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if elist_prices_length > 3 %}
+                    <div class="implantation__button-wrapper">
+                        <div class="implantation__button-next swiper-arrow next"></div>
+                        <div class="implantation__button-prev swiper-arrow prev"></div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-implantation/chunk-panel.html" %}
+    {% endif %}
+</section>

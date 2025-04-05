@@ -1,0 +1,27 @@
+{
+    "button": "Управление ценами",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "title": {
+            "name": "Текст",
+            "type": "str"
+        },
+        "note": {
+            "name": "Подпись",
+            "type": "str"
+        },
+        "price_id": {
+            "name": "ID цены",
+            "type": "str"
+        },
+        "image": {
+            "name": "Изображение",
+            "type": "img",
+            "file": "m-modal-installment-img-[id]",
+            "path": "m-modals"
+        }
+    }
+}

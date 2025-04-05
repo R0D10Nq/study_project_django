@@ -1,0 +1,6 @@
+{% load core_tags %}
+<ul class="about__list">
+    {% for item in chunk_data %}
+        <li class="about__list-item">{{ item }}</li>
+    {% endfor %}
+</ul>

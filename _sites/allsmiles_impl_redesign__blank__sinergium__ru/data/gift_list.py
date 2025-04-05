@@ -1,0 +1,68 @@
+DATA = {
+
+    'list': {
+        '1': {
+            'description': None,
+            'text': 'Компьютерная томография <span class="bold throughline nobr">3 120</span> <span class="bold nobr">0 ₽</span>',
+            'image': 'gifts/m-modal-gift-1.webp',
+            'm_modal_price': 'true',
+            'm_modal_diagnostic': 'false',
+            'm_modal_best_price': 'true',
+            'm_quiz_result': 'true',
+        },
+        '2': {
+            'description': 'При заключении договора в&nbsp;день диагностики',
+            'text': 'КТ&nbsp;в&nbsp;подарок',
+            'image': 'gifts/m-modal-gift-2.webp',
+            'm_modal_price': 'false',
+            'm_modal_diagnostic': 'true',
+            'm_modal_best_price': 'false',
+            'm_quiz_result': 'false',
+        },
+        '3': {
+            'description': None,
+            'text': 'Цифровая диагностика <span class="bold throughline nobr">3 440</span> <span class="bold nobr">0 ₽</span>',
+            'image': 'gifts/m-modal-gift-3.webp',
+            'm_modal_price': 'true',
+            'm_modal_diagnostic': 'false',
+            'm_modal_best_price': 'true',
+            'm_quiz_result': 'true',
+        },
+        '4': {
+            'description': 'Искусственным интеллектом по&nbsp;122 параметрам ',
+            'text': 'Анализ снимка КТ',
+            'image': 'gifts/m-modal-gift-4.webp',
+            'm_modal_price': 'false',
+            'm_modal_diagnostic': 'true',
+            'm_modal_best_price': 'false',
+            'm_quiz_result': 'false',
+        },
+        '5': {
+            'description': 'Осмотр главного хирурга-имплантолога ',
+            'text': 'Профессиональный осмотр',
+            'image': 'gifts/m-modal-gift-5.webp',
+            'm_modal_price': 'false',
+            'm_modal_diagnostic': 'true',
+            'm_modal_best_price': 'false',
+            'm_quiz_result': 'false',
+        },
+        '6': {
+            'description': None,
+            'text': 'Скидку 40% на&nbsp;имплнтацию Snaucone',
+            'image': None,
+            'm_modal_price': 'false',
+            'm_modal_diagnostic': 'false',
+            'm_modal_best_price': 'false',
+            'm_quiz_result': 'true',
+        },
+        '7': {
+            'description': None,
+            'text': 'Удаление зубов 10 000 0 ₽ (при All-on-4)',
+            'image': None,
+            'm_modal_price': 'false',
+            'm_modal_diagnostic': 'false',
+            'm_modal_best_price': 'false',
+            'm_quiz_result': 'true',
+        },
+    }
+}

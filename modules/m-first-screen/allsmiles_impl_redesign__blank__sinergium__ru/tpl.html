@@ -1,0 +1,184 @@
+{% load core_tags core_filters %}
+
+{% elist "prices" as elist_prices %}
+{% elist "prices_stages" as elist_prices_stages %}
+{% elist "first_screen_photo" as elist_first_screen_photo %}
+
+{% chunk "first_screen.subtitle" raw=True as fs_subtitle %}
+{% chunk "first_screen.tooltip" raw=True as fs_tooltip %}
+{% chunk "first_screen.button_info" raw=True as fs_button_info %}
+{% chunk "first_screen.list_photo" raw=True as fs_list_photo %}
+{% chunk "first_screen.installment" raw=True as fs_installment %}
+{% chunk "first_screen.type" raw=True as fs_type %}
+
+{% list_count elist_prices.instance.list as elist_prices_length %}
+
+<section class="first-screen" data-js-scroll-target="first-screen">
+    <div class="row">
+        <div class="first-screen__grid">
+            <div class="first-screen__title">
+                <h1 class="h1">{% chunk 'first_screen.title' %}</h1>
+                {% if fs_subtitle and fs_subtitle != 'false' %}
+                    <a class="first-screen__subtitle"
+                       data-js="popup"
+                       data-js-popup="modal-price"
+                    >
+                        {% chunk "first_screen.subtitle" %}
+                    </a>
+                {% endif %}
+            </div>
+            {% if fs_type %}
+                <div class="first-screen__price-wrapper">
+                    <div class="first-screen__price-flag">
+                        {% img_tag data.first_screen.flag width=56 height=38 without_lazy=True %}
+                    </div>
+                    <div class="first-screen__price">
+                        <div class="first-screen__price-discount">{% chunk 'first_screen.discount' %}</div>
+                        <div class="first-screen__price-brand">{% chunk 'first_screen.brand' %}</div>
+                        <div class="first-screen__price-block">
+                            {% if fs_type == 'default' %}
+                                {% if elist_prices.instance.list %}
+                                    {% for id, item in elist_prices.instance.list.items %}
+                                        {% if item.checkbox_first_screen == 'true' %}
+                                            {% if forloop.counter <= 2 %}
+                                                <div class="first-screen__price-block-item">
+                                                    {% if item.icon %}
+                                                        <div class="first-screen__price-icon">
+                                                            {% img_tag item.icon module="m-prices" width=item.icon_width height=item.icon_height is_elist=True without_lazy=True %}
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="first-screen__price-content">
+                                                        {% if item.title_short %}
+                                                            <div class="first-screen__price-title">{{ item.title_short|safe }}</div>
+                                                        {% endif %}
+                                                        <div class="first-screen__price-wrapper-block">
+                                                            {% if item.price_old %}
+                                                                <div class="first-screen__price-old">{{ item.price_old|safe }}</div>
+                                                            {% endif %}
+                                                            {% if item.price %}
+                                                                <div class="first-screen__price-new">{{ item.price|safe }}</div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                            {% if fs_type == 'surgical_implant' %}
+                                {% if elist_prices.instance.list %}
+                                    {% for id, item in elist_prices.instance.list.items %}
+                                        {% if item.checkbox_first_screen == 'true' %}
+                                            {% if elist_prices_stages.instance.list %}
+                                                {% for id_stage, item_stage in elist_prices_stages.instance.list.items %}
+                                                    {% if id|to_number == item_stage.parent_id|to_number and  item_stage.step == 'surgical' and item.type == 'implant' %}
+                                                        <div class="first-screen__price-block-item">
+                                                            {% if item.icon %}
+                                                                <div class="first-screen__price-icon">
+                                                                    {% img_tag item.icon module="m-prices" width=item.icon_width height=item.icon_height is_elist=True without_lazy=True %}
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="first-screen__price-content">
+                                                                {% if item.title_short %}
+                                                                    <div class="first-screen__price-title">{{ item.title_short|safe }}</div>
+                                                                {% endif %}
+                                                                <div class="first-screen__price-wrapper-block">
+                                                                    {% if item.price_old %}
+                                                                        <div class="first-screen__price-old">{{ item_stage.price_old|safe }}</div>
+                                                                    {% endif %}
+                                                                    {% if item.price %}
+                                                                        <div class="first-screen__price-new">{{ item_stage.price|safe }}</div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                            {% if fs_type == 'surgical_allon4' %}
+                                {% if elist_prices.instance.list %}
+                                    {% for id, item in elist_prices.instance.list.items %}
+                                        {% if item.checkbox_first_screen == 'true' %}
+                                            {% if elist_prices_stages.instance.list %}
+                                                {% for id_stage, item_stage in elist_prices_stages.instance.list.items %}
+                                                    {% if id|to_number == item_stage.parent_id|to_number and  item_stage.step == 'surgical' and item.type == 'allon4' %}
+                                                        <div class="first-screen__price-block-item">
+                                                            {% if item.icon %}
+                                                                <div class="first-screen__price-icon">
+                                                                    {% img_tag item.icon module="m-prices" width=item.icon_width height=item.icon_height is_elist=True without_lazy=True %}
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="first-screen__price-content">
+                                                                {% if item.title_short %}
+                                                                    <div class="first-screen__price-title">{{ item.title_short|safe }}</div>
+                                                                {% endif %}
+                                                                <div class="first-screen__price-wrapper-block">
+                                                                    {% if item.price_old %}
+                                                                        <div class="first-screen__price-old">{{ item_stage.price_old|safe }}</div>
+                                                                    {% endif %}
+                                                                    {% if item.price %}
+                                                                        <div class="first-screen__price-new">{{ item_stage.price|safe }}</div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% if fs_installment and fs_installment != 'false' %}
+                            <div class="first-screen__installment-wrapper">
+                                <div class="first-screen__installment-icon">
+                                    {% img_tag 'm-first-screen-installment.webp' width=41 height=51 without_lazy=True %}
+                                </div>
+                                <div class="first-screen__installment-text">{{ fs_installment|safe }}</div>
+                            </div>
+                        {% else %}
+                            <div class="first-screen__count-wrapper count-wrapper">
+                                <div class="first-screen__count count">{% chunk 'count_lost' %}<span
+                                        class="first-screen__count-all count-all">{% chunk 'count_all' %}</span></div>
+                                <div class="first-screen__count-text count-text">{% chunk 'count_text' %}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="first-screen__button-wrapper">
+                {% if fs_button_info and fs_button_info != false %}
+                    <div class="first-screen__button-info">
+                        {% chunk 'first_screen.button_info' %}
+                    </div>
+                {% endif %}
+                <button type="button"
+                        data-js="popup"
+                        data-js-popup="modal-quiz"
+                        class="btn first-screen__button"
+                >
+                    {% chunk 'first_screen.button' %}
+                </button>
+            </div>
+            <div class="first-screen__photo-wrapper">
+                {% for id, item in elist_first_screen_photo.instance.list.items %}
+                    {% if item.image %}
+                        <div class="first-screen__photo-item">
+                            {% img_tag item.image width=item.image_width height=item.image_height class="first-screen__photo" is_elist=True without_lazy=True %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-first-screen/chunk-panel.html" %}
+    {% endif %}
+</section>

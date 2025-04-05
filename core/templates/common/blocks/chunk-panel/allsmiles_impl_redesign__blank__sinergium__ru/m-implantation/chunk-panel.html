@@ -1,0 +1,18 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+
+    <div class="chunk-panel__block">
+        {{ elist_prices.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        {{ elist_settings_prices.button }}
+    </div>
+
+    <div class="chunk-panel__block">
+        {{ elist_settings_implantation.button }}
+    </div>
+
+{% endblock panel_content %}

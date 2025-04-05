@@ -1,0 +1,35 @@
+{
+    "button": "Управление блоком",
+    "fields": {
+        "id": {
+          "name": "ID",
+          "type": "int"
+        },
+        "title": {
+            "name": "Заголовок",
+            "type": "str"
+        },
+        "text": {
+            "name": "Текст",
+            "type": "str"
+        },
+        "cost_old": {
+            "name": "Старая цена",
+            "type": "str"
+        },
+        "cost_new": {
+            "name": "Новая цена",
+            "type": "str"
+        },
+        "note": {
+            "name": "Описание",
+            "type": "str"
+        },
+        "image": {
+            "name": "Изображения",
+            "type": "img",
+            "file": "m-steps-image-[id]",
+            "path": "m-steps"
+        }
+    }
+}

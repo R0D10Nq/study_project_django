@@ -1,0 +1,23 @@
+{
+  "button": "Управление блоком",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "parent_id": {
+      "name": "ID родителя",
+      "type": "int"
+    },
+    "text_list": {
+        "name": "Наименование",
+        "type": "text-list"
+    },
+    "image_list": {
+        "name": "Изображение",
+        "type": "img-list",
+        "file": "[id]/types/m-prosthesis-type-[inc]",
+        "path": "m-prosthesis"
+    }
+  }
+}

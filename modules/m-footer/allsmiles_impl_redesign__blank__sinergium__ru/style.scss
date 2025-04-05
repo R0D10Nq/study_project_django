@@ -1,0 +1,422 @@
+.footer {
+  background-color: $bg_2;
+  padding-top: 51px;
+  padding-bottom: 42px;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-areas: 'f_logo f_offer f_requisites f_license f_payment'
+                      'f_logo f_license_title f_requisites f_license f_payment'
+                      'f_subtitle f_license_title f_requisites f_license f_payment';
+  grid-template-columns: 251px 345px 168px 246px;
+  grid-template-rows: 29px 1fr;
+  margin-bottom: 26px;
+  padding-bottom: 37px;
+  border-bottom: 1px solid $bg;
+}
+
+.footer__logo {
+  grid-area: f_logo;
+}
+
+.footer__logo-img {
+  max-width: unset;
+}
+
+.footer__subtitle {
+  grid-area: f_subtitle;
+  font-size: 13px;
+  line-height: 18px;
+  margin-top: 25px;
+  color: $text-accent;
+}
+
+.footer__license-title {
+  grid-area: f_license_title;
+  font-size: 14px;
+}
+
+.footer__socials-wrapper {
+  grid-area: f_socials;
+}
+
+.footer__requisites {
+  grid-area: f_requisites;
+  font-size: 12px;
+}
+
+.footer__offer-text {
+  @include font($font_sb);
+  grid-area: f_offer;
+  font-size: 14px;
+}
+
+.footer__license {
+  grid-area: f_license;
+  display: flex;
+  column-gap: 14px;
+}
+
+.footer__license-img {
+  width: 53px;
+}
+
+.footer__copyright-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__copyright {
+  @include font($font_sb);
+  font-size: 14px;
+
+  .footer__offer-text {
+    display: none;
+  }
+}
+
+.footer__payment-wrapper {
+  grid-area: f_payment;
+}
+
+.footer__payment-list {
+  display: flex;
+  column-gap: 14px;
+}
+
+.footer__payment-title {
+  @include font($font_bold);
+  font-size: 12px;
+  line-height: 20px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.footer__payment-list-item {
+  width: 60px;
+  height: 30px;
+  background-color: $bg;
+  border-radius: 10px;
+  padding: 7px 5px 7px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__payment-list-img {
+  width: auto;
+}
+
+.footer__sinergium {
+  @include font($font_regular);
+  display: flex;
+  font-size: 12px;
+  max-width: 286px;
+  margin-right: 14px;
+  column-gap: 15px;
+}
+
+.footer__sinergium-text {
+  font-size: 12px;
+  line-height: 18px;
+
+  a {
+    border-bottom: 1px solid;
+  }
+}
+
+.footer__requisites-btn {
+  display: none;
+}
+
+.footer__requisites-mobile {
+  display: none;
+}
+
+@include laptop {
+
+  .footer {
+    padding-top: 23px;
+    padding-bottom: 25px;
+  }
+
+  .footer__grid {
+    grid-template-columns: 240px 326px 175px;
+    grid-template-areas: 'f_logo f_offer f_license f_payment'
+                      'f_logo f_license_title f_license f_payment'
+                      'f_subtitle f_requisites f_license f_payment';
+    padding-bottom: 19px;
+    margin-bottom: 19px;
+  }
+
+  .footer__logo {
+    width: 208px;
+  }
+
+  .footer__logo-img {
+    width: 163px;
+  }
+
+  .footer__offer-text {
+    margin-top: 9px;
+  }
+
+  .footer__license-title {
+    margin-top: 7px;
+  }
+
+  .footer__requisites {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+
+  .footer__license {
+    column-gap: 4px;
+    margin-top: 9px;
+  }
+
+  .footer__license-img {
+    width: 43px;
+  }
+
+  .footer__payment-title {
+    text-transform: unset;
+    margin-bottom: 18px;
+  }
+
+  .footer__payment-list {
+    column-gap: 3px;
+  }
+
+  .footer__payment-list-item {
+    width: 45px;
+    height: 23px;
+    padding: 5px 3px 5px 4px;
+  }
+
+  .footer__payment-wrapper {
+    margin-top: 8px;
+  }
+
+  .footer__sinergium {
+    margin-right: 0;
+  }
+
+  .footer__subtitle {
+    font-size: 13px;
+  }
+}
+
+@include tablet {
+
+  .footer {
+    padding-bottom: 15px;
+  }
+
+  .footer__grid {
+    grid-template-columns: 209px 269px 137px;
+    padding-bottom: 13px;
+  }
+
+  .footer__subtitle {
+    font-size: 12px;
+    margin-right: 20px;
+  }
+
+  .footer__offer-text {
+    font-size: 12px;
+    line-height: 20px;
+    margin-top: 0;
+  }
+
+  .footer__license-title {
+    font-size: 12px;
+    line-height: 20px;
+    margin-top: -11px;
+  }
+
+  .footer__license-img {
+    width: 35px;
+  }
+
+  .footer__license {
+    column-gap: 3px;
+    margin-top: 0;
+  }
+
+  .footer__payment-wrapper {
+    margin-top: 0;
+  }
+
+  .footer__payment-title {
+    margin-bottom: 7px;
+  }
+
+  .footer__payment-list {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .footer__subtitle {
+    margin-top: -4px;
+  }
+
+  .footer__requisites {
+    margin-top: -11px;
+  }
+
+  .footer__copyright-wrapper {
+    column-gap: 50px;
+  }
+
+  .footer__copyright-warning {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@include mobile {
+
+  .footer {
+    padding-bottom: 30px;
+  }
+
+  .footer__requisites-btn {
+    display: flex;
+    background-color: $bg;
+    border: none;
+    border-radius: 20px;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 6px 15px 5px 15px;
+    width: 100%;
+    justify-content: center;
+
+    &.active {
+      border-radius: 20px 20px 0 0;
+
+      .footer__requisites-btn-text {
+
+        &::before {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  .footer__requisites-btn-text {
+    position: relative;
+    transform: translateX(-9px);
+
+    &::before {
+      position: absolute;
+      content: '';
+      background-image: url(~img/arrow-down.svg);
+      right: -22px;
+      top: 3px;
+      width: 13px;
+      height: 11px;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  }
+
+  .footer__subtitle {
+    margin-top: 0;
+    margin-bottom: 14px;
+  }
+
+  .footer__grid {
+    grid-template-areas: 'f_logo'
+                          'f_subtitle'
+                          'f_requisites_mobile';
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    margin-bottom: 12px;
+  }
+
+  .footer__license {
+    display: none;
+    margin-top: 9px;
+    margin-right: 10px;
+  }
+
+  .footer__license-title {
+    display: none;
+    margin-top: 0;
+  }
+
+  .footer__requisites {
+    display: none;
+    margin-top: 0;
+    flex-direction: row;
+    font-size: 10px;
+    line-height: 18px;
+    column-gap: 5px;
+    flex-wrap: wrap;
+    color: $text-accent;
+  }
+
+  .footer__payment-wrapper {
+    display: none;
+  }
+
+  .footer__offer-text {
+    display: none;
+  }
+
+  .footer__license-content {
+    display: none;
+    padding: 5px 10px 18px 10px;
+  }
+
+  .footer__requisites-mobile {
+    display: block;
+    grid-area: f_requisites_mobile;
+    max-width: 320px;
+
+    .footer__licenses {
+      background-color: $bg;
+      display: flex;
+      border-radius: 0 0 20px 20px;
+
+      &.active {
+
+        .footer__license {
+          display: flex;
+        }
+
+        .footer__license-content {
+          display: block;
+
+          & > * {
+              display: flex;
+            }
+        }
+      }
+    }
+  }
+
+  .footer__copyright {
+    margin-bottom: 16px;
+
+    .footer__offer-text {
+      @include font($font_regular);
+      display: block;
+      color: $text-accent;
+    }
+  }
+
+  .footer__copyright-wrapper {
+    flex-direction: column;
+  }
+
+  .footer__copyright-warning {
+    font-size: 10px;
+    line-height: 18px;
+    margin-bottom: 6px;
+  }
+}

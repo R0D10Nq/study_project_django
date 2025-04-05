@@ -1,0 +1,145 @@
+{% load core_tags core_filters %}
+
+{% if on_moderation %}
+    {% elist "affiliates_moderate" as e_affiliates %}
+{% else %}
+    {% elist "affiliates" as e_affiliates %}
+{% endif %}
+{% elist "settings_map" as elist_settings_map %}
+{% elist "settings_offer" as e_settings_offer %}
+
+{% define e_settings_offer.instance.list.1 as settings_offer %}
+{% define e_affiliates.instance.list as e_affiliates_list %}
+{% define e_affiliates_list.1 as one_address %}
+
+{% list_count e_affiliates_list as e_affiliates_list_length %}
+
+{% chunk 'contacts.title_multi_prefix' raw=True as title_multi_prefix %}
+{% chunk 'contacts.text_content' raw=True as text_content %}
+{% chunk 'contacts.show_offer' raw=True as show_offer %}
+{% chunk 'contacts.form_offer_prefix' raw=True as form_offer_prefix %}
+
+<section
+        class="contacts {% if e_affiliates_list_length > 1 and e_affiliates_list_length < 5 %}contacts_two{% elif e_affiliates_list_length > 4 %}contacts_multi{% endif %}"
+        data-js-scroll-target="contacts">
+    <div class="row">
+        <div class="contacts__grid {% if success_page %}contacts__grid__success{% endif %}">
+            <h2 class="contacts__title h2">
+                {% if e_affiliates_list_length == 1 %}
+                    {% chunk 'contacts.title_single' %}
+                {% else %}
+                    {% if e_affiliates_list_length != 2 and title_multi_prefix and title_multi_prefix != 'false' %}
+                        {{ title_multi_prefix|safe }}
+                    {% endif %}
+                    {% if text_content and text_content != 'false' %}
+                        {% affiliates_count type='text' affiliates_list=e_affiliates_list text_content=text_content %}
+                    {% endif %}
+                    {% chunk 'contacts.title_multi' %}
+                {% endif %}
+            </h2>
+            <div class="contacts__content">
+                {% if not hide_phone %}
+                    {% for phone in get_phones %}
+                        <div class="contacts__phone bold">
+                            <a href="tel:{{ phone|phone }}" class="phone nobr">
+                                {{ phone|safe }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="contacts__address-wrapper">
+                    {% if e_affiliates_list_length < 5 %}
+                        {% if e_affiliates_list %}
+                            {% for id, item in e_affiliates_list.items %}
+                                {% if e_affiliates_list_length  < 2 %}
+                                    <div class="contacts__address-item">
+                                        {% if item.address %}
+                                            <div class="contacts__address">
+                                                {{ item.address|safe }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="contacts__address-item">
+                                        {% if item.metro %}
+                                            <div class="contacts__metro bold">
+                                                {{ item.metro|safe }}
+                                            </div>
+                                        {% endif %}
+                                        {% if item.address %}
+                                            <div class="contacts__address">
+                                                {{ item.address|safe }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        <button class="contact__popup link_dashed"
+                                type="button"
+                                data-js="popup"
+                                data-js-popup="modal-map-list">
+                            <span>
+                                {% affiliates_count affiliates_list=e_affiliates_list %}
+                                {% chunk 'contacts.popup_postfix' %}
+                            </span>
+                        </button>
+                    {% endif %}
+                </div>
+                <div class="contacts__worktime-wrapper">
+                    <div class="contacts__worktime">
+                        {% chunk 'worktime_short' %}
+                    </div>
+                    <div class="contacts__worktime contacts__worktime_mobile">
+                        {% chunk 'worktime_contacts' %}
+                    </div>
+                </div>
+            </div>
+            <div class="contacts__map">
+                <div class="map"
+                     data-js="map"
+                        {% if is_modal %}
+                     id="map-modal"
+                        {% endif %}
+                     data-js-map-settings="{{ elist_settings_map.instance.list|to_data_json }}"
+                     data-js-markers-list='{{ e_affiliates_list|to_data_json }}'
+                     data-js-pin="{% get_map_pin name=map_pin %}"
+                >
+                    {% include "common/blocks/map-loader/map_loader.html" %}
+                </div>
+            </div>
+            {% if not success_page %}
+                <div class="contacts__form-wrapper">
+                    <div class="contacts__form-title">
+                        {% chunk 'contacts.form_title' %}
+                    </div>
+                    <div class="contacts__form-text">
+                        {% chunk 'contacts.form_text' %}
+                    </div>
+                    {% if show_offer and show_offer != 'false' %}
+                        <div class="contacts__offer">
+                            <span class="contacts__offer-prefix">
+                                {% if form_offer_prefix and form_offer_prefix != 'false' %}
+                                    {{ form_offer_prefix|safe }}
+                                {% endif %}
+                            </span>
+                            {% if elist_settings_offer.instance.list.1.display != 'false' %}
+                                {% custom_offer %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% with button='contacts.button'  class="contacts__form" %}
+                        {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form.html" with button=button form_class=class %}
+                    {% endwith %}
+                </div>
+            {% endif %}
+        </div>
+        {% if success_page %}
+            <a href="/" class="btn btn-back-main">Назад на сайт</a>
+        {% endif %}
+    </div>
+    {% if is_content_manager and not is_modal %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-contacts/chunk-panel.html" %}
+    {% endif %}
+</section>

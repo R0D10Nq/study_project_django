@@ -1,0 +1,136 @@
+{% load core_tags core_filters %}
+
+{% elist 'prosthesis' as elist_prosthesis %}
+{% elist 'prosthesis_types' as elist_prosthesis_types %}
+{% elist 'employees' as elist_employees %}
+{% chunk 'prosthesis.doctor_id' raw=True as prosthesis_doctor_id %}
+
+<section class="prosthesis" data-js-scroll-target="prosthesis">
+    <div class="row">
+        <h2 class="h2 prosthesis__title">{% chunk 'prosthesis.title' %}</h2>
+        {% if elist_prosthesis.instance.list %}
+            <div class="prosthesis__list">
+                {% for id, item in elist_prosthesis.instance.list.items %}
+                    <div class="prosthesis__list-item-wrapper">
+                        <div class="prosthesis__list-item">
+                            <div class="prosthesis__list-number">0{{ id }}</div>
+                            {% if item.photo %}
+                                <div class="prosthesis__list-image">
+                                    {% if item.flag_list %}
+                                        <div class="prosthesis__list-flag">
+                                            {% for flag in item.flag_list %}
+                                                {% img_tag flag width=54 height=35 is_elist=True class="prosthesis__list-flag-img" %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% img_tag item.photo width=355 height=220 is_elist=True class="prosthesis__list-image-photo" %}
+                                </div>
+                            {% endif %}
+                            <div class="prosthesis__list-content">
+                                {% if item.title %}
+                                    <div class="prosthesis__list-title">{{ item.title|safe }}</div>
+                                {% endif %}
+                                {% if item.text %}
+                                    <div class="prosthesis__list-text">{{ item.text|safe }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="prosthesis__list-info">
+                                {% if item.text_list %}
+                                    <div class="prosthesis__list-info-list">
+                                        {% for item in item.text_list %}
+                                            <div class="prosthesis__list-info-list-item">
+                                                {{ item|safe }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% if item.text_note %}
+                                    <div class="prosthesis__list-info-badge">
+                                        {{ item.text_note|safe }}
+                                    </div>
+                                {% endif %}
+                                {% if elist_prosthesis_types.instance.list %}
+                                    <div class="prosthesis__list-info-types-inner" data-parent-id="{{item.id}}">
+                                        {% if is_content_manager %}
+                                            {{ elist_prosthesis_types.button }}
+                                        {% endif %}
+                                        <div class="prosthesis__list-info-types">
+                                            {% for id_type, type in elist_prosthesis_types.instance.list.items %}
+                                                {% if item.id|to_number == type.parent_id|to_number %}
+                                                    {% if type.image_list %}
+                                                        <div class="prosthesis__list-info-types-item" >
+                                                            {% for image in type.image_list %}
+                                                                <div class="prosthesis__list-info-types-item-icon">
+                                                                    {% img_tag image width=51 height=30 is_elist=True class="prosthesis__list-info-types-image" %}
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="prosthesis__list-info-types-item prosthesis__list-info-types-item-text">
+                                                        {% for text in type.text_list %}
+                                                            {% if text %}
+                                                                <p class="prosthesis__list-info-types-text">{{ text|safe }}</p>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if item.text_list %}
+                            <div class="prosthesis__list-info-list prosthesis__list-info-list--mobile">
+                                {% for item in item.text_list %}
+                                    <div class="prosthesis__list-info-list-item">
+                                        {{ item|safe }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if item.text_note %}
+                            <div class="prosthesis__list-info-badge prosthesis__list-info-badge--mobile">
+                                {{ item.text_note|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if elist_employees.instance.list %}
+            {% for id, item in elist_employees.instance.list.items %}
+                {% if id == prosthesis_doctor_id  %}
+                    <div class="prosthesis__doctor-wrapper">
+                        <div class="prosthesis__doctor-title">{% chunk 'prosthesis.doctor_title' %}</div>
+                        <div class="prosthesis__doctor-info">
+                            <div class="prosthesis__doctor-photo">
+                                {% img_tag 'm-employees-prosthesis-doctor.webp' width=215 height=215 module="m-employees" class="prosthesis__doctor-photo-img" %}
+                            </div>
+                            <div class="prosthesis__doctor-block">
+                                {% if item.name %}
+                                    <div class="prosthesis__doctor-name">{{ item.name|safe }}</div>
+                                {% endif %}
+                                {% if item.profession %}
+                                    <div class="prosthesis__doctor-prof">{{ item.profession|safe }}</div>
+                                {% endif %}
+                                {% if item.experience %}
+                                    <div class="prosthesis__doctor-experience">
+                                        {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="prosthesis__doctor-quote">{% chunk 'prosthesis.doctor_quote' %}</div>
+                        </div>
+                        <div class="prosthesis__doctor-image">
+                            {% img_tag data.prosthesis.image width=333 height=383 %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-prosthesis/chunk-panel.html" %}
+    {% endif %}
+</section>

@@ -1,0 +1,33 @@
+{
+    "button": "Управление преимуществами",
+    "fields": {
+        "id": {
+            "name": "ID",
+            "type": "int"
+        },
+        "title": {
+            "name": "Заголовок",
+            "type": "str"
+        },
+        "text": {
+            "name": "Текст",
+            "type": "str"
+        },
+        "percent": {
+            "name": "Проценты",
+            "type": "str"
+        },
+        "image": {
+            "name": "Изображение",
+            "type": "img",
+            "file": "m-modal-installment-img-[id]",
+            "path": "m-modals"
+        },
+        "icon": {
+            "name": "Иконка",
+            "type": "img",
+            "file": "m-modal-price-icon-[id]",
+            "path": "m-modals"
+        }
+    }
+}

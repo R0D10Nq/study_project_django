@@ -1,0 +1,46 @@
+{% extends "core/chunk-panel.html" %}
+{% load core_filters core_tags %}
+
+{% block panel_content %}
+    {% if title_multi_prefix == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__subtitle">
+                Заголовок префикс
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'contacts.title_multi_prefix' %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if text_content == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__subtitle">
+                Заголовок
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'contacts.text_content' %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if show_offer == 'false' %}
+        <div class="chunk-panel__block">
+            <div class="chunk-panel__subtitle">
+                Показать предложение
+            </div>
+            <div class="chunk-panel__chunk">
+                {% chunk 'contacts.show_offer' %}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="chunk-panel__block">
+        <div class="chunk-panel__subtitle">
+            Показать предложение
+        </div>
+        <div class="chunk-panel__chunk">
+            {% chunk 'contacts.form_offer_prefix' %}
+        </div>
+    </div>
+{% endblock panel_content %}

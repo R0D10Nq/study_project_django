@@ -1,0 +1,16 @@
+{
+  "button": "Список банков",
+  "cannot_be_added": true,
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "image": {
+      "name": "Изображение",
+      "type": "img-list",
+      "file": "banks/m-modals-[id]",
+      "path": "m-modals"
+    }
+  }
+}

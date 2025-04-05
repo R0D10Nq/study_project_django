@@ -1,0 +1,121 @@
+.modal-policy {
+  max-width: 1290px;
+
+  .modal__wrapper {
+    background-color: $bg;
+    padding: 90px 64px 75px;
+  }
+
+  .mfp-close {
+    right: 18px;
+    top: 24px;
+  }
+}
+
+.policy__title {
+  @include font($font_bold_2);
+  font-size: 50px;
+  line-height: 65px;
+  margin-bottom: 31px;
+  text-align: center;
+}
+
+.policy__text {
+  @include font($font_sb);
+  font-size: 20px;
+  line-height: 26px;
+
+  p + p {
+    margin-top: 33px;
+  }
+}
+
+@include laptop {
+
+  .modal-policy {
+    max-width: calc(100% - 78px);
+
+    .mfp-close {
+      right: 22px;
+    }
+
+    .modal__wrapper {
+      padding: 52px 50px 53px 60px;
+    }
+  }
+
+  .policy__title {
+    font-size: 35px;
+    line-height: 40px;
+    margin-bottom: 28px;
+  }
+
+  .policy__text {
+    font-size: 18px;
+    line-height: 23px;
+
+    p + p {
+      margin-top: 22px;
+    }
+  }
+}
+
+@include tablet {
+
+  .modal-policy {
+    max-width: calc(100% - 30px);
+
+    .mfp-close {
+      top: 16px;
+      right: 13px;
+    }
+
+    .modal__wrapper {
+      padding: 52px 39px 53px 33px;
+    }
+  }
+
+  .policy__title {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  .policy__text {
+    font-size: 14px;
+    line-height: 22px;
+
+    p + p {
+      margin-top: 16px;
+    }
+  }
+}
+
+@include mobile {
+
+  .modal-policy {
+    max-width: calc(100% - 18px);
+
+    .mfp-close {
+      top: 11px;
+      right: 9px;
+    }
+
+    .modal__wrapper {
+      padding: 31px 23px 42px ;
+    }
+  }
+
+  .policy__title {
+    text-align: left;
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 12px;
+  }
+
+  .policy__text {
+
+    p + p {
+      margin-top: 20px;
+    }
+  }
+}
+

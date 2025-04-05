@@ -1,0 +1,146 @@
+{
+  "button": "Управление ценами",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "type": {
+      "name": "Тип услуги:",
+      "type": "select",
+      "options": {
+        "allon4": {
+          "name": "All-on-4"
+        },
+        "implant": {
+          "name": "Одиночная имплантация"
+        },
+        "other": {
+          "name": "Другое"
+        }
+      }
+    },
+    "checkbox_first_screen": {
+        "name": "Использовать на первом экране",
+        "type": "bool"
+    },
+    "checkbox_offer": {
+        "name": "Использовать в блоке Горячие предложения",
+        "type": "bool"
+    },
+    "checkbox_implantation": {
+        "name": "Использовать в блоке Имплантации",
+        "type": "bool"
+    },
+    "info": {
+      "name": "Текст над заголовком",
+      "type": "str"
+    },
+    "title": {
+      "name": "Заголовок",
+      "type": "str"
+    },
+    "title_short": {
+      "name": "Заголовок длинный",
+      "type": "str"
+    },
+    "manufacture": {
+      "name": "Производитель",
+      "type": "str"
+    },
+    "manufacture_subtitle": {
+      "name": "Производитель подзаголовок",
+      "type": "str"
+    },
+    "tooltip": {
+      "name": "Тултип",
+      "type": "str"
+    },
+    "modal_name": {
+      "name": "Название модального окна",
+      "type": "str"
+    },
+    "benefit": {
+      "name": "Выгода",
+      "type": "str"
+    },
+    "price_title": {
+      "name": "Заголовок общей цены",
+      "type": "str"
+    },
+    "price_old": {
+      "name": "Старая цена",
+      "type": "str"
+    },
+    "price": {
+      "name": "Цена",
+      "type": "str"
+    },
+    "gift_title": {
+      "name": "Заголовок подарка",
+      "type": "str"
+    },
+    "gift_price": {
+      "name": "Цена подарка",
+      "type": "str"
+    },
+    "footer_title": {
+      "name": "Заголовок футер",
+      "type": "str"
+    },
+    "footer_subtitle": {
+      "name": "Подзаголовок футер",
+      "type": "str"
+    },
+    "icon_width": {
+      "name": "Ширина иконки",
+      "type": "int"
+    },
+    "icon_height": {
+      "name": "Высота иконки",
+      "type": "int"
+    },
+    "gift_icon_width": {
+      "name": "Ширина изображения подарка",
+      "type": "str"
+    },
+    "gift_icon_height": {
+      "name": "Высота изображения подарка",
+      "type": "str"
+    },
+    "text_list": {
+      "name": "Текстовый список",
+      "type": "text-list"
+    },
+    "icon": {
+      "name": "Иконка",
+      "type": "img",
+      "file": "m-prices-icon-[id]",
+      "path": "m-prices"
+    },
+    "image": {
+      "name": "Изображение",
+      "type": "img",
+      "file": "m-prices-image-[id]",
+      "path": "m-prices"
+    },
+    "flag": {
+      "name": "Флаг",
+      "type": "img",
+      "file": "m-prices-flag-[id]",
+      "path": "m-prices"
+    },
+    "gift_image": {
+      "name": "Изображение подарка",
+      "type": "img",
+      "file": "m-prices-gift-[id]",
+      "path": "m-prices"
+    },
+    "icon_stage": {
+      "name": "Иконка в этапах",
+      "type": "img",
+      "file": "m-price-stage-icon-[id]",
+      "path": "m-prices"
+    }
+  }
+}

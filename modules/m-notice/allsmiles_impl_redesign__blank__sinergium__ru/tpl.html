@@ -1,0 +1,41 @@
+{% load core_tags core_filters %}
+
+{% elist 'employees' as elist_employees %}
+{% chunk 'notice.doctor_id' raw=True as doctor_id %}
+
+<section class="notice" data-js-scroll-target="notice">
+    <div class="row">
+        <div class="notice__wrapper">
+            {% if elist_employees.instance.list %}
+                {% for id, item in elist_employees.instance.list.items %}
+                    {% if id == doctor_id %}
+                        <div class="notice__doctor">
+                            <div class="notice__doctor-photo">
+                                {% img_tag 'm-employees-notice-doctor.webp' width=361 height=351 class="notice__doctor-photo-img" module="m-employees" %}
+                            </div>
+                            <div class="notice__doctor-info">
+                                {% if item.name %}
+                                    <div class="notice__doctor-name">{{ item.name|safe }}</div>
+                                {% endif %}
+                                {% if item.profession %}
+                                    <div class="notice__doctor-profession">{{ item.profession|safe }}</div>
+                                {% endif %}
+                                {% if item.experience %}
+                                    <div class="notice__doctor-experience">
+                                        {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <h2 class="h2 notice__title">{% chunk 'notice.title' %}</h2>
+            <div class="notice__quote">{% chunk 'notice.quote' %}</div>
+        </div>
+    </div>
+
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-notice/chunk-panel.html" %}
+    {% endif %}
+</section>

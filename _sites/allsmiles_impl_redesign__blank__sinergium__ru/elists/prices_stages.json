@@ -1,0 +1,66 @@
+{
+  "button": "Управление этапами",
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "parent_id": {
+      "name": "ID родителя",
+      "type": "int"
+    },
+    "price": {
+      "name": "Цена",
+      "type": "str"
+    },
+    "price_old": {
+      "name": "Старая цена",
+      "type": "str"
+    },
+    "badge": {
+      "name": "Наименование этапа",
+      "type": "str"
+    },
+    "operating_time": {
+      "name": "Время",
+      "type": "str"
+    },
+    "list_stage": {
+      "name": "Текстовый список в этапах",
+      "type": "text-list"
+    },
+    "step": {
+        "name": "Цена за:",
+        "type": "select",
+        "options": {
+            "surgical": {
+                "name": "Хирургический этап"
+            },
+            "orthopedic": {
+                "name": "Ортопедический этап"
+            },
+            "turnkey": {
+                "name": "Под ключ"
+            },
+            "other": {
+                "name": "Другое"
+            }
+        }
+    },
+    "type": {
+        "name": "Тип услуги",
+        "type": "select",
+        "options": {
+            "allon4": {
+                "name": "All-on-4"
+            },
+            "implant": {
+                "name": "Одиночная имплантация"
+            },
+            "other": {
+                "name": "Другое"
+            }
+        }
+    }
+  }
+}

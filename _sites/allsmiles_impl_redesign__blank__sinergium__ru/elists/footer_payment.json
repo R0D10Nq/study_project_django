@@ -1,0 +1,16 @@
+{
+  "button": "Управление способами оплаты",
+  "cannot_be_added": true,
+  "fields": {
+    "id": {
+      "name": "ID",
+      "type": "int"
+    },
+    "payment": {
+      "name": "Иконки",
+      "type": "img-list",
+      "file": "payment/[id]/m-footer-[inc]",
+      "path": "m-footer"
+    }
+  }
+}

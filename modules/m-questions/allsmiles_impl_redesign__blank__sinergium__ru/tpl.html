@@ -1,0 +1,68 @@
+{% load core_tags core_filters %}
+
+{% elist "questions" as elist_questions %}
+{% elist "employees" as elist_employees %}
+
+{% chunk "questions.doctor_id" raw=True as doctor_id %}
+
+<section class="questions" data-js-scroll-target="questions">
+    <div class="row">
+        <div class="h2 questions__title">
+            {% chunk 'questions.title' %}
+        </div>
+        <div class="questions__grid">
+            <div class="questions__list" data-js="accordion">
+                {% if elist_questions.instance.list %}
+                    {% for id, item in elist_questions.instance.list.items %}
+                        {% if item.question %}
+                            <div class="questions__item">
+                                <div class="questions__item-title accordion__tab__title {% if forloop.first %}active{% endif %}">
+                                    {{ item.question|safe }}
+                                </div>
+                                <div class="questions__item-content accordion__tab__content {% if forloop.first %}active{% endif %}">
+                                    {% if item.answer %}
+                                        {{ item.answer|safe }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="questions__form-grid">
+                <div class="questions__doctor">
+                    {% if elist_employees.instance.list %}
+                        {% for id, item in elist_employees.instance.list.items %}
+                            {% if id == doctor_id %}
+                                <div class="questions__doctor-image">
+                                    {% img_tag 'm-employees-questions-doctor.webp' width=168 height=168 alt="{{ item.name|safe }}" module="m-employees" class="callback__doctor-image-photo" %}
+                                </div>
+                                <div class="questions__doctor-info">
+                                    {% if item.name %}
+                                        <div class="questions__doctor-name">{{ item.name|safe }}</div>
+                                    {% endif %}
+                                    {% if item.profession %}
+                                        <div class="questions__doctor-profession">{{ item.profession|safe }}</div>
+                                    {% endif %}
+                                    {% if item.experience %}
+                                        <div class="questions__doctor-experience">
+                                            {{ item.experience_prefix|safe }} {% get_experience item.experience %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="questions__form">
+                    {% with btn_submit="questions.btn" redirect="success" %}
+                        {% include "common/modules/m-forms/allsmiles_impl_redesign__blank__sinergium__ru/form_questions.html" with form_class="form__inner__form" button=button redirect=redirect %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if is_content_manager %}
+        {% include "common/blocks/chunk-panel/allsmiles_impl_redesign__blank__sinergium__ru/m-questions/chunk-panel.html" %}
+    {% endif %}
+</section>

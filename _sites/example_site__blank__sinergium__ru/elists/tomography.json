@@ -1,0 +1,91 @@
+{
+  "question": {
+    "img": {
+      "type": "image",
+      "label": "Изображение вопроса"
+    },
+    "text": {
+      "type": "text",
+      "label": "Текст вопроса",
+      "editor": "inline"
+    },
+    "display": {
+      "type": "boolean",
+      "label": "Отображать блок",
+      "default": true
+    },
+    "question_img_width": {
+      "type": "number",
+      "label": "Ширина изображения вопроса",
+      "default": 141
+    },
+    "question_img_height": {
+      "type": "number",
+      "label": "Высота изображения вопроса",
+      "default": 141
+    }
+  },
+  "text": {
+    "type": "text",
+    "label": "Текст блока",
+    "editor": "inline"
+  },
+  "list": {
+    "type": "list",
+    "label": "Список преимуществ",
+    "item": {
+      "text": {
+        "type": "text",
+        "label": "Текст",
+        "editor": "inline"
+      },
+      "img": {
+        "type": "image",
+        "label": "Иконка"
+      },
+      "exclusive": {
+        "type": "boolean",
+        "label": "Эксклюзивное преимущество"
+      },
+      "display": {
+        "type": "boolean",
+        "label": "Отображать пункт",
+        "default": true
+      }
+    }
+  },
+  "list_visible": {
+    "type": "boolean",
+    "label": "Отображать список"
+  },
+  "media": {
+    "is_video": {
+      "type": "boolean",
+      "label": "Использовать видео"
+    },
+    "src": {
+      "type": "file",
+      "label": "Видео/изображение"
+    },
+    "text": {
+      "type": "text",
+      "label": "Текст под медиафайлом",
+      "editor": "inline"
+    },
+    "media_width": {
+      "type": "number",
+      "label": "Ширина медиа",
+      "default": 800
+    },
+    "media_height": {
+      "type": "number",
+      "label": "Высота медиа", 
+      "default": 450
+    },
+    "display": {
+      "type": "boolean",
+      "label": "Отображать медиа-блок",
+      "default": true
+    }
+  }
+}
