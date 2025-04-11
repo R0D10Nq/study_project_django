@@ -8,7 +8,7 @@ from core.models import Chunk, Landing, LocalLandingData
 from core.chunks.queries.chunk import ChunkQuery
 from django.template.exceptions import TemplateDoesNotExist
 import os
-
+import logging
 
 def get_chunks(landing=None):
     """Достать все чанки для текущего лэндинга"""
@@ -124,7 +124,15 @@ def add_chunk_to_globals(landing: Landing, chunk_instance, local_data=None):
 
 def chunk(*args, **kwargs):
     """Рендер чанка
-    :return: mixed
+    Функция для получения и отображения содержимого чанка (фрагмента контента).
+    
+    :param name: Имя чанка для поиска
+    :param variables: Переменные для шаблона, если чанк является шаблоном
+    :param raw: Если True, возвращает содержимое без обработки HTML
+    :param wrap: Если True, оборачивает контент административной панелью для редактирования
+    :param module: Модуль, в контексте которого используется чанк
+    :param through: Флаг "сквозного" чанка (общего для всех страниц)
+    :return: Содержимое чанка в виде строки HTML или сырых данных
     """
     from core.helpers import (
         get_landing,
@@ -138,134 +146,184 @@ def chunk(*args, **kwargs):
         data_get, prettify_html,
         is_dev
     )
+    from django.utils.html import escape
+    import logging
 
-    name = kwargs.get("name")
+    logger = logging.getLogger('chunks')
+    
+    # Получение и валидация параметров
+    name = kwargs.get("name") or (args[0] if args else None)
     variables = kwargs.get("variables", {})
     raw = kwargs.get("raw", False)
-    wrap = kwargs.get("wrap", True)
+    wrap = kwargs.get("wrap", True) and not raw  # Если raw=True, то wrap всегда False
     module = kwargs.get("module", None)
     through = kwargs.get("through", None)
     base_dir = settings().BASE_DIR
     page = get_current_page()
-
-    if raw:
-        wrap = False
-
-    if kwargs.get("module"):
-        del kwargs["module"]
-
     request = get_request()
     landing_tpl_path = get_landing_tpl_path()
     content = existing_content = None
-    existing = search_existing_chunk(name)
     
-    if enable_local_data(request, str(request.path)):
-        landing = get_landing()
-        user = request.user if request.user.is_authenticated else None
-        local_data_instance = LocalLandingData.objects.filter(causer=user, landing=landing).first()
-        if local_data_instance and "chunk" in local_data_instance.temp_data and name in local_data_instance.temp_data["chunk"]:
+    try:
+        # Поиск существующего чанка в кэше или БД
+        existing = search_existing_chunk(name)
+        
+        # Проверка локальных данных (например, для A/B тестирования)
+        if request and enable_local_data(request, str(request.path)):
+            landing = get_landing()
+            user = request.user if request.user.is_authenticated else None
+            local_data = LocalLandingData.objects.filter(causer=user, landing=landing).first()
             
-            local_through = local_data_instance.temp_data["chunk"][name].get("through")
+            if local_data and "chunk" in local_data.temp_data and name in local_data.temp_data["chunk"]:
+                local_through = local_data.temp_data["chunk"][name].get("through")
+                
+                if page and not local_through and local_data.temp_data["chunk"][name]["custom_content"].get(str(page.id)):
+                    content = local_data.temp_data["chunk"][name]["custom_content"].get(str(page.id))
+                else:
+                    content = local_data.temp_data["chunk"][name].get("content")
+                
+                if content:
+                    # Санитизация HTML перед возвратом (защита от XSS)
+                    safe_content = prettify_html(content)
+                    return admin_chunk_wrapper(name, safe_content, module) if wrap else safe_content
+    
+        # Если чанк не найден в БД, пробуем получить из глобальных данных
+        if not existing:
+            global_data = get_landing_data()
+            content = data_get(global_data, name)
             
-            if page and not local_through and local_data_instance.temp_data["chunk"][name]["custom_content"].get(str(page.id)):
-                content = local_data_instance.temp_data["chunk"][name]["custom_content"].get(str(page.id))
-            else:
-                content = local_data_instance.temp_data["chunk"][name].get("content")
-        else:
-            content = None
-
-        if content:
-            return admin_chunk_wrapper(name, content, module) if wrap else prettify_html(content)
-
-    if not existing:
-        global_data = get_landing_data()
-        content = data_get(global_data, name)
-
-        if raw:
-            return content
-
-        # Если чанк список или словарь
-        if content and (isinstance(content, list) or isinstance(content, dict)):
-            try:
-                # Ищем есть ли циферка в имени и строим имя файла без неё (чтобы не плодить файлы для каждый итерации)
-                name_without_context = None
-                for i in name.split("."):
+            if raw:
+                return content
+                
+            # Обработка различных типов контента
+            if content:
+                if isinstance(content, (list, dict)):
                     try:
-                        if isinstance(int(i), int):
-                            if not name_without_context:
-                                name_without_context = name.replace(f"{i}.", "")
-                            else:
-                                name_without_context = name_without_context.replace(f"{i}.", "")
-                    except Exception:
-                        pass
-
-                if name_without_context and os.path.exists(
-                    base_dir / f"core/templates/common/modules/{module}/{landing_tpl_path}/{name_without_context}.html"
-                ):
-                    chunk_way = f"common/modules/{module}/{landing_tpl_path}/{name_without_context}.html"
-                elif os.path.exists(
-                    base_dir / f"core/templates/common/modules/{module}/{landing_tpl_path}/{name}.html"
-                ):
-                    chunk_way = f"common/modules/{module}/{landing_tpl_path}/{name}.html"
-                elif os.path.exists(base_dir / f"common/modules/{module}/{name}.html"):
-                    chunk_way = f"common/modules/{module}/{name}.html"
-                else:
-                    chunk_way = f"common/{name}.html"
-
-                content = render_to_string(chunk_way, {"chunk_vars": variables, "chunk_data": content}, request=request)
-
-            except TemplateDoesNotExist as e:
-                if is_dev():
-                    raise TemplateDoesNotExist(e)
-                content = None
-
-            existing = ChunkQuery.save(
-                name=name,
-                content=prettify_html(content),
-            )
-
-        # Если чанк это html
-        elif content and isinstance(content, str) and content.endswith(".html"):
-            try:
-                if os.path.exists(base_dir / f"core/templates/common/modules/{module}/{landing_tpl_path}/{content}"):
-                    chunk_way = f"common/modules/{module}/{landing_tpl_path}/{content}"
-                elif os.path.exists(base_dir / f"common/modules/{module}/{content}"):
-                    chunk_way = f"common/modules/{module}/{content}"
-                else:
-                    chunk_way = f"common/{content}"
-
-                content = render_to_string(chunk_way, {"chunk_vars": variables}, request=request)
-            except TemplateDoesNotExist as e:
-                if is_dev():
-                    raise TemplateDoesNotExist(e)
-                content = None
-
-        # Если чанк строка
-        elif content and isinstance(content, str):
-            existing = ChunkQuery.save(
-                name=name,
-                content=prettify_html(content),
-            )
-
-    if isinstance(existing, Chunk):
-        
-        if through == "false" and existing.custom_content and page and existing.custom_content.get(str(page.id), None):
-            chunk_content = existing.custom_content.get(str(page.id), None)
-        elif not existing.through and page and through != "true":
-            chunk_content = existing.custom_content.get(str(page.id), None)
-        else:
-            chunk_content = existing.content
-        
-        existing_content = "false" if chunk_content == "" and is_content_manager(request.user) else chunk_content
+                        # Определение пути к шаблону для списков и словарей
+                        chunk_way = _get_chunk_template_path(name, module, landing_tpl_path, base_dir)
+                        content = render_to_string(
+                            chunk_way, 
+                            {"chunk_vars": variables, "chunk_data": content}, 
+                            request=request
+                        )
+                    except Exception as e:
+                        if is_dev():
+                            logger.error(f"Ошибка рендеринга шаблона для чанка {name}: {str(e)}")
+                        content = None
+                        
+                    # Сохраняем чанк, если он был успешно сгенерирован
+                    if content:
+                        existing = ChunkQuery.save(
+                            name=name,
+                            content=prettify_html(content),
+                        )
+                        
+                # Обработка HTML-файлов
+                elif isinstance(content, str) and content.endswith(".html"):
+                    try:
+                        # Определение пути к HTML-файлу
+                        chunk_way = _find_html_template(content, module, landing_tpl_path, base_dir)
+                        content = render_to_string(chunk_way, {"chunk_vars": variables}, request=request)
+                    except Exception as e:
+                        if is_dev():
+                            logger.error(f"Ошибка загрузки HTML-шаблона для чанка {name}: {str(e)}")
+                        content = None
+                        
+                # Сохранение обычного строкового контента
+                elif isinstance(content, str):
+                    existing = ChunkQuery.save(
+                        name=name,
+                        content=prettify_html(content),
+                    )
+                    
+        # Обработка существующего чанка из БД
+        if isinstance(existing, Chunk):
+            # Определение контента в зависимости от режима (through/custom)
+            if through == "false" and existing.custom_content and page and existing.custom_content.get(str(page.id), None):
+                chunk_content = existing.custom_content.get(str(page.id), None)
+            elif not existing.through and page and through != "true":
+                chunk_content = existing.custom_content.get(str(page.id), None)
+            else:
+                chunk_content = existing.content
             
-        return admin_chunk_wrapper(name, existing_content, module) if wrap else prettify_html(existing_content)
+            # Для контент-менеджеров пустой контент показываем как "false"
+            existing_content = "false" if chunk_content == "" and is_content_manager(request.user) else chunk_content
+            
+            # Санитизация HTML перед возвратом (защита от XSS)
+            safe_content = prettify_html(existing_content)
+            return admin_chunk_wrapper(name, safe_content, module) if wrap else safe_content
+    
+        # Обработка случая, когда чанк не существует
+        if not isinstance(existing, Chunk):
+            existing_content = "false" if is_content_manager(request.user) else ""
+    
+        # Финальный возврат контента с учетом всех условий
+        if content:
+            safe_content = prettify_html(content)
+            return admin_chunk_wrapper(name, safe_content, module) if wrap else safe_content
+        elif existing_content:
+            safe_content = prettify_html(existing_content)
+            return admin_chunk_wrapper(name, safe_content, module) if wrap else safe_content
+        else:
+            return admin_chunk_wrapper(name, "", module) if wrap else ""
+            
+    except Exception as e:
+        logger.error(f"Ошибка при обработке чанка {name}: {str(e)}")
+        return "" if not is_dev() else f"Ошибка в чанке {name}: {str(e)}"
 
-    if not isinstance(existing, Chunk):
-        existing_content = "false" if is_content_manager(request.user) else ""
 
-    if content:
-        return admin_chunk_wrapper(name, content, module) if wrap else prettify_html(content)
-    elif existing_content:
-        return admin_chunk_wrapper(name, existing_content, module) if wrap else prettify_html(existing_content)
+def _get_chunk_template_path(name, module, landing_tpl_path, base_dir):
+    """Вспомогательная функция для определения пути к шаблону чанка
+    
+    :param name: Имя чанка
+    :param module: Модуль чанка
+    :param landing_tpl_path: Путь к шаблонам лендинга
+    :param base_dir: Корневая директория проекта
+    :return: Путь к шаблону
+    """
+    import os
+    
+    # Удаление цифр из имени для поиска общего шаблона
+    name_without_context = None
+    for i in name.split("."):
+        try:
+            if isinstance(int(i), int):
+                if not name_without_context:
+                    name_without_context = name.replace(f"{i}.", "")
+                else:
+                    name_without_context = name_without_context.replace(f"{i}.", "")
+        except ValueError:
+            pass
+    
+    # Проверка существования различных вариантов пути к шаблону
+    if name_without_context and os.path.exists(
+        base_dir / f"core/templates/common/modules/{module}/{landing_tpl_path}/{name_without_context}.html"
+    ):
+        return f"common/modules/{module}/{landing_tpl_path}/{name_without_context}.html"
+    elif os.path.exists(
+        base_dir / f"core/templates/common/modules/{module}/{landing_tpl_path}/{name}.html"
+    ):
+        return f"common/modules/{module}/{landing_tpl_path}/{name}.html"
+    elif os.path.exists(base_dir / f"common/modules/{module}/{name}.html"):
+        return f"common/modules/{module}/{name}.html"
     else:
-        return admin_chunk_wrapper(name, "", module) if wrap else ""
+        return f"common/{name}.html"
+
+
+def _find_html_template(content, module, landing_tpl_path, base_dir):
+    """Вспомогательная функция для поиска HTML-шаблона
+    
+    :param content: Имя HTML-файла
+    :param module: Модуль
+    :param landing_tpl_path: Путь к шаблонам лендинга
+    :param base_dir: Корневая директория проекта
+    :return: Путь к шаблону
+    """
+    import os
+    
+    if os.path.exists(base_dir / f"core/templates/common/modules/{module}/{landing_tpl_path}/{content}"):
+        return f"common/modules/{module}/{landing_tpl_path}/{content}"
+    elif os.path.exists(base_dir / f"common/modules/{module}/{content}"):
+        return f"common/modules/{module}/{content}"
+    else:
+        return f"common/{content}"

@@ -48,6 +48,10 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'crequest.middleware.CrequestMiddleware',  # Добавляем middleware для доступа к текущему запросу
+	# Добавляем наши кастомные middleware для оптимизации
+	'core.middleware.StaticFilesOptimizationMiddleware',
+	'core.middleware.XSSProtectionMiddleware',
 ]
 
 ROOT_URLCONF = 'django_landings.urls'
@@ -56,8 +60,8 @@ TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
 		'DIRS': [
-			os.path.join(BASE_DIR, 'templates'),
-			os.path.join(BASE_DIR, 'modules'),  
+			os.path.join (BASE_DIR, 'templates'),
+			os.path.join (BASE_DIR, 'modules'),  
 		],
 		'APP_DIRS': True,
 		'OPTIONS': {
@@ -67,7 +71,12 @@ TEMPLATES = [
 				'django.contrib.auth.context_processors.auth',
 				'django.contrib.messages.context_processors.messages',
 			],
-			'builtins': [],  # Пустой список, чтобы отключить автоматическую загрузку тегов
+			'builtins': [
+				'core.templatetags.assets_tags',  # Автоматически загружаем наши теги для оптимизации assets
+			],
+			'libraries': {
+				'django': 'django.template.defaulttags',  # Явно регистрируем стандартную библиотеку Django
+			},
 		},
 	},
 ]
@@ -119,14 +128,150 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+	BASE_DIR / 'static',
 ]
+
+# Настройка статических файлов для production
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Настройки кэширования
+CACHES = {
+	'default': {
+		'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+		'LOCATION': 'unique-snowflake',
+		'TIMEOUT': 300,  # 5 минут
+		'OPTIONS': {
+			'MAX_ENTRIES': 1000,
+			'CULL_FREQUENCY': 3,  # Удаление устаревших записей при заполнении кэша
+		}
+	},
+	'chunks': {
+		'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+		'LOCATION': 'chunks-cache',
+		'TIMEOUT': 3600,  # 1 час для кэширования чанков
+		'OPTIONS': {
+			'MAX_ENTRIES': 2000,
+			'CULL_FREQUENCY': 2,
+		}
+	},
+	'templates': {
+		'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+		'LOCATION': BASE_DIR / 'cache' / 'templates',
+		'TIMEOUT': 1800,  # 30 минут для шаблонов
+		'OPTIONS': {
+			'MAX_ENTRIES': 1000,
+		}
+	}
+}
+
+# Настройки кэширования для production (закомментированы, активировать при деплое)
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/1',
+#         'TIMEOUT': 300,
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'PARSER_CLASS': 'redis.connection.HiredisParser',
+#         }
+#     },
+#     'chunks': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/2',
+#         'TIMEOUT': 3600,
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'PARSER_CLASS': 'redis.connection.HiredisParser',
+#         }
+#     },
+#     'templates': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/3',
+#         'TIMEOUT': 1800,
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'PARSER_CLASS': 'redis.connection.HiredisParser',
+#         }
+#     }
+# }
+
+# Ключи кэша по умолчанию для разных типов данных
+CACHE_MIDDLEWARE_KEY_PREFIX = 'django_landings'
+CACHE_MIDDLEWARE_SECONDS = 600  # 10 минут
+
+# Кэширование сессий (для производительности)
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_CACHE_ALIAS = 'default'
+
+# Настройки безопасности для production
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+CSRF_COOKIE_SECURE = False  # Установить в True в production
+SESSION_COOKIE_SECURE = False  # Установить в True в production
+
+# Настройки для сжатия статических файлов
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = [
+	'compressor.filters.css_default.CssAbsoluteFilter',
+	'compressor.filters.cssmin.CSSMinFilter',
+]
+COMPRESS_JS_FILTERS = [
+	'compressor.filters.jsmin.JSMinFilter',
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Настройки для логирования
+LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'formatters': {
+		'verbose': {
+			'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+			'style': '{',
+		},
+		'simple': {
+			'format': '{levelname} {message}',
+			'style': '{',
+		},
+	},
+	'handlers': {
+		'console': {
+			'level': 'INFO',
+			'class': 'logging.StreamHandler',
+			'formatter': 'simple',
+		},
+		'file': {
+			'level': 'INFO',
+			'class': 'logging.FileHandler',
+			'filename': BASE_DIR / 'logs' / 'django.log',
+			'formatter': 'verbose',
+		},
+		'chunks_file': {
+			'level': 'INFO',
+			'class': 'logging.FileHandler',
+			'filename': BASE_DIR / 'logs' / 'chunks.log',
+			'formatter': 'verbose',
+		},
+	},
+	'loggers': {
+		'django': {
+			'handlers': ['console', 'file'],
+			'level': 'INFO',
+			'propagate': True,
+		},
+		'chunks': {
+			'handlers': ['console', 'chunks_file'],
+			'level': 'INFO',
+			'propagate': False,
+		},
+	},
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Лендинг{% endblock %}</title>
+    
+    <!-- Мета-теги для SEO -->
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    
+    <!-- Стили для оптимизированного frontend -->
+    <style>
+        /* Базовые стили со сбросом */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f8fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        h1 {
+            font-size: 32px;
+        }
+        h2 {
+            font-size: 24px;
+        }
+        h3 {
+            font-size: 18px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #004499;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #004499;
+            color: white;
+        }
+        
+        /* Сетка модулей */
+        .module {
+            padding: 60px 0;
+        }
+        .module-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        /* Медиа-запросы для адаптивности */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            h2 {
+                font-size: 22px;
+            }
+            .module {
+                padding: 40px 0;
+            }
+        }
+        
+        /* Кастомные стили */
+        {% block custom_styles %}{% endblock %}
+    </style>
+    
+    <!-- Дополнительные стили из модулей при помощи наших оптимизированных тегов -->
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                {% block header %}
+                <h1>Название компании</h1>
+                {% endblock %}
+            </div>
+        </div>
+    </header>
+    
+    <!-- Основной контент -->
+    <main>
+        {% block content %}
+        <div class="container">
+            <h2>Эта страница ещё в разработке</h2>
+            <p>Скоро здесь будет размещена полезная информация.</p>
+        </div>
+        {% endblock %}
+    </main>
+    
+    <!-- Подвал сайта -->
+    <footer>
+        <div class="container">
+            {% block footer %}
+            <p>&copy; {% now "Y" %} Все права защищены.</p>
+            {% endblock %}
+        </div>
+    </footer>
+    
+    <!-- Оптимизированные скрипты из модулей -->
+    {% block scripts %}{% endblock %}
+    
+    <!-- Инлайновый JavaScript для мгновенной отрисовки -->
+    <script>
+        // Базовый JavaScript с анимацией появления контента
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.module');
+            elements.forEach(element => {
+                element.classList.add('animate-fadeIn');
+            });
+        });
+        
+        // Дополнительный JavaScript
+        {% block custom_scripts %}{% endblock %}
+    </script>
+</body>
+</html>
